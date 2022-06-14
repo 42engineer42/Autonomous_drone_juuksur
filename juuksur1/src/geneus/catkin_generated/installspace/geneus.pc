@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: geneus
+Description: Description of geneus
+Version: 2.2.6
+Cflags: 
+Libs: -L/usr/local/lib 
+Requires: genmsg

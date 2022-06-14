@@ -1,0 +1,8 @@
+prefix=/home/ttammear/juuksurros/devel
+
+Name: gennodejs
+Description: Description of gennodejs
+Version: 2.0.1
+Cflags: 
+Libs: -L/home/ttammear/juuksurros/devel/lib 
+Requires: genmsg

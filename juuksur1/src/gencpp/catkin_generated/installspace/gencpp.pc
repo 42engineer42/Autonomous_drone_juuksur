@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: gencpp
+Description: Description of gencpp
+Version: 0.6.2
+Cflags: 
+Libs: -L/usr/local/lib 
+Requires: genmsg

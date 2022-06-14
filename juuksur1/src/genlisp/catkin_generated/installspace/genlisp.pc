@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: genlisp
+Description: Description of genlisp
+Version: 0.4.16
+Cflags: 
+Libs: -L/usr/local/lib 
+Requires: genmsg

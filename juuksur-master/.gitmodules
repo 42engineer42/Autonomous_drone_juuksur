@@ -1,0 +1,3 @@
+[submodule "project"]
+  path = ros
+  url = https://gitlab.com/timo.loomets/juuksurros.git

@@ -1,0 +1,8 @@
+prefix=/home/ttammear/juuksurros/devel
+
+Name: gencpp
+Description: Description of gencpp
+Version: 0.6.2
+Cflags: 
+Libs: -L/home/ttammear/juuksurros/devel/lib 
+Requires: genmsg

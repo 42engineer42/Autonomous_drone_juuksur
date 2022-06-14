@@ -1,0 +1,8 @@
+prefix=/home/ttammear/juuksurros/devel
+
+Name: genmsg
+Description: Description of genmsg
+Version: 0.5.12
+Cflags: 
+Libs: -L/home/ttammear/juuksurros/devel/lib 
+Requires: 

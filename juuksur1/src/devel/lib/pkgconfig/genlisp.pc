@@ -1,0 +1,8 @@
+prefix=/home/ttammear/juuksurros/devel
+
+Name: genlisp
+Description: Description of genlisp
+Version: 0.4.16
+Cflags: 
+Libs: -L/home/ttammear/juuksurros/devel/lib 
+Requires: genmsg

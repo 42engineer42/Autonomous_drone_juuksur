@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: genpy
+Description: Description of genpy
+Version: 0.6.8
+Cflags: 
+Libs: -L/usr/local/lib 
+Requires: genmsg

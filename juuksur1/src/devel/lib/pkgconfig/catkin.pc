@@ -1,0 +1,8 @@
+prefix=/home/ttammear/juuksurros/devel
+
+Name: catkin
+Description: Description of catkin
+Version: 0.7.17
+Cflags: 
+Libs: -L/home/ttammear/juuksurros/devel/lib 
+Requires: 
