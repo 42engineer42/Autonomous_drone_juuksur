@@ -1,0 +1,3 @@
+global:
+    rate: 30
+    target_height: 150

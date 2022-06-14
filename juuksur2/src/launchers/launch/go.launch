@@ -1,0 +1,11 @@
+<launch>
+    <include file="$(find launchers)/launch/camera.launch"/>
+    <rosparam command="load" file="$(find launchers)/params/globalParams.yml"/>
+
+    <node name="fc" pkg="fcontroller" type="fcontroller_node.py" output="screen"/>
+    <node name="switch" pkg="switch" type="switch_node.py" output="screen"/>
+    <node name="vision" pkg="vision" type="vision_node" output="screen"/>
+    <node name="path" pkg="pathfinder" type="path_node" output="screen"/>
+    <node name="move" pkg="move" type="move_node.py" output="screen"/>
+</launch>
+

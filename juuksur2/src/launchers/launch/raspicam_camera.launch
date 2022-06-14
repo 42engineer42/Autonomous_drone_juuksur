@@ -1,0 +1,4 @@
+<launch>
+    <node name="raspicam_camera" pkg="raspicam_camera" type="raspicam_camera_node" output="screen"/>
+</launch>
+

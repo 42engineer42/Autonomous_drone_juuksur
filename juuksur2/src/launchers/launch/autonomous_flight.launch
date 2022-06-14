@@ -1,0 +1,5 @@
+<launch>
+    <env name="GMON_OUT_PREFIX" value="autonomous_flight" />
+	<node pkg="autonomous_flight" type="autonomous_flight_node" name="autonomous_flight_node" output="screen" >
+	</node>
+</launch>

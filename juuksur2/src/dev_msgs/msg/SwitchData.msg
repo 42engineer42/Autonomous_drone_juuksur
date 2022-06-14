@@ -1,0 +1,4 @@
+uint8 user
+uint16 sensor_height_low
+uint16 sensor_height_high
+uint16 kalman_height

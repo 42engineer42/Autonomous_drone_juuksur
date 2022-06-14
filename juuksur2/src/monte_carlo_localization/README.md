@@ -1,0 +1,1 @@
+g++ main.cpp visualizer.cpp robot.cpp util.cpp landmarks.cpp -o app -std=c++11 -lrt -lopencv_core -lopencv_imgproc -lopencv_highgui -lopencv_videoio -lopencv_imgcodecs

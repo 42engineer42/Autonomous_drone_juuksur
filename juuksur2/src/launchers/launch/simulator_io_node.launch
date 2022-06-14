@@ -1,0 +1,4 @@
+<launch>
+	<node pkg="simulator_io" type="simulator_io_node" name="simulator_io_node" output="screen">
+	</node>
+</launch>

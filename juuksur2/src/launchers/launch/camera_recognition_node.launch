@@ -1,0 +1,4 @@
+<launch>
+	<node pkg="camera_recognition" type="camera_recognition_node" name="camera_recognition_node" output="log" >
+	</node>
+</launch>
