@@ -1,0 +1,14 @@
+Added Component: Designator=J7(JST-SH 6pin 1mm pitch)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "FarnellPN"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ManufacturerPN"; Value = ""; VariantName = "[No Variations]"
+Added Pin To Net: NetName=NetJ7_1 Pin=J7-1
+Added Pin To Net: NetName=NetJ7_2 Pin=J7-2
+Added Pin To Net: NetName=NetJ7_3 Pin=J7-3
+Added Pin To Net: NetName=NetJ7_4 Pin=J7-4
+Added Pin To Net: NetName=NetJ7_5 Pin=J7-5
+Added Pin To Net: NetName=NetJ7_6 Pin=J7-6
+Added Member To Class: ClassName=Droon_REV3 Member=Component J7 Header 6p
+Added Room: Name=Droon_REV3
+Added Room: Name=Power 3V3
+Added Room: Name=Power 5V

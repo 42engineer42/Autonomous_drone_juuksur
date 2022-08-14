@@ -1,0 +1,12 @@
+Output: NC Drill Files
+Type  : NC Drill
+From  : Project [Droon_REV3.PrjPCB]
+   Generated File[FC_PiHat_REV1.TXT]
+   Generated File[FC_PiHat_REV1.LDP]
+   Generated File[FC_PiHat_REV1.DRR]
+
+
+Files Generated   : 3
+Documents Printed : 0
+
+Finished Output Generation At 8:59:36 PM On 5/18/2021

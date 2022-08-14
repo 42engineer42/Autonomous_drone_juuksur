@@ -1,0 +1,6 @@
+Removed Pin From Net: NetName=GND Pin=R16-1
+Removed Pin From Net: NetName=+5 Pin=R16-2
+Removed Member From Class: ClassName=Power 3V3 Member=R16
+Added Room: Name=Droon_REV3
+Added Room: Name=Power 3V3
+Added Room: Name=Power 5V

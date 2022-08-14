@@ -1,0 +1,44 @@
+Added Component: Designator=D4(LED RGB)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "FarnellPN"; Value = "1716792"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ManufacturerPN"; Value = "OVS-3309"; VariantName = "[No Variations]"
+Added Component: Designator=D5(LED RGB)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "FarnellPN"; Value = "1716792"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ManufacturerPN"; Value = "OVS-3309"; VariantName = "[No Variations]"
+Added Component: Designator=D6(LED RGB)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "FarnellPN"; Value = "1716792"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ManufacturerPN"; Value = "OVS-3309"; VariantName = "[No Variations]"
+Added Component: Designator=D7(LED RGB)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "FarnellPN"; Value = "1716792"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ManufacturerPN"; Value = "OVS-3309"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=NetD4_BA Pin=D4-BA
+Added Pin To Net: NetName=GND Pin=D4-BK
+Added Pin To Net: NetName=NetD4_GA Pin=D4-GA
+Added Pin To Net: NetName=GND Pin=D4-GK
+Added Pin To Net: NetName=NetD4_RA Pin=D4-RA
+Added Pin To Net: NetName=GND Pin=D4-RK
+Added Pin To Net: NetName=NetD5_BA Pin=D5-BA
+Added Pin To Net: NetName=GND Pin=D5-BK
+Added Pin To Net: NetName=NetD5_GA Pin=D5-GA
+Added Pin To Net: NetName=GND Pin=D5-GK
+Added Pin To Net: NetName=NetD5_RA Pin=D5-RA
+Added Pin To Net: NetName=GND Pin=D5-RK
+Added Pin To Net: NetName=NetD6_BA Pin=D6-BA
+Added Pin To Net: NetName=GND Pin=D6-BK
+Added Pin To Net: NetName=NetD6_GA Pin=D6-GA
+Added Pin To Net: NetName=GND Pin=D6-GK
+Added Pin To Net: NetName=NetD6_RA Pin=D6-RA
+Added Pin To Net: NetName=GND Pin=D6-RK
+Added Pin To Net: NetName=NetD7_BA Pin=D7-BA
+Added Pin To Net: NetName=GND Pin=D7-BK
+Added Pin To Net: NetName=NetD7_GA Pin=D7-GA
+Added Pin To Net: NetName=GND Pin=D7-GK
+Added Pin To Net: NetName=NetD7_RA Pin=D7-RA
+Added Pin To Net: NetName=GND Pin=D7-RK
+Added Member To Class: ClassName=Droon_REV3 Member=Component D4 OVS-3309
+Added Member To Class: ClassName=Droon_REV3 Member=Component D5 OVS-3309
+Added Member To Class: ClassName=Droon_REV3 Member=Component D6 OVS-3309
+Added Member To Class: ClassName=Droon_REV3 Member=Component D7 OVS-3309

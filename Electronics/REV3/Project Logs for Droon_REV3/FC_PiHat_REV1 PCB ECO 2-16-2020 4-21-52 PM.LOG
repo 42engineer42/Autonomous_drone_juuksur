@@ -1,0 +1,7 @@
+Removed Pin From Net: NetName=TRACESWO Pin=J2-5
+Removed Pin From Net: NetName=NJTRST Pin=J2-6
+Added Pin To Net: NetName=NJTRST Pin=J2-5
+Added Pin To Net: NetName=TRACESWO Pin=J2-6
+Added Room: Name=Droon_REV3
+Added Room: Name=Power 3V3
+Added Room: Name=Power 5V

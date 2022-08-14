@@ -1,0 +1,117 @@
+Removed Pin From Net: NetName=GND Pin=C5-1
+Removed Pin From Net: NetName=GND Pin=C6-1
+Removed Pin From Net: NetName=+5 Pin=C6-2
+Removed Member From Class: ClassName=Droon_REV3 Member=C7
+Removed Member From Class: ClassName=Droon_REV3 Member=C8
+Removed Member From Class: ClassName=Droon_REV3 Member=J11
+Change Component Footprint: Designator=C5 Old Footprint=C0603 New Footprint=Capacitor Through Hole 5x11
+Change Component Footprint: Designator=C6 Old Footprint=C0603 New Footprint=Through hole Capacitor 16V 470uF
+Change Component Comment : Designator=C5 Old Comment=100nF New Comment=10uF
+Change Component Comment : Designator=C6 Old Comment=100nF New Comment=10uF
+Change Component Designator: OldDesignator=C1 NewDesignator=C5
+Change Component Designator: OldDesignator=C2 NewDesignator=C6
+Change Component Designator: OldDesignator=C3 NewDesignator=C7
+Change Component Designator: OldDesignator=C4 NewDesignator=C8
+Change Component Designator: OldDesignator=C5 NewDesignator=C9
+Change Component Designator: OldDesignator=C6 NewDesignator=C10
+Change Component Designator: OldDesignator=C7 NewDesignator=C1
+Change Component Designator: OldDesignator=C8 NewDesignator=C2
+Change Component Designator: OldDesignator=C9 NewDesignator=C3
+Change Component Designator: OldDesignator=C10 NewDesignator=C4
+Change Component Designator: OldDesignator=D1 NewDesignator=D5
+Change Component Designator: OldDesignator=D2 NewDesignator=D7
+Change Component Designator: OldDesignator=D3 NewDesignator=D6
+Change Component Designator: OldDesignator=D4 NewDesignator=D1
+Change Component Designator: OldDesignator=D5 NewDesignator=D2
+Change Component Designator: OldDesignator=D6 NewDesignator=D3
+Change Component Designator: OldDesignator=D7 NewDesignator=D4
+Change Component Designator: OldDesignator=J1 NewDesignator=J9
+Change Component Designator: OldDesignator=J2 NewDesignator=J10
+Change Component Designator: OldDesignator=J3 NewDesignator=J11
+Change Component Designator: OldDesignator=J4 NewDesignator=J5
+Change Component Designator: OldDesignator=J5 NewDesignator=J1
+Change Component Designator: OldDesignator=J6 NewDesignator=J2
+Change Component Designator: OldDesignator=J7 NewDesignator=J3
+Change Component Designator: OldDesignator=J8 NewDesignator=J4
+Change Component Designator: OldDesignator=J9 NewDesignator=J6
+Change Component Designator: OldDesignator=J10 NewDesignator=J7
+Change Component Designator: OldDesignator=J11 NewDesignator=J8
+Change Component Designator: OldDesignator=L2 NewDesignator=L3
+Change Component Designator: OldDesignator=L3 NewDesignator=L2
+Change Component Designator: OldDesignator=R1 NewDesignator=R15
+Change Component Designator: OldDesignator=R2 NewDesignator=R16
+Change Component Designator: OldDesignator=R3 NewDesignator=R17
+Change Component Designator: OldDesignator=R4 NewDesignator=R1
+Change Component Designator: OldDesignator=R5 NewDesignator=R2
+Change Component Designator: OldDesignator=R6 NewDesignator=R3
+Change Component Designator: OldDesignator=R7 NewDesignator=R4
+Change Component Designator: OldDesignator=R8 NewDesignator=R5
+Change Component Designator: OldDesignator=R9 NewDesignator=R6
+Change Component Designator: OldDesignator=R10 NewDesignator=R7
+Change Component Designator: OldDesignator=R11 NewDesignator=R8
+Change Component Designator: OldDesignator=R12 NewDesignator=R9
+Change Component Designator: OldDesignator=R13 NewDesignator=R10
+Change Component Designator: OldDesignator=R14 NewDesignator=R11
+Change Component Designator: OldDesignator=R15 NewDesignator=R12
+Change Component Designator: OldDesignator=R16 NewDesignator=R13
+Change Component Designator: OldDesignator=R17 NewDesignator=R14
+Change component parameters: Designator = "C9"; Footprint = "Capacitor Through Hole 5x11"; UniqueID = "\KQUYXEGP"
+Change component parameters. Clean all parameters for all variants
+Change component parameters (AddParameter): Name = "FarnellPN"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "ManufacturerPN"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "10uF"; VariantName = "[No Variations]"
+Change component parameters: Designator = "C10"; Footprint = "Through hole Capacitor 16V 470uF"; UniqueID = "\IEKALNAT"
+Change component parameters. Clean all parameters for all variants
+Change component parameters (AddParameter): Name = "FarnellPN"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "ManufacturerPN"; Value = ""; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "10uF"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=C9-2
+Added Pin To Net: NetName=+5 Pin=C10-1
+Added Pin To Net: NetName=GND Pin=C10-2
+Change Net Name : Old Net Name=NetC1_2 New Net Name=NetC5_2
+Change Net Name : Old Net Name=NetC2_2 New Net Name=NetC6_2
+Change Net Name : Old Net Name=NetC10_2 New Net Name=NetC4_2
+Change Net Name : Old Net Name=NetD1_1 New Net Name=NetD5_1
+Change Net Name : Old Net Name=NetD2_1 New Net Name=NetD7_1
+Change Net Name : Old Net Name=NetD3_1 New Net Name=NetD6_1
+Change Net Name : Old Net Name=NetD4_BA New Net Name=NetD1_BA
+Change Net Name : Old Net Name=NetD4_GA New Net Name=NetD1_GA
+Change Net Name : Old Net Name=NetD4_RA New Net Name=NetD1_RA
+Change Net Name : Old Net Name=NetD5_BA New Net Name=NetD2_BA
+Change Net Name : Old Net Name=NetD5_GA New Net Name=NetD2_GA
+Change Net Name : Old Net Name=NetD5_RA New Net Name=NetD2_RA
+Change Net Name : Old Net Name=NetD6_BA New Net Name=NetD3_BA
+Change Net Name : Old Net Name=NetD6_GA New Net Name=NetD3_GA
+Change Net Name : Old Net Name=NetD6_RA New Net Name=NetD3_RA
+Change Net Name : Old Net Name=NetD7_BA New Net Name=NetD4_BA
+Change Net Name : Old Net Name=NetD7_GA New Net Name=NetD4_GA
+Change Net Name : Old Net Name=NetD7_RA New Net Name=NetD4_RA
+Change Net Name : Old Net Name=NetJ1_2 New Net Name=NetJ9_2
+Change Net Name : Old Net Name=NetJ4_3 New Net Name=NetJ5_3
+Change Net Name : Old Net Name=NetJ4_4 New Net Name=NetJ5_4
+Change Net Name : Old Net Name=NetJ9_2 New Net Name=NetJ6_2
+Change Net Name : Old Net Name=NetJ9_3 New Net Name=NetJ6_3
+Change Net Name : Old Net Name=NetJ10_1 New Net Name=NetJ7_1
+Change Net Name : Old Net Name=NetJ10_2 New Net Name=NetJ7_2
+Change Net Name : Old Net Name=NetJ10_3 New Net Name=NetJ7_3
+Change Net Name : Old Net Name=NetJ10_4 New Net Name=NetJ7_4
+Change Net Name : Old Net Name=NetJ10_5 New Net Name=NetJ7_5
+Change Net Name : Old Net Name=NetJ10_6 New Net Name=NetJ7_6
+Change Net Name : Old Net Name=NetJ11_1 New Net Name=NetJ8_1
+Change Net Name : Old Net Name=NetJ11_2 New Net Name=NetJ8_2
+Change Net Name : Old Net Name=NetJ11_3 New Net Name=NetJ8_3
+Change Net Name : Old Net Name=NetJ11_4 New Net Name=NetJ8_4
+Change Net Name : Old Net Name=NetJ11_5 New Net Name=NetJ8_5
+Change Net Name : Old Net Name=NetJ11_6 New Net Name=NetJ8_6
+Change Net Name : Old Net Name=NetR10_1 New Net Name=NetR7_1
+Added Pin To Net: NetName=NetC9_1 Pin=C9-1
+Added Pin To Net: NetName=NetC9_1 Pin=J11-3
+Added Pin To Net: NetName=NetC9_1 Pin=J11-3
+Added Pin To Net: NetName=NetC9_1 Pin=U3-1
+Added Net: Name=NetC9_1
+Added Member To Class: ClassName=Droon_REV3 Member=Component C5 100nF
+Added Member To Class: ClassName=Droon_REV3 Member=Component C6 100nF
+Added Member To Class: ClassName=Droon_REV3 Member=Component J5 RPi_PWR+UART
+Added Room: Name=Droon_REV3
+Added Room: Name=Power 3V3
+Added Room: Name=Power 5V

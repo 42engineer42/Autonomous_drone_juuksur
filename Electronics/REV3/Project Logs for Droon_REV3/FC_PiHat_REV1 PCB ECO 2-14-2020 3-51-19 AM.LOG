@@ -1,0 +1,24 @@
+Added Component: Designator=J4(Header 2x20 2.54mm)
+Add component. Clean all parameters for all variants
+Added Component: Designator=L3(Inductor 12.5x12.5x6mm)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "FarnellPN"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ManufacturerPN"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "VALUE"; Value = "10uH"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=+5 Pin=J4-1
+Added Pin To Net: NetName=+5 Pin=J4-1
+Added Pin To Net: NetName=GND Pin=J4-2
+Added Pin To Net: NetName=GND Pin=J4-2
+Added Pin To Net: NetName=NetD3_1 Pin=L3-1
+Added Pin To Net: NetName=+5 Pin=L3-2
+Added Pin To Net: NetName=NetJ4_3 Pin=J4-3
+Added Pin To Net: NetName=NetJ4_3 Pin=U1-17
+Added Net: Name=NetJ4_3
+Added Pin To Net: NetName=NetJ4_4 Pin=J4-4
+Added Pin To Net: NetName=NetJ4_4 Pin=U1-16
+Added Net: Name=NetJ4_4
+Added Member To Class: ClassName=Droon_REV3 Member=Component J4 RPi_PWR+UART
+Added Member To Class: ClassName=Power 5V Member=Component L3 Inductor
+Added Room: Name=Droon_REV3
+Added Room: Name=Power 3V3
+Added Room: Name=Power 5V

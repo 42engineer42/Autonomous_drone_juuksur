@@ -1,0 +1,41 @@
+Removed Member From Class: ClassName=Power 3V3 Member=C1
+Removed Member From Class: ClassName=Power 5V Member=C3
+Removed Member From Class: ClassName=Power 3V3 Member=C4
+Removed Member From Class: ClassName=Power 5V Member=C4
+Removed Member From Class: ClassName=Droon_REV3 Member=C9
+Removed Member From Class: ClassName=Droon_REV3 Member=C10
+Removed Member From Class: ClassName=Power 5V Member=D3
+Removed Member From Class: ClassName=Power 5V Member=D4
+Removed Member From Class: ClassName=Power 5V Member=J8
+Removed Member From Class: ClassName=Droon_REV3 Member=J9
+Removed Member From Class: ClassName=Power 3V3 Member=R13
+Removed Member From Class: ClassName=Power 5V Member=R14
+Removed Member From Class: ClassName=Droon_REV3 Member=R15
+Removed Member From Class: ClassName=Droon_REV3 Member=R17
+Added Component: Designator=J11(POWER SWITCH)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Supplier 1"; Value = "Farnell"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=NetJ9_2 Pin=J11-2
+Added Pin To Net: NetName=NetJ9_2 Pin=J11-2
+Added Pin To Net: NetName=NetC9_1 Pin=J11-3
+Added Pin To Net: NetName=NetC9_1 Pin=J11-3
+Added Pin To Net: NetName=GND Pin=J11-4
+Added Pin To Net: NetName=GND Pin=J11-4
+Added Member To Class: ClassName=Droon_REV3 Member=Component C1 100nF
+Added Member To Class: ClassName=Droon_REV3 Member=Component C2 100nF
+Added Member To Class: ClassName=Power 3V3 Member=Component C7 100nF
+Added Member To Class: ClassName=Power 3V3 Member=Component C8 100nF
+Added Member To Class: ClassName=Power 5V Member=Component C9 10uF
+Added Member To Class: ClassName=Power 5V Member=Component C10 10uF
+Added Member To Class: ClassName=Power 5V Member=Component D6 *
+Added Member To Class: ClassName=Power 5V Member=Component D7 LED Single
+Added Member To Class: ClassName=Droon_REV3 Member=Component J1 Receiver
+Added Member To Class: ClassName=Droon_REV3 Member=Component J8 Header 6p
+Added Member To Class: ClassName=Power 5V Member=Component J11 Power Switch
+Added Member To Class: ClassName=Droon_REV3 Member=Component R1 1k
+Added Member To Class: ClassName=Droon_REV3 Member=Component R3 1k
+Added Member To Class: ClassName=Power 3V3 Member=Component R16 1k
+Added Member To Class: ClassName=Power 5V Member=Component R17 1k
+Added Room: Name=Droon_REV3
+Added Room: Name=Power 3V3
+Added Room: Name=Power 5V

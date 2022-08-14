@@ -1,0 +1,4 @@
+Change Component Footprint: Designator=L2 Old Footprint=C0805 New Footprint=Inductor 12.5x12.5x6mm
+Added Room: Name=Droon_REV3
+Added Room: Name=Power 3V3
+Added Room: Name=Power 5V

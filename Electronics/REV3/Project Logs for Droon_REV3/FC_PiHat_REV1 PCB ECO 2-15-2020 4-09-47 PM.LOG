@@ -1,0 +1,11 @@
+Change Component Footprint: Designator=J6 Old Footprint=JST-SH 6pin 1mm pitch New Footprint=HEADER 6x1 2.54
+Change Component Footprint: Designator=J10 Old Footprint=JST-SH 6pin 1mm pitch New Footprint=HEADER 6x1 2.54
+Change Component Footprint: Designator=J11 Old Footprint=JST-SH 6pin 1mm pitch New Footprint=HEADER 6x1 2.54
+Change Component Comment : Designator=J9 Old Comment=Bluetooth New Comment=Header 6p
+Change Component Comment : Designator=S1 Old Comment=IMU New Comment=S?
+Change Component Comment : Designator=J6 Old Comment=Prog New Comment=Header 6p
+Change Component Comment : Designator=J11 Old Comment=Varu1 New Comment=Header 6p
+Change Component Comment : Designator=J10 Old Comment=Varu2 New Comment=Header 6p
+Added Room: Name=Droon_REV3
+Added Room: Name=Power 3V3
+Added Room: Name=Power 5V

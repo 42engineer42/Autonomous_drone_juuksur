@@ -1,0 +1,11 @@
+Added Component: Designator=J11(POWER SWITCH)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Supplier 1"; Value = "Farnell"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=NetJ9_2 Pin=J11-2
+Added Pin To Net: NetName=NetJ9_2 Pin=J11-2
+Added Pin To Net: NetName=NetC9_1 Pin=J11-3
+Added Pin To Net: NetName=NetC9_1 Pin=J11-3
+Added Pin To Net: NetName=GND Pin=J11-4
+Added Pin To Net: NetName=GND Pin=J11-4
+Added Member To Class: ClassName=Power 5V Member=Component J11 Power Switch
+Added Room: Name=Power 5V

@@ -1,0 +1,9 @@
+Removed Pin From Net: NetName=NetJ8_1 Pin=U1-4
+Removed Pin From Net: NetName=NetJ8_6 Pin=U1-25
+Removed Pin From Net: NetName=NetJ8_4 Pin=U1-52
+Added Pin To Net: NetName=NetJ8_6 Pin=U1-4
+Added Pin To Net: NetName=NetJ8_4 Pin=U1-25
+Added Pin To Net: NetName=NetJ8_1 Pin=U1-52
+Added Room: Name=Droon_REV3
+Added Room: Name=Power 3V3
+Added Room: Name=Power 5V
