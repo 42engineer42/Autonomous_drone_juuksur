@@ -1,0 +1,8 @@
+<launch>
+    <!--<include file="$(find launchers)/launch/camera.launch"/> -->
+    <include file="$(find launchers)/launch/raspicam_camera.launch"/> 
+    <include file="$(find launchers)/launch/stm32_io_node.launch"/>
+    <include file="$(find launchers)/launch/hover_node.launch"/>
+    <include file="$(find launchers)/launch/autonomous_flight.launch"/>
+    <!--<node pkg="rosbag" type="record" name="rosbag_record" args="record -a -o /home/pi/logs"/>-->
+</launch>

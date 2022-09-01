@@ -1,0 +1,1279 @@
+ARM GAS  /tmp/ccyANkOR.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"ibus.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.ibus_empty_cb,"ax",%progbits
+  18              		.align	1
+  19              		.global	ibus_empty_cb
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	ibus_empty_cb:
+  26              	.LFB3:
+  27              		.file 1 "Src/ibus.c"
+   1:Src/ibus.c    **** #include "ibus.h"
+   2:Src/ibus.c    **** 
+   3:Src/ibus.c    **** #include <stdio.h>
+   4:Src/ibus.c    **** #include <assert.h>
+   5:Src/ibus.c    **** 
+   6:Src/ibus.c    **** 
+   7:Src/ibus.c    **** static int ibus_test_cs(IbusState *ib);
+   8:Src/ibus.c    **** 
+   9:Src/ibus.c    **** void ibus_empty_cb(void *usrData, void *ptr) {
+  28              		.loc 1 9 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33              	.LVL0:
+  10:Src/ibus.c    **** }
+  34              		.loc 1 10 0
+  35 0000 7047     		bx	lr
+  36              		.cfi_endproc
+  37              	.LFE3:
+  39              		.section	.text.ibus_start_ch_cmd,"ax",%progbits
+  40              		.align	1
+  41              		.syntax unified
+  42              		.thumb
+  43              		.thumb_func
+  44              		.fpu fpv4-sp-d16
+  46              	ibus_start_ch_cmd:
+  47              	.LFB6:
+  11:Src/ibus.c    **** 
+  12:Src/ibus.c    **** void ibus_init(IbusState *ib) {
+  13:Src/ibus.c    ****     ib->state = 0;
+ARM GAS  /tmp/ccyANkOR.s 			page 2
+
+
+  14:Src/ibus.c    ****     ib->onEvent = (IbusCb) ibus_empty_cb;
+  15:Src/ibus.c    **** }
+  16:Src/ibus.c    **** 
+  17:Src/ibus.c    **** void ibus_set_event_callback(IbusState *ib, IbusCb cb, void *usrData) {
+  18:Src/ibus.c    ****     ib->onEvent = cb;
+  19:Src/ibus.c    ****     ib->usrData = usrData;
+  20:Src/ibus.c    **** }
+  21:Src/ibus.c    **** 
+  22:Src/ibus.c    **** // TODO: clean these 4 functions up
+  23:Src/ibus.c    **** 
+  24:Src/ibus.c    **** static void ibus_start_ch_cmd(IbusState *ib, uint8_t byte) {
+  48              		.loc 1 24 0
+  49              		.cfi_startproc
+  50              		@ args = 0, pretend = 0, frame = 0
+  51              		@ frame_needed = 0, uses_anonymous_args = 0
+  52              		@ link register save eliminated.
+  53              	.LVL1:
+  25:Src/ibus.c    ****     // valid channel data cmd header
+  26:Src/ibus.c    ****     if(byte == 0x40 && ib->curSize == 0x20) {
+  54              		.loc 1 26 0
+  55 0000 4029     		cmp	r1, #64
+  56 0002 03D0     		beq	.L5
+  57              	.L3:
+  27:Src/ibus.c    ****         ib->curCmd = IBUS_CMD_CH;
+  28:Src/ibus.c    ****         ib->curHeader[1] = byte;
+  29:Src/ibus.c    ****         ib->state++; 
+  30:Src/ibus.c    ****     } else { // invalid (size didn't match or command didn't make sense)
+  31:Src/ibus.c    ****         ib->curSize = byte;
+  58              		.loc 1 31 0
+  59 0004 0184     		strh	r1, [r0, #32]	@ movhi
+  32:Src/ibus.c    ****         ib->curHeader[0] = byte;
+  60              		.loc 1 32 0
+  61 0006 80F82410 		strb	r1, [r0, #36]
+  33:Src/ibus.c    ****     }
+  34:Src/ibus.c    **** }
+  62              		.loc 1 34 0
+  63 000a 7047     		bx	lr
+  64              	.L5:
+  26:Src/ibus.c    ****         ib->curCmd = IBUS_CMD_CH;
+  65              		.loc 1 26 0 discriminator 1
+  66 000c 038C     		ldrh	r3, [r0, #32]
+  67 000e 202B     		cmp	r3, #32
+  68 0010 F8D1     		bne	.L3
+  27:Src/ibus.c    ****         ib->curHeader[1] = byte;
+  69              		.loc 1 27 0
+  70 0012 4023     		movs	r3, #64
+  71 0014 4384     		strh	r3, [r0, #34]	@ movhi
+  28:Src/ibus.c    ****         ib->state++; 
+  72              		.loc 1 28 0
+  73 0016 80F82510 		strb	r1, [r0, #37]
+  29:Src/ibus.c    ****     } else { // invalid (size didn't match or command didn't make sense)
+  74              		.loc 1 29 0
+  75 001a 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+  76 001c 0133     		adds	r3, r3, #1
+  77 001e 0370     		strb	r3, [r0]
+  78 0020 7047     		bx	lr
+  79              		.cfi_endproc
+ARM GAS  /tmp/ccyANkOR.s 			page 3
+
+
+  80              	.LFE6:
+  82              		.section	.text.ibus_start_sensor_discovery_cmd,"ax",%progbits
+  83              		.align	1
+  84              		.syntax unified
+  85              		.thumb
+  86              		.thumb_func
+  87              		.fpu fpv4-sp-d16
+  89              	ibus_start_sensor_discovery_cmd:
+  90              	.LFB7:
+  35:Src/ibus.c    **** 
+  36:Src/ibus.c    **** static void ibus_start_sensor_discovery_cmd(IbusState *ib, uint8_t byte) {
+  91              		.loc 1 36 0
+  92              		.cfi_startproc
+  93              		@ args = 0, pretend = 0, frame = 0
+  94              		@ frame_needed = 0, uses_anonymous_args = 0
+  95              		@ link register save eliminated.
+  96              	.LVL2:
+  37:Src/ibus.c    ****     // valid sensor discovery header
+  38:Src/ibus.c    ****     if((byte&0xF0) == IBUS_CMD_SENSOR_DISCOVER && ib->curSize == 4) {
+  97              		.loc 1 38 0
+  98 0000 01F0F003 		and	r3, r1, #240
+  99 0004 802B     		cmp	r3, #128
+ 100 0006 03D0     		beq	.L9
+ 101              	.L7:
+  39:Src/ibus.c    ****         ib->curCmd = IBUS_CMD_SENSOR_DISCOVER;
+  40:Src/ibus.c    ****         ib->curHeader[1] = byte;
+  41:Src/ibus.c    ****         ib->state++;
+  42:Src/ibus.c    ****     } else {
+  43:Src/ibus.c    ****         ib->curSize = byte;
+ 102              		.loc 1 43 0
+ 103 0008 0184     		strh	r1, [r0, #32]	@ movhi
+  44:Src/ibus.c    ****         ib->curHeader[0] = byte;
+ 104              		.loc 1 44 0
+ 105 000a 80F82410 		strb	r1, [r0, #36]
+  45:Src/ibus.c    ****     }
+  46:Src/ibus.c    **** }
+ 106              		.loc 1 46 0
+ 107 000e 7047     		bx	lr
+ 108              	.L9:
+  38:Src/ibus.c    ****         ib->curCmd = IBUS_CMD_SENSOR_DISCOVER;
+ 109              		.loc 1 38 0 discriminator 1
+ 110 0010 038C     		ldrh	r3, [r0, #32]
+ 111 0012 042B     		cmp	r3, #4
+ 112 0014 F8D1     		bne	.L7
+  39:Src/ibus.c    ****         ib->curHeader[1] = byte;
+ 113              		.loc 1 39 0
+ 114 0016 8023     		movs	r3, #128
+ 115 0018 4384     		strh	r3, [r0, #34]	@ movhi
+  40:Src/ibus.c    ****         ib->state++;
+ 116              		.loc 1 40 0
+ 117 001a 80F82510 		strb	r1, [r0, #37]
+  41:Src/ibus.c    ****     } else {
+ 118              		.loc 1 41 0
+ 119 001e 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 120 0020 0133     		adds	r3, r3, #1
+ 121 0022 0370     		strb	r3, [r0]
+ 122 0024 7047     		bx	lr
+ARM GAS  /tmp/ccyANkOR.s 			page 4
+
+
+ 123              		.cfi_endproc
+ 124              	.LFE7:
+ 126              		.section	.text.ibus_start_sensor_type_cmd,"ax",%progbits
+ 127              		.align	1
+ 128              		.syntax unified
+ 129              		.thumb
+ 130              		.thumb_func
+ 131              		.fpu fpv4-sp-d16
+ 133              	ibus_start_sensor_type_cmd:
+ 134              	.LFB8:
+  47:Src/ibus.c    **** 
+  48:Src/ibus.c    **** static void ibus_start_sensor_type_cmd(IbusState *ib, uint8_t byte) {
+ 135              		.loc 1 48 0
+ 136              		.cfi_startproc
+ 137              		@ args = 0, pretend = 0, frame = 0
+ 138              		@ frame_needed = 0, uses_anonymous_args = 0
+ 139              		@ link register save eliminated.
+ 140              	.LVL3:
+  49:Src/ibus.c    ****     if((byte&0xF0) == IBUS_CMD_SENSOR_TYPE && ib->curSize == 6) {
+ 141              		.loc 1 49 0
+ 142 0000 01F0F003 		and	r3, r1, #240
+ 143 0004 902B     		cmp	r3, #144
+ 144 0006 03D0     		beq	.L13
+ 145              	.L11:
+  50:Src/ibus.c    ****         ib->curCmd = IBUS_CMD_SENSOR_TYPE;
+  51:Src/ibus.c    ****         ib->curHeader[1] = byte;
+  52:Src/ibus.c    ****         ib->state++;
+  53:Src/ibus.c    ****     } else {
+  54:Src/ibus.c    ****         ib->curSize = byte;
+ 146              		.loc 1 54 0
+ 147 0008 0184     		strh	r1, [r0, #32]	@ movhi
+  55:Src/ibus.c    ****         ib->curHeader[0] = byte;
+ 148              		.loc 1 55 0
+ 149 000a 80F82410 		strb	r1, [r0, #36]
+  56:Src/ibus.c    ****     }
+  57:Src/ibus.c    **** }
+ 150              		.loc 1 57 0
+ 151 000e 7047     		bx	lr
+ 152              	.L13:
+  49:Src/ibus.c    ****         ib->curCmd = IBUS_CMD_SENSOR_TYPE;
+ 153              		.loc 1 49 0 discriminator 1
+ 154 0010 038C     		ldrh	r3, [r0, #32]
+ 155 0012 062B     		cmp	r3, #6
+ 156 0014 F8D1     		bne	.L11
+  50:Src/ibus.c    ****         ib->curHeader[1] = byte;
+ 157              		.loc 1 50 0
+ 158 0016 9023     		movs	r3, #144
+ 159 0018 4384     		strh	r3, [r0, #34]	@ movhi
+  51:Src/ibus.c    ****         ib->state++;
+ 160              		.loc 1 51 0
+ 161 001a 80F82510 		strb	r1, [r0, #37]
+  52:Src/ibus.c    ****     } else {
+ 162              		.loc 1 52 0
+ 163 001e 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 164 0020 0133     		adds	r3, r3, #1
+ 165 0022 0370     		strb	r3, [r0]
+ 166 0024 7047     		bx	lr
+ARM GAS  /tmp/ccyANkOR.s 			page 5
+
+
+ 167              		.cfi_endproc
+ 168              	.LFE8:
+ 170              		.section	.text.ibus_start_sensor_measurement_cmd,"ax",%progbits
+ 171              		.align	1
+ 172              		.syntax unified
+ 173              		.thumb
+ 174              		.thumb_func
+ 175              		.fpu fpv4-sp-d16
+ 177              	ibus_start_sensor_measurement_cmd:
+ 178              	.LFB9:
+  58:Src/ibus.c    **** 
+  59:Src/ibus.c    **** static void ibus_start_sensor_measurement_cmd(IbusState *ib, uint8_t byte) {
+ 179              		.loc 1 59 0
+ 180              		.cfi_startproc
+ 181              		@ args = 0, pretend = 0, frame = 0
+ 182              		@ frame_needed = 0, uses_anonymous_args = 0
+ 183              		@ link register save eliminated.
+ 184              	.LVL4:
+  60:Src/ibus.c    ****     // TODO: sensor data might be larger than 2, depends on sensor type
+  61:Src/ibus.c    ****     if((byte&0xF0) == IBUS_CMD_SENSOR_MEASUREMENT && ib->curSize == 6) {
+ 185              		.loc 1 61 0
+ 186 0000 01F0F003 		and	r3, r1, #240
+ 187 0004 A02B     		cmp	r3, #160
+ 188 0006 03D0     		beq	.L17
+ 189              	.L15:
+  62:Src/ibus.c    ****         ib->curCmd = IBUS_CMD_SENSOR_MEASUREMENT;
+  63:Src/ibus.c    ****         ib->curHeader[1] = byte;
+  64:Src/ibus.c    ****         ib->state++;
+  65:Src/ibus.c    ****     } else {
+  66:Src/ibus.c    ****         ib->curSize = byte;
+ 190              		.loc 1 66 0
+ 191 0008 0184     		strh	r1, [r0, #32]	@ movhi
+  67:Src/ibus.c    ****         ib->curHeader[0] = byte;
+ 192              		.loc 1 67 0
+ 193 000a 80F82410 		strb	r1, [r0, #36]
+  68:Src/ibus.c    ****     }
+  69:Src/ibus.c    **** }
+ 194              		.loc 1 69 0
+ 195 000e 7047     		bx	lr
+ 196              	.L17:
+  61:Src/ibus.c    ****         ib->curCmd = IBUS_CMD_SENSOR_MEASUREMENT;
+ 197              		.loc 1 61 0 discriminator 1
+ 198 0010 038C     		ldrh	r3, [r0, #32]
+ 199 0012 062B     		cmp	r3, #6
+ 200 0014 F8D1     		bne	.L15
+  62:Src/ibus.c    ****         ib->curHeader[1] = byte;
+ 201              		.loc 1 62 0
+ 202 0016 A023     		movs	r3, #160
+ 203 0018 4384     		strh	r3, [r0, #34]	@ movhi
+  63:Src/ibus.c    ****         ib->state++;
+ 204              		.loc 1 63 0
+ 205 001a 80F82510 		strb	r1, [r0, #37]
+  64:Src/ibus.c    ****     } else {
+ 206              		.loc 1 64 0
+ 207 001e 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 208 0020 0133     		adds	r3, r3, #1
+ 209 0022 0370     		strb	r3, [r0]
+ARM GAS  /tmp/ccyANkOR.s 			page 6
+
+
+ 210 0024 7047     		bx	lr
+ 211              		.cfi_endproc
+ 212              	.LFE9:
+ 214              		.section	.text.ibus_test_cs,"ax",%progbits
+ 215              		.align	1
+ 216              		.syntax unified
+ 217              		.thumb
+ 218              		.thumb_func
+ 219              		.fpu fpv4-sp-d16
+ 221              	ibus_test_cs:
+ 222              	.LFB11:
+  70:Src/ibus.c    **** 
+  71:Src/ibus.c    **** void ibus_receive(IbusState *ib, uint8_t byte) {
+  72:Src/ibus.c    ****     uint8_t csValid = 0;
+  73:Src/ibus.c    ****     int i, j;
+  74:Src/ibus.c    ****     if(ib->state == 0) {
+  75:Src/ibus.c    ****         ib->curSize = byte;
+  76:Src/ibus.c    ****         ib->curHeader[0] = byte;
+  77:Src/ibus.c    ****         ib->state++;
+  78:Src/ibus.c    ****     } else if(ib->state == 1) {
+  79:Src/ibus.c    ****         switch(byte & 0xF0) {
+  80:Src/ibus.c    ****             case 0x40:
+  81:Src/ibus.c    ****                 ibus_start_ch_cmd(ib, byte);
+  82:Src/ibus.c    ****                 break;
+  83:Src/ibus.c    ****             case 0x80:
+  84:Src/ibus.c    ****                 ibus_start_sensor_discovery_cmd(ib, byte);
+  85:Src/ibus.c    ****                 break;
+  86:Src/ibus.c    ****             case 0x90:
+  87:Src/ibus.c    ****                 ibus_start_sensor_type_cmd(ib, byte);
+  88:Src/ibus.c    ****                 break;
+  89:Src/ibus.c    ****             case 0xA0:
+  90:Src/ibus.c    ****                 ibus_start_sensor_measurement_cmd(ib, byte);
+  91:Src/ibus.c    ****                 break;
+  92:Src/ibus.c    ****             default:
+  93:Src/ibus.c    ****                 ib->curHeader[0] = byte;
+  94:Src/ibus.c    ****                 ib->curSize = byte;
+  95:Src/ibus.c    ****                 break;
+  96:Src/ibus.c    ****         }
+  97:Src/ibus.c    ****     } else if(ib->state >= 2 && ib->state < ib->curSize - 2) {
+  98:Src/ibus.c    ****         ib->payload[ib->state++ - 2] = byte;
+  99:Src/ibus.c    ****     } else if(ib->state == ib->curSize - 2) {
+ 100:Src/ibus.c    ****         ib->checksum = (uint16_t)byte;
+ 101:Src/ibus.c    ****         ib->state++;
+ 102:Src/ibus.c    ****     } else if(ib->state == ib->curSize - 1) {
+ 103:Src/ibus.c    ****         ib->checksum |= ((uint16_t)byte)<<8;
+ 104:Src/ibus.c    ****         csValid = ibus_test_cs(ib);
+ 105:Src/ibus.c    ****         IbusEvent e;
+ 106:Src/ibus.c    ****         if(csValid) {
+ 107:Src/ibus.c    ****             e.type = ib->curCmd;
+ 108:Src/ibus.c    ****             switch(ib->curCmd) {
+ 109:Src/ibus.c    ****                 case IBUS_CMD_CH:
+ 110:Src/ibus.c    ****                     for(i = 0, j = 0; i < 14; i++, j+=2) {
+ 111:Src/ibus.c    ****                         e.e.ch.channels[i] = (uint16_t)ib->payload[j];
+ 112:Src/ibus.c    ****                         e.e.ch.channels[i] |= ((uint16_t)ib->payload[j+1])<<8;
+ 113:Src/ibus.c    ****                     }
+ 114:Src/ibus.c    ****                     ib->onEvent(ib->usrData, &e);
+ 115:Src/ibus.c    ****                     break;
+ARM GAS  /tmp/ccyANkOR.s 			page 7
+
+
+ 116:Src/ibus.c    ****                 case IBUS_CMD_SENSOR_DISCOVER:
+ 117:Src/ibus.c    ****                     e.e.sdisc.sensorId = ib->curHeader[1] & 0x0F;
+ 118:Src/ibus.c    ****                     ib->onEvent(ib->usrData, &e);
+ 119:Src/ibus.c    ****                     break;
+ 120:Src/ibus.c    ****                 case IBUS_CMD_SENSOR_TYPE:
+ 121:Src/ibus.c    ****                     e.e.stype.sensorId = ib->curHeader[1] & 0x0F;
+ 122:Src/ibus.c    ****                     e.e.stype.sensorType = ib->payload[0];
+ 123:Src/ibus.c    ****                     ib->onEvent(ib->usrData, &e);
+ 124:Src/ibus.c    ****                     break;
+ 125:Src/ibus.c    ****                 case IBUS_CMD_SENSOR_MEASUREMENT:
+ 126:Src/ibus.c    ****                     e.e.smeas.sensorId = ib->curHeader[1] & 0x0F;
+ 127:Src/ibus.c    ****                     e.e.smeas.umeas = (uint16_t)ib->payload[0] | ((uint16_t)ib->payload[1]<<8);
+ 128:Src/ibus.c    ****                     ib->onEvent(ib->usrData, &e);
+ 129:Src/ibus.c    ****                     break;
+ 130:Src/ibus.c    ****             }
+ 131:Src/ibus.c    ****             ib->state = 0;
+ 132:Src/ibus.c    ****         } else {
+ 133:Src/ibus.c    ****             printf("ibus receive checksum mismatch\r\n");
+ 134:Src/ibus.c    ****             ib->state = 0;
+ 135:Src/ibus.c    ****         }
+ 136:Src/ibus.c    ****     }
+ 137:Src/ibus.c    **** }
+ 138:Src/ibus.c    **** 
+ 139:Src/ibus.c    **** static int ibus_test_cs(IbusState *ib) {
+ 223              		.loc 1 139 0
+ 224              		.cfi_startproc
+ 225              		@ args = 0, pretend = 0, frame = 0
+ 226              		@ frame_needed = 0, uses_anonymous_args = 0
+ 227              		@ link register save eliminated.
+ 228              	.LVL5:
+ 140:Src/ibus.c    ****     uint16_t gchecksum = 0xFFFF - ib->curHeader[0] - ib->curHeader[1];
+ 229              		.loc 1 140 0
+ 230 0000 90F82430 		ldrb	r3, [r0, #36]	@ zero_extendqisi2
+ 231 0004 83F47F43 		eor	r3, r3, #65280
+ 232 0008 83F0FF03 		eor	r3, r3, #255
+ 233 000c 90F82520 		ldrb	r2, [r0, #37]	@ zero_extendqisi2
+ 234 0010 9B1A     		subs	r3, r3, r2
+ 235 0012 9BB2     		uxth	r3, r3
+ 236              	.LVL6:
+ 141:Src/ibus.c    ****     int i;
+ 142:Src/ibus.c    ****     for(i = 0; i < ib->curSize - 4; i++) {
+ 237              		.loc 1 142 0
+ 238 0014 0021     		movs	r1, #0
+ 239 0016 04E0     		b	.L19
+ 240              	.LVL7:
+ 241              	.L20:
+ 143:Src/ibus.c    ****         gchecksum -= (uint16_t)ib->payload[i];
+ 242              		.loc 1 143 0 discriminator 3
+ 243 0018 4218     		adds	r2, r0, r1
+ 244 001a 5278     		ldrb	r2, [r2, #1]	@ zero_extendqisi2
+ 245 001c 9B1A     		subs	r3, r3, r2
+ 246              	.LVL8:
+ 247 001e 9BB2     		uxth	r3, r3
+ 248              	.LVL9:
+ 142:Src/ibus.c    ****         gchecksum -= (uint16_t)ib->payload[i];
+ 249              		.loc 1 142 0 discriminator 3
+ 250 0020 0131     		adds	r1, r1, #1
+ARM GAS  /tmp/ccyANkOR.s 			page 8
+
+
+ 251              	.LVL10:
+ 252              	.L19:
+ 142:Src/ibus.c    ****         gchecksum -= (uint16_t)ib->payload[i];
+ 253              		.loc 1 142 0 is_stmt 0 discriminator 1
+ 254 0022 028C     		ldrh	r2, [r0, #32]
+ 255 0024 043A     		subs	r2, r2, #4
+ 256 0026 8A42     		cmp	r2, r1
+ 257 0028 F6DC     		bgt	.L20
+ 144:Src/ibus.c    ****     }
+ 145:Src/ibus.c    ****     return gchecksum == ib->checksum;
+ 258              		.loc 1 145 0 is_stmt 1
+ 259 002a C08B     		ldrh	r0, [r0, #30]
+ 260              	.LVL11:
+ 146:Src/ibus.c    **** }
+ 261              		.loc 1 146 0
+ 262 002c 9842     		cmp	r0, r3
+ 263 002e 14BF     		ite	ne
+ 264 0030 0020     		movne	r0, #0
+ 265 0032 0120     		moveq	r0, #1
+ 266 0034 7047     		bx	lr
+ 267              		.cfi_endproc
+ 268              	.LFE11:
+ 270              		.section	.text.ibus_calc_cs,"ax",%progbits
+ 271              		.align	1
+ 272              		.syntax unified
+ 273              		.thumb
+ 274              		.thumb_func
+ 275              		.fpu fpv4-sp-d16
+ 277              	ibus_calc_cs:
+ 278              	.LFB12:
+ 147:Src/ibus.c    **** 
+ 148:Src/ibus.c    **** static uint16_t ibus_calc_cs(uint8_t *buf, uint8_t count) {
+ 279              		.loc 1 148 0
+ 280              		.cfi_startproc
+ 281              		@ args = 0, pretend = 0, frame = 0
+ 282              		@ frame_needed = 0, uses_anonymous_args = 0
+ 283              		@ link register save eliminated.
+ 284              	.LVL12:
+ 149:Src/ibus.c    ****     uint16_t ret = 0xFFFF;
+ 150:Src/ibus.c    ****     int i;
+ 151:Src/ibus.c    ****     for(i = 0; i < count; i++) {
+ 285              		.loc 1 151 0
+ 286 0000 0022     		movs	r2, #0
+ 149:Src/ibus.c    ****     uint16_t ret = 0xFFFF;
+ 287              		.loc 1 149 0
+ 288 0002 4FF6FF73 		movw	r3, #65535
+ 289              	.LVL13:
+ 290              		.loc 1 151 0
+ 291 0006 9142     		cmp	r1, r2
+ 292 0008 0ADD     		ble	.L28
+ 148:Src/ibus.c    ****     uint16_t ret = 0xFFFF;
+ 293              		.loc 1 148 0
+ 294 000a 10B4     		push	{r4}
+ 295              	.LCFI0:
+ 296              		.cfi_def_cfa_offset 4
+ 297              		.cfi_offset 4, -4
+ 298              	.L23:
+ARM GAS  /tmp/ccyANkOR.s 			page 9
+
+
+ 152:Src/ibus.c    ****         ret -= buf[i];
+ 299              		.loc 1 152 0 discriminator 3
+ 300 000c 845C     		ldrb	r4, [r0, r2]	@ zero_extendqisi2
+ 301 000e 1B1B     		subs	r3, r3, r4
+ 302              	.LVL14:
+ 303 0010 9BB2     		uxth	r3, r3
+ 304              	.LVL15:
+ 151:Src/ibus.c    ****         ret -= buf[i];
+ 305              		.loc 1 151 0 discriminator 3
+ 306 0012 0132     		adds	r2, r2, #1
+ 307              	.LVL16:
+ 308 0014 9142     		cmp	r1, r2
+ 309 0016 F9DC     		bgt	.L23
+ 153:Src/ibus.c    ****     }
+ 154:Src/ibus.c    ****     return ret;
+ 155:Src/ibus.c    **** }
+ 310              		.loc 1 155 0
+ 311 0018 1846     		mov	r0, r3
+ 312              	.LVL17:
+ 313 001a 5DF8044B 		ldr	r4, [sp], #4
+ 314              	.LCFI1:
+ 315              		.cfi_restore 4
+ 316              		.cfi_def_cfa_offset 0
+ 317 001e 7047     		bx	lr
+ 318              	.LVL18:
+ 319              	.L28:
+ 320 0020 1846     		mov	r0, r3
+ 321              	.LVL19:
+ 322 0022 7047     		bx	lr
+ 323              		.cfi_endproc
+ 324              	.LFE12:
+ 326              		.section	.text.ibus_init,"ax",%progbits
+ 327              		.align	1
+ 328              		.global	ibus_init
+ 329              		.syntax unified
+ 330              		.thumb
+ 331              		.thumb_func
+ 332              		.fpu fpv4-sp-d16
+ 334              	ibus_init:
+ 335              	.LFB4:
+  12:Src/ibus.c    ****     ib->state = 0;
+ 336              		.loc 1 12 0
+ 337              		.cfi_startproc
+ 338              		@ args = 0, pretend = 0, frame = 0
+ 339              		@ frame_needed = 0, uses_anonymous_args = 0
+ 340              		@ link register save eliminated.
+ 341              	.LVL20:
+  13:Src/ibus.c    ****     ib->onEvent = (IbusCb) ibus_empty_cb;
+ 342              		.loc 1 13 0
+ 343 0000 0023     		movs	r3, #0
+ 344 0002 0370     		strb	r3, [r0]
+  14:Src/ibus.c    **** }
+ 345              		.loc 1 14 0
+ 346 0004 014B     		ldr	r3, .L30
+ 347 0006 C362     		str	r3, [r0, #44]
+  15:Src/ibus.c    **** 
+ 348              		.loc 1 15 0
+ARM GAS  /tmp/ccyANkOR.s 			page 10
+
+
+ 349 0008 7047     		bx	lr
+ 350              	.L31:
+ 351 000a 00BF     		.align	2
+ 352              	.L30:
+ 353 000c 00000000 		.word	ibus_empty_cb
+ 354              		.cfi_endproc
+ 355              	.LFE4:
+ 357              		.section	.text.ibus_set_event_callback,"ax",%progbits
+ 358              		.align	1
+ 359              		.global	ibus_set_event_callback
+ 360              		.syntax unified
+ 361              		.thumb
+ 362              		.thumb_func
+ 363              		.fpu fpv4-sp-d16
+ 365              	ibus_set_event_callback:
+ 366              	.LFB5:
+  17:Src/ibus.c    ****     ib->onEvent = cb;
+ 367              		.loc 1 17 0
+ 368              		.cfi_startproc
+ 369              		@ args = 0, pretend = 0, frame = 0
+ 370              		@ frame_needed = 0, uses_anonymous_args = 0
+ 371              		@ link register save eliminated.
+ 372              	.LVL21:
+  18:Src/ibus.c    ****     ib->usrData = usrData;
+ 373              		.loc 1 18 0
+ 374 0000 C162     		str	r1, [r0, #44]
+  19:Src/ibus.c    **** }
+ 375              		.loc 1 19 0
+ 376 0002 8262     		str	r2, [r0, #40]
+  20:Src/ibus.c    **** 
+ 377              		.loc 1 20 0
+ 378 0004 7047     		bx	lr
+ 379              		.cfi_endproc
+ 380              	.LFE5:
+ 382              		.section	.text.ibus_receive,"ax",%progbits
+ 383              		.align	1
+ 384              		.global	ibus_receive
+ 385              		.syntax unified
+ 386              		.thumb
+ 387              		.thumb_func
+ 388              		.fpu fpv4-sp-d16
+ 390              	ibus_receive:
+ 391              	.LFB10:
+  71:Src/ibus.c    ****     uint8_t csValid = 0;
+ 392              		.loc 1 71 0
+ 393              		.cfi_startproc
+ 394              		@ args = 0, pretend = 0, frame = 32
+ 395              		@ frame_needed = 0, uses_anonymous_args = 0
+ 396              	.LVL22:
+  74:Src/ibus.c    ****         ib->curSize = byte;
+ 397              		.loc 1 74 0
+ 398 0000 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 399 0002 9BB1     		cbz	r3, .L58
+  71:Src/ibus.c    ****     uint8_t csValid = 0;
+ 400              		.loc 1 71 0
+ 401 0004 30B5     		push	{r4, r5, lr}
+ 402              	.LCFI2:
+ARM GAS  /tmp/ccyANkOR.s 			page 11
+
+
+ 403              		.cfi_def_cfa_offset 12
+ 404              		.cfi_offset 4, -12
+ 405              		.cfi_offset 5, -8
+ 406              		.cfi_offset 14, -4
+ 407 0006 89B0     		sub	sp, sp, #36
+ 408              	.LCFI3:
+ 409              		.cfi_def_cfa_offset 48
+ 410 0008 0446     		mov	r4, r0
+  78:Src/ibus.c    ****         switch(byte & 0xF0) {
+ 411              		.loc 1 78 0
+ 412 000a 012B     		cmp	r3, #1
+ 413 000c 14D0     		beq	.L59
+  97:Src/ibus.c    ****         ib->payload[ib->state++ - 2] = byte;
+ 414              		.loc 1 97 0
+ 415 000e 012B     		cmp	r3, #1
+ 416 0010 03D9     		bls	.L43
+  97:Src/ibus.c    ****         ib->payload[ib->state++ - 2] = byte;
+ 417              		.loc 1 97 0 is_stmt 0 discriminator 1
+ 418 0012 028C     		ldrh	r2, [r0, #32]
+ 419 0014 023A     		subs	r2, r2, #2
+ 420 0016 9342     		cmp	r3, r2
+ 421 0018 29DB     		blt	.L60
+ 422              	.L43:
+  99:Src/ibus.c    ****         ib->checksum = (uint16_t)byte;
+ 423              		.loc 1 99 0 is_stmt 1
+ 424 001a 228C     		ldrh	r2, [r4, #32]
+ 425 001c 901E     		subs	r0, r2, #2
+ 426              	.LVL23:
+ 427 001e 8342     		cmp	r3, r0
+ 428 0020 2BD0     		beq	.L61
+ 102:Src/ibus.c    ****         ib->checksum |= ((uint16_t)byte)<<8;
+ 429              		.loc 1 102 0
+ 430 0022 013A     		subs	r2, r2, #1
+ 431 0024 9342     		cmp	r3, r2
+ 432 0026 2CD0     		beq	.L62
+ 433              	.LVL24:
+ 434              	.L33:
+ 137:Src/ibus.c    **** 
+ 435              		.loc 1 137 0
+ 436 0028 09B0     		add	sp, sp, #36
+ 437              	.LCFI4:
+ 438              		.cfi_def_cfa_offset 12
+ 439              		@ sp needed
+ 440 002a 30BD     		pop	{r4, r5, pc}
+ 441              	.LVL25:
+ 442              	.L58:
+ 443              	.LCFI5:
+ 444              		.cfi_def_cfa_offset 0
+ 445              		.cfi_restore 4
+ 446              		.cfi_restore 5
+ 447              		.cfi_restore 14
+  75:Src/ibus.c    ****         ib->curHeader[0] = byte;
+ 448              		.loc 1 75 0
+ 449 002c 0184     		strh	r1, [r0, #32]	@ movhi
+  76:Src/ibus.c    ****         ib->state++;
+ 450              		.loc 1 76 0
+ 451 002e 80F82410 		strb	r1, [r0, #36]
+ARM GAS  /tmp/ccyANkOR.s 			page 12
+
+
+  77:Src/ibus.c    ****     } else if(ib->state == 1) {
+ 452              		.loc 1 77 0
+ 453 0032 0133     		adds	r3, r3, #1
+ 454 0034 0370     		strb	r3, [r0]
+ 455 0036 7047     		bx	lr
+ 456              	.L59:
+ 457              	.LCFI6:
+ 458              		.cfi_def_cfa_offset 48
+ 459              		.cfi_offset 4, -12
+ 460              		.cfi_offset 5, -8
+ 461              		.cfi_offset 14, -4
+  79:Src/ibus.c    ****             case 0x40:
+ 462              		.loc 1 79 0
+ 463 0038 01F0F003 		and	r3, r1, #240
+ 464 003c 802B     		cmp	r3, #128
+ 465 003e 0CD0     		beq	.L38
+ 466 0040 06D9     		bls	.L63
+ 467 0042 902B     		cmp	r3, #144
+ 468 0044 0CD0     		beq	.L41
+ 469 0046 A02B     		cmp	r3, #160
+ 470 0048 0DD1     		bne	.L37
+  90:Src/ibus.c    ****                 break;
+ 471              		.loc 1 90 0
+ 472 004a FFF7FEFF 		bl	ibus_start_sensor_measurement_cmd
+ 473              	.LVL26:
+  91:Src/ibus.c    ****             default:
+ 474              		.loc 1 91 0
+ 475 004e EBE7     		b	.L33
+ 476              	.LVL27:
+ 477              	.L63:
+  79:Src/ibus.c    ****             case 0x40:
+ 478              		.loc 1 79 0
+ 479 0050 402B     		cmp	r3, #64
+ 480 0052 08D1     		bne	.L37
+  81:Src/ibus.c    ****                 break;
+ 481              		.loc 1 81 0
+ 482 0054 FFF7FEFF 		bl	ibus_start_ch_cmd
+ 483              	.LVL28:
+  82:Src/ibus.c    ****             case 0x80:
+ 484              		.loc 1 82 0
+ 485 0058 E6E7     		b	.L33
+ 486              	.LVL29:
+ 487              	.L38:
+  84:Src/ibus.c    ****                 break;
+ 488              		.loc 1 84 0
+ 489 005a FFF7FEFF 		bl	ibus_start_sensor_discovery_cmd
+ 490              	.LVL30:
+  85:Src/ibus.c    ****             case 0x90:
+ 491              		.loc 1 85 0
+ 492 005e E3E7     		b	.L33
+ 493              	.LVL31:
+ 494              	.L41:
+  87:Src/ibus.c    ****                 break;
+ 495              		.loc 1 87 0
+ 496 0060 FFF7FEFF 		bl	ibus_start_sensor_type_cmd
+ 497              	.LVL32:
+  88:Src/ibus.c    ****             case 0xA0:
+ARM GAS  /tmp/ccyANkOR.s 			page 13
+
+
+ 498              		.loc 1 88 0
+ 499 0064 E0E7     		b	.L33
+ 500              	.LVL33:
+ 501              	.L37:
+  93:Src/ibus.c    ****                 ib->curSize = byte;
+ 502              		.loc 1 93 0
+ 503 0066 84F82410 		strb	r1, [r4, #36]
+  94:Src/ibus.c    ****                 break;
+ 504              		.loc 1 94 0
+ 505 006a 2184     		strh	r1, [r4, #32]	@ movhi
+  95:Src/ibus.c    ****         }
+ 506              		.loc 1 95 0
+ 507 006c DCE7     		b	.L33
+ 508              	.L60:
+  98:Src/ibus.c    ****     } else if(ib->state == ib->curSize - 2) {
+ 509              		.loc 1 98 0
+ 510 006e 5A1C     		adds	r2, r3, #1
+ 511 0070 0270     		strb	r2, [r0]
+ 512 0072 023B     		subs	r3, r3, #2
+ 513 0074 1844     		add	r0, r0, r3
+ 514              	.LVL34:
+ 515 0076 4170     		strb	r1, [r0, #1]
+ 516 0078 D6E7     		b	.L33
+ 517              	.L61:
+ 100:Src/ibus.c    ****         ib->state++;
+ 518              		.loc 1 100 0
+ 519 007a E183     		strh	r1, [r4, #30]	@ movhi
+ 101:Src/ibus.c    ****     } else if(ib->state == ib->curSize - 1) {
+ 520              		.loc 1 101 0
+ 521 007c 0133     		adds	r3, r3, #1
+ 522 007e 2370     		strb	r3, [r4]
+ 523 0080 D2E7     		b	.L33
+ 524              	.L62:
+ 525              	.LBB2:
+ 103:Src/ibus.c    ****         csValid = ibus_test_cs(ib);
+ 526              		.loc 1 103 0
+ 527 0082 E38B     		ldrh	r3, [r4, #30]
+ 528 0084 43EA0121 		orr	r1, r3, r1, lsl #8
+ 529              	.LVL35:
+ 530 0088 E183     		strh	r1, [r4, #30]	@ movhi
+ 104:Src/ibus.c    ****         IbusEvent e;
+ 531              		.loc 1 104 0
+ 532 008a 2046     		mov	r0, r4
+ 533 008c FFF7FEFF 		bl	ibus_test_cs
+ 534              	.LVL36:
+ 535 0090 C0B2     		uxtb	r0, r0
+ 536              	.LVL37:
+ 106:Src/ibus.c    ****             e.type = ib->curCmd;
+ 537              		.loc 1 106 0
+ 538 0092 0028     		cmp	r0, #0
+ 539 0094 51D0     		beq	.L45
+ 107:Src/ibus.c    ****             switch(ib->curCmd) {
+ 540              		.loc 1 107 0
+ 541 0096 638C     		ldrh	r3, [r4, #34]
+ 542 0098 8DF81C30 		strb	r3, [sp, #28]
+ 108:Src/ibus.c    ****                 case IBUS_CMD_CH:
+ 543              		.loc 1 108 0
+ARM GAS  /tmp/ccyANkOR.s 			page 14
+
+
+ 544 009c 802B     		cmp	r3, #128
+ 545 009e 33D0     		beq	.L47
+ 546 00a0 14D9     		bls	.L64
+ 547 00a2 902B     		cmp	r3, #144
+ 548 00a4 3BD0     		beq	.L50
+ 549 00a6 A02B     		cmp	r3, #160
+ 550 00a8 2BD1     		bne	.L46
+ 126:Src/ibus.c    ****                     e.e.smeas.umeas = (uint16_t)ib->payload[0] | ((uint16_t)ib->payload[1]<<8);
+ 551              		.loc 1 126 0
+ 552 00aa 94F82530 		ldrb	r3, [r4, #37]	@ zero_extendqisi2
+ 553 00ae 03F00F03 		and	r3, r3, #15
+ 554 00b2 8DF80030 		strb	r3, [sp]
+ 127:Src/ibus.c    ****                     ib->onEvent(ib->usrData, &e);
+ 555              		.loc 1 127 0
+ 556 00b6 6378     		ldrb	r3, [r4, #1]	@ zero_extendqisi2
+ 557 00b8 A278     		ldrb	r2, [r4, #2]	@ zero_extendqisi2
+ 558 00ba 43EA0223 		orr	r3, r3, r2, lsl #8
+ 559 00be ADF80230 		strh	r3, [sp, #2]	@ movhi
+ 128:Src/ibus.c    ****                     break;
+ 560              		.loc 1 128 0
+ 561 00c2 E36A     		ldr	r3, [r4, #44]
+ 562 00c4 6946     		mov	r1, sp
+ 563 00c6 A06A     		ldr	r0, [r4, #40]
+ 564              	.LVL38:
+ 565 00c8 9847     		blx	r3
+ 566              	.LVL39:
+ 129:Src/ibus.c    ****             }
+ 567              		.loc 1 129 0
+ 568 00ca 1AE0     		b	.L46
+ 569              	.LVL40:
+ 570              	.L64:
+ 108:Src/ibus.c    ****                 case IBUS_CMD_CH:
+ 571              		.loc 1 108 0
+ 572 00cc 402B     		cmp	r3, #64
+ 573 00ce 18D1     		bne	.L46
+ 110:Src/ibus.c    ****                         e.e.ch.channels[i] = (uint16_t)ib->payload[j];
+ 574              		.loc 1 110 0
+ 575 00d0 0021     		movs	r1, #0
+ 576 00d2 0A46     		mov	r2, r1
+ 577 00d4 0FE0     		b	.L49
+ 578              	.LVL41:
+ 579              	.L52:
+ 111:Src/ibus.c    ****                         e.e.ch.channels[i] |= ((uint16_t)ib->payload[j+1])<<8;
+ 580              		.loc 1 111 0 discriminator 3
+ 581 00d6 6318     		adds	r3, r4, r1
+ 582 00d8 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 583 00da 08A8     		add	r0, sp, #32
+ 584 00dc 00EB4205 		add	r5, r0, r2, lsl #1
+ 585 00e0 25F8203C 		strh	r3, [r5, #-32]	@ movhi
+ 112:Src/ibus.c    ****                     }
+ 586              		.loc 1 112 0 discriminator 3
+ 587 00e4 481C     		adds	r0, r1, #1
+ 588 00e6 2044     		add	r0, r0, r4
+ 589 00e8 4078     		ldrb	r0, [r0, #1]	@ zero_extendqisi2
+ 590 00ea 43EA0023 		orr	r3, r3, r0, lsl #8
+ 591 00ee 25F8203C 		strh	r3, [r5, #-32]	@ movhi
+ 110:Src/ibus.c    ****                         e.e.ch.channels[i] = (uint16_t)ib->payload[j];
+ARM GAS  /tmp/ccyANkOR.s 			page 15
+
+
+ 592              		.loc 1 110 0 discriminator 3
+ 593 00f2 0132     		adds	r2, r2, #1
+ 594              	.LVL42:
+ 595 00f4 0231     		adds	r1, r1, #2
+ 596              	.LVL43:
+ 597              	.L49:
+ 110:Src/ibus.c    ****                         e.e.ch.channels[i] = (uint16_t)ib->payload[j];
+ 598              		.loc 1 110 0 is_stmt 0 discriminator 1
+ 599 00f6 0D2A     		cmp	r2, #13
+ 600 00f8 EDDD     		ble	.L52
+ 114:Src/ibus.c    ****                     break;
+ 601              		.loc 1 114 0 is_stmt 1
+ 602 00fa E36A     		ldr	r3, [r4, #44]
+ 603 00fc 6946     		mov	r1, sp
+ 604              	.LVL44:
+ 605 00fe A06A     		ldr	r0, [r4, #40]
+ 606 0100 9847     		blx	r3
+ 607              	.LVL45:
+ 608              	.L46:
+ 131:Src/ibus.c    ****         } else {
+ 609              		.loc 1 131 0
+ 610 0102 0023     		movs	r3, #0
+ 611 0104 2370     		strb	r3, [r4]
+ 612 0106 8FE7     		b	.L33
+ 613              	.LVL46:
+ 614              	.L47:
+ 117:Src/ibus.c    ****                     ib->onEvent(ib->usrData, &e);
+ 615              		.loc 1 117 0
+ 616 0108 94F82530 		ldrb	r3, [r4, #37]	@ zero_extendqisi2
+ 617 010c 03F00F03 		and	r3, r3, #15
+ 618 0110 08A9     		add	r1, sp, #32
+ 619 0112 01F8203D 		strb	r3, [r1, #-32]!
+ 118:Src/ibus.c    ****                     break;
+ 620              		.loc 1 118 0
+ 621 0116 E36A     		ldr	r3, [r4, #44]
+ 622 0118 A06A     		ldr	r0, [r4, #40]
+ 623              	.LVL47:
+ 624 011a 9847     		blx	r3
+ 625              	.LVL48:
+ 119:Src/ibus.c    ****                 case IBUS_CMD_SENSOR_TYPE:
+ 626              		.loc 1 119 0
+ 627 011c F1E7     		b	.L46
+ 628              	.LVL49:
+ 629              	.L50:
+ 121:Src/ibus.c    ****                     e.e.stype.sensorType = ib->payload[0];
+ 630              		.loc 1 121 0
+ 631 011e 94F82530 		ldrb	r3, [r4, #37]	@ zero_extendqisi2
+ 632 0122 03F00F03 		and	r3, r3, #15
+ 633 0126 8DF80030 		strb	r3, [sp]
+ 122:Src/ibus.c    ****                     ib->onEvent(ib->usrData, &e);
+ 634              		.loc 1 122 0
+ 635 012a 6378     		ldrb	r3, [r4, #1]	@ zero_extendqisi2
+ 636 012c 8DF80130 		strb	r3, [sp, #1]
+ 123:Src/ibus.c    ****                     break;
+ 637              		.loc 1 123 0
+ 638 0130 E36A     		ldr	r3, [r4, #44]
+ 639 0132 6946     		mov	r1, sp
+ARM GAS  /tmp/ccyANkOR.s 			page 16
+
+
+ 640 0134 A06A     		ldr	r0, [r4, #40]
+ 641              	.LVL50:
+ 642 0136 9847     		blx	r3
+ 643              	.LVL51:
+ 124:Src/ibus.c    ****                 case IBUS_CMD_SENSOR_MEASUREMENT:
+ 644              		.loc 1 124 0
+ 645 0138 E3E7     		b	.L46
+ 646              	.LVL52:
+ 647              	.L45:
+ 133:Src/ibus.c    ****             ib->state = 0;
+ 648              		.loc 1 133 0
+ 649 013a 0348     		ldr	r0, .L65
+ 650              	.LVL53:
+ 651 013c FFF7FEFF 		bl	puts
+ 652              	.LVL54:
+ 134:Src/ibus.c    ****         }
+ 653              		.loc 1 134 0
+ 654 0140 0023     		movs	r3, #0
+ 655 0142 2370     		strb	r3, [r4]
+ 656              	.LBE2:
+ 137:Src/ibus.c    **** 
+ 657              		.loc 1 137 0
+ 658 0144 70E7     		b	.L33
+ 659              	.L66:
+ 660 0146 00BF     		.align	2
+ 661              	.L65:
+ 662 0148 00000000 		.word	.LC0
+ 663              		.cfi_endproc
+ 664              	.LFE10:
+ 666              		.section	.text.ibus_make_packet,"ax",%progbits
+ 667              		.align	1
+ 668              		.global	ibus_make_packet
+ 669              		.syntax unified
+ 670              		.thumb
+ 671              		.thumb_func
+ 672              		.fpu fpv4-sp-d16
+ 674              	ibus_make_packet:
+ 675              	.LFB13:
+ 156:Src/ibus.c    **** 
+ 157:Src/ibus.c    **** int ibus_make_packet(IbusChannels *ib, uint8_t *buf, uint8_t bufLen) {
+ 676              		.loc 1 157 0
+ 677              		.cfi_startproc
+ 678              		@ args = 0, pretend = 0, frame = 0
+ 679              		@ frame_needed = 0, uses_anonymous_args = 0
+ 680              		@ link register save eliminated.
+ 681              	.LVL55:
+ 158:Src/ibus.c    ****   int i;
+ 159:Src/ibus.c    ****   uint16_t ch;
+ 160:Src/ibus.c    ****   uint8_t b;
+ 161:Src/ibus.c    ****   if(bufLen < 32) {
+ 682              		.loc 1 161 0
+ 683 0000 1F2A     		cmp	r2, #31
+ 684 0002 1ED9     		bls	.L71
+ 157:Src/ibus.c    ****   int i;
+ 685              		.loc 1 157 0
+ 686 0004 F0B4     		push	{r4, r5, r6, r7}
+ 687              	.LCFI7:
+ARM GAS  /tmp/ccyANkOR.s 			page 17
+
+
+ 688              		.cfi_def_cfa_offset 16
+ 689              		.cfi_offset 4, -16
+ 690              		.cfi_offset 5, -12
+ 691              		.cfi_offset 6, -8
+ 692              		.cfi_offset 7, -4
+ 693              	.LVL56:
+ 694              	.LBB3:
+ 162:Src/ibus.c    ****       return -1;
+ 163:Src/ibus.c    ****   } else {
+ 164:Src/ibus.c    ****     uint16_t checksum = 0xFFFF - IBUS_MAGIC_1 - IBUS_MAGIC_2;
+ 165:Src/ibus.c    ****     buf[0] = IBUS_CH_SIZE;
+ 695              		.loc 1 165 0
+ 696 0006 2023     		movs	r3, #32
+ 697 0008 0B70     		strb	r3, [r1]
+ 166:Src/ibus.c    ****     buf[1] = IBUS_MAGIC_2;
+ 698              		.loc 1 166 0
+ 699 000a 4023     		movs	r3, #64
+ 700 000c 4B70     		strb	r3, [r1, #1]
+ 701              	.LVL57:
+ 164:Src/ibus.c    ****     buf[0] = IBUS_CH_SIZE;
+ 702              		.loc 1 164 0
+ 703 000e 4FF69F73 		movw	r3, #65439
+ 167:Src/ibus.c    ****     // TODO: just use ibus_calc_cs for checksum?
+ 168:Src/ibus.c    ****     for(i = 0; i < 14; i++) {
+ 704              		.loc 1 168 0
+ 705 0012 0024     		movs	r4, #0
+ 706 0014 0DE0     		b	.L69
+ 707              	.LVL58:
+ 708              	.L70:
+ 169:Src/ibus.c    ****       ch = ib->channels[i];
+ 709              		.loc 1 169 0 discriminator 3
+ 710 0016 30F81420 		ldrh	r2, [r0, r4, lsl #1]
+ 711              	.LVL59:
+ 170:Src/ibus.c    ****       b = ch&0xFF;
+ 712              		.loc 1 170 0 discriminator 3
+ 713 001a D6B2     		uxtb	r6, r2
+ 714              	.LVL60:
+ 171:Src/ibus.c    ****       checksum -= b;
+ 715              		.loc 1 171 0 discriminator 3
+ 716 001c 9B1B     		subs	r3, r3, r6
+ 717              	.LVL61:
+ 718 001e 9BB2     		uxth	r3, r3
+ 719              	.LVL62:
+ 172:Src/ibus.c    ****       buf[i*2 + 2] = b; 
+ 720              		.loc 1 172 0 discriminator 3
+ 721 0020 6500     		lsls	r5, r4, #1
+ 722 0022 AF1C     		adds	r7, r5, #2
+ 723 0024 CE55     		strb	r6, [r1, r7]
+ 173:Src/ibus.c    ****       b = (ch>>8)&0xFF;
+ 724              		.loc 1 173 0 discriminator 3
+ 725 0026 120A     		lsrs	r2, r2, #8
+ 726              	.LVL63:
+ 174:Src/ibus.c    ****       checksum -= b;
+ 727              		.loc 1 174 0 discriminator 3
+ 728 0028 9B1A     		subs	r3, r3, r2
+ 729              	.LVL64:
+ 730 002a 9BB2     		uxth	r3, r3
+ARM GAS  /tmp/ccyANkOR.s 			page 18
+
+
+ 731              	.LVL65:
+ 175:Src/ibus.c    ****       buf[i*2 + 3] = b;
+ 732              		.loc 1 175 0 discriminator 3
+ 733 002c 0335     		adds	r5, r5, #3
+ 734 002e 4A55     		strb	r2, [r1, r5]
+ 168:Src/ibus.c    ****       ch = ib->channels[i];
+ 735              		.loc 1 168 0 discriminator 3
+ 736 0030 0134     		adds	r4, r4, #1
+ 737              	.LVL66:
+ 738              	.L69:
+ 168:Src/ibus.c    ****       ch = ib->channels[i];
+ 739              		.loc 1 168 0 is_stmt 0 discriminator 1
+ 740 0032 0D2C     		cmp	r4, #13
+ 741 0034 EFDD     		ble	.L70
+ 176:Src/ibus.c    ****     }
+ 177:Src/ibus.c    ****     buf[30] = checksum&0xFF;
+ 742              		.loc 1 177 0 is_stmt 1
+ 743 0036 8B77     		strb	r3, [r1, #30]
+ 178:Src/ibus.c    ****     buf[31] = (checksum>>8)&0xFF;
+ 744              		.loc 1 178 0
+ 745 0038 1B0A     		lsrs	r3, r3, #8
+ 746              	.LVL67:
+ 747 003a CB77     		strb	r3, [r1, #31]
+ 179:Src/ibus.c    ****     return 0;
+ 748              		.loc 1 179 0
+ 749 003c 0020     		movs	r0, #0
+ 750              	.LVL68:
+ 751              	.LBE3:
+ 180:Src/ibus.c    ****   } 
+ 181:Src/ibus.c    **** }
+ 752              		.loc 1 181 0
+ 753 003e F0BC     		pop	{r4, r5, r6, r7}
+ 754              	.LCFI8:
+ 755              		.cfi_restore 7
+ 756              		.cfi_restore 6
+ 757              		.cfi_restore 5
+ 758              		.cfi_restore 4
+ 759              		.cfi_def_cfa_offset 0
+ 760              	.LVL69:
+ 761 0040 7047     		bx	lr
+ 762              	.LVL70:
+ 763              	.L71:
+ 162:Src/ibus.c    ****   } else {
+ 764              		.loc 1 162 0
+ 765 0042 4FF0FF30 		mov	r0, #-1
+ 766              	.LVL71:
+ 767              		.loc 1 181 0
+ 768 0046 7047     		bx	lr
+ 769              		.cfi_endproc
+ 770              	.LFE13:
+ 772              		.section	.text.ibus_make_sensor_request_packet,"ax",%progbits
+ 773              		.align	1
+ 774              		.global	ibus_make_sensor_request_packet
+ 775              		.syntax unified
+ 776              		.thumb
+ 777              		.thumb_func
+ 778              		.fpu fpv4-sp-d16
+ARM GAS  /tmp/ccyANkOR.s 			page 19
+
+
+ 780              	ibus_make_sensor_request_packet:
+ 781              	.LFB14:
+ 182:Src/ibus.c    **** 
+ 183:Src/ibus.c    **** int ibus_make_sensor_request_packet(uint8_t cmd, uint8_t sensorId, uint8_t *buf, uint8_t bufLen) {
+ 782              		.loc 1 183 0
+ 783              		.cfi_startproc
+ 784              		@ args = 0, pretend = 0, frame = 0
+ 785              		@ frame_needed = 0, uses_anonymous_args = 0
+ 786              	.LVL72:
+ 184:Src/ibus.c    ****     uint16_t cs;
+ 185:Src/ibus.c    ****     if(bufLen < 4) {
+ 787              		.loc 1 185 0
+ 788 0000 032B     		cmp	r3, #3
+ 789 0002 1CD9     		bls	.L79
+ 183:Src/ibus.c    ****     uint16_t cs;
+ 790              		.loc 1 183 0
+ 791 0004 38B5     		push	{r3, r4, r5, lr}
+ 792              	.LCFI9:
+ 793              		.cfi_def_cfa_offset 16
+ 794              		.cfi_offset 3, -16
+ 795              		.cfi_offset 4, -12
+ 796              		.cfi_offset 5, -8
+ 797              		.cfi_offset 14, -4
+ 798 0006 1446     		mov	r4, r2
+ 186:Src/ibus.c    ****         return -1;
+ 187:Src/ibus.c    ****     } else {
+ 188:Src/ibus.c    ****         assert(cmd == IBUS_CMD_SENSOR_DISCOVER || cmd == IBUS_CMD_SENSOR_TYPE || cmd == IBUS_CMD_SE
+ 799              		.loc 1 188 0
+ 800 0008 8028     		cmp	r0, #128
+ 801 000a 03D0     		beq	.L78
+ 802              		.loc 1 188 0 is_stmt 0 discriminator 1
+ 803 000c 9028     		cmp	r0, #144
+ 804 000e 01D0     		beq	.L78
+ 805              		.loc 1 188 0 discriminator 2
+ 806 0010 A028     		cmp	r0, #160
+ 807 0012 0ED1     		bne	.L84
+ 808              	.L78:
+ 189:Src/ibus.c    ****         buf[0] = IBUS_SENSOR_REQ_SIZE; // packet size
+ 809              		.loc 1 189 0 is_stmt 1
+ 810 0014 0425     		movs	r5, #4
+ 811 0016 2570     		strb	r5, [r4]
+ 190:Src/ibus.c    ****         buf[1] = cmd | (sensorId & 0x0F);
+ 812              		.loc 1 190 0
+ 813 0018 01F00F01 		and	r1, r1, #15
+ 814              	.LVL73:
+ 815 001c 0143     		orrs	r1, r1, r0
+ 816 001e 6170     		strb	r1, [r4, #1]
+ 191:Src/ibus.c    ****         cs = ibus_calc_cs(buf, 2);
+ 817              		.loc 1 191 0
+ 818 0020 0221     		movs	r1, #2
+ 819 0022 2046     		mov	r0, r4
+ 820              	.LVL74:
+ 821 0024 FFF7FEFF 		bl	ibus_calc_cs
+ 822              	.LVL75:
+ 192:Src/ibus.c    ****         buf[2] = cs & 0xFF;
+ 823              		.loc 1 192 0
+ 824 0028 A070     		strb	r0, [r4, #2]
+ARM GAS  /tmp/ccyANkOR.s 			page 20
+
+
+ 193:Src/ibus.c    ****         buf[3] = (cs>>8)&0xFF;
+ 825              		.loc 1 193 0
+ 826 002a 000A     		lsrs	r0, r0, #8
+ 827              	.LVL76:
+ 828 002c E070     		strb	r0, [r4, #3]
+ 194:Src/ibus.c    ****         return IBUS_SENSOR_REQ_SIZE;
+ 829              		.loc 1 194 0
+ 830 002e 2846     		mov	r0, r5
+ 195:Src/ibus.c    ****     }
+ 196:Src/ibus.c    **** }
+ 831              		.loc 1 196 0
+ 832 0030 38BD     		pop	{r3, r4, r5, pc}
+ 833              	.LVL77:
+ 834              	.L84:
+ 188:Src/ibus.c    ****         buf[0] = IBUS_SENSOR_REQ_SIZE; // packet size
+ 835              		.loc 1 188 0 discriminator 3
+ 836 0032 044B     		ldr	r3, .L85
+ 837              	.LVL78:
+ 838 0034 044A     		ldr	r2, .L85+4
+ 839              	.LVL79:
+ 840 0036 BC21     		movs	r1, #188
+ 841              	.LVL80:
+ 842 0038 0448     		ldr	r0, .L85+8
+ 843              	.LVL81:
+ 844 003a FFF7FEFF 		bl	__assert_func
+ 845              	.LVL82:
+ 846              	.L79:
+ 847              	.LCFI10:
+ 848              		.cfi_def_cfa_offset 0
+ 849              		.cfi_restore 3
+ 850              		.cfi_restore 4
+ 851              		.cfi_restore 5
+ 852              		.cfi_restore 14
+ 186:Src/ibus.c    ****     } else {
+ 853              		.loc 1 186 0
+ 854 003e 4FF0FF30 		mov	r0, #-1
+ 855              	.LVL83:
+ 856              		.loc 1 196 0
+ 857 0042 7047     		bx	lr
+ 858              	.L86:
+ 859              		.align	2
+ 860              	.L85:
+ 861 0044 00000000 		.word	.LC1
+ 862 0048 00000000 		.word	.LANCHOR0
+ 863 004c 68000000 		.word	.LC2
+ 864              		.cfi_endproc
+ 865              	.LFE14:
+ 867              		.section	.rodata.__func__.6583,"a",%progbits
+ 868              		.align	2
+ 869              		.set	.LANCHOR0,. + 0
+ 872              	__func__.6583:
+ 873 0000 69627573 		.ascii	"ibus_make_sensor_request_packet\000"
+ 873      5F6D616B 
+ 873      655F7365 
+ 873      6E736F72 
+ 873      5F726571 
+ 874              		.section	.rodata.ibus_make_sensor_request_packet.str1.4,"aMS",%progbits,1
+ARM GAS  /tmp/ccyANkOR.s 			page 21
+
+
+ 875              		.align	2
+ 876              	.LC1:
+ 877 0000 636D6420 		.ascii	"cmd == IBUS_CMD_SENSOR_DISCOVER || cmd == IBUS_CMD_"
+ 877      3D3D2049 
+ 877      4255535F 
+ 877      434D445F 
+ 877      53454E53 
+ 878 0033 53454E53 		.ascii	"SENSOR_TYPE || cmd == IBUS_CMD_SENSOR_MEASUREMENT\000"
+ 878      4F525F54 
+ 878      59504520 
+ 878      7C7C2063 
+ 878      6D64203D 
+ 879 0065 000000   		.space	3
+ 880              	.LC2:
+ 881 0068 5372632F 		.ascii	"Src/ibus.c\000"
+ 881      69627573 
+ 881      2E6300
+ 882              		.section	.rodata.ibus_receive.str1.4,"aMS",%progbits,1
+ 883              		.align	2
+ 884              	.LC0:
+ 885 0000 69627573 		.ascii	"ibus receive checksum mismatch\015\000"
+ 885      20726563 
+ 885      65697665 
+ 885      20636865 
+ 885      636B7375 
+ 886              		.text
+ 887              	.Letext0:
+ 888              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 889              		.file 3 "/usr/include/newlib/sys/_stdint.h"
+ 890              		.file 4 "Inc/ibus.h"
+ 891              		.file 5 "/usr/include/newlib/sys/lock.h"
+ 892              		.file 6 "/usr/include/newlib/sys/_types.h"
+ 893              		.file 7 "/usr/lib/gcc/arm-none-eabi/7.3.1/include/stddef.h"
+ 894              		.file 8 "/usr/include/newlib/sys/reent.h"
+ 895              		.file 9 "/usr/include/newlib/assert.h"
+ 896              		.file 10 "<built-in>"
+ARM GAS  /tmp/ccyANkOR.s 			page 22
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 ibus.c
+     /tmp/ccyANkOR.s:18     .text.ibus_empty_cb:0000000000000000 $t
+     /tmp/ccyANkOR.s:25     .text.ibus_empty_cb:0000000000000000 ibus_empty_cb
+     /tmp/ccyANkOR.s:40     .text.ibus_start_ch_cmd:0000000000000000 $t
+     /tmp/ccyANkOR.s:46     .text.ibus_start_ch_cmd:0000000000000000 ibus_start_ch_cmd
+     /tmp/ccyANkOR.s:83     .text.ibus_start_sensor_discovery_cmd:0000000000000000 $t
+     /tmp/ccyANkOR.s:89     .text.ibus_start_sensor_discovery_cmd:0000000000000000 ibus_start_sensor_discovery_cmd
+     /tmp/ccyANkOR.s:127    .text.ibus_start_sensor_type_cmd:0000000000000000 $t
+     /tmp/ccyANkOR.s:133    .text.ibus_start_sensor_type_cmd:0000000000000000 ibus_start_sensor_type_cmd
+     /tmp/ccyANkOR.s:171    .text.ibus_start_sensor_measurement_cmd:0000000000000000 $t
+     /tmp/ccyANkOR.s:177    .text.ibus_start_sensor_measurement_cmd:0000000000000000 ibus_start_sensor_measurement_cmd
+     /tmp/ccyANkOR.s:215    .text.ibus_test_cs:0000000000000000 $t
+     /tmp/ccyANkOR.s:221    .text.ibus_test_cs:0000000000000000 ibus_test_cs
+     /tmp/ccyANkOR.s:271    .text.ibus_calc_cs:0000000000000000 $t
+     /tmp/ccyANkOR.s:277    .text.ibus_calc_cs:0000000000000000 ibus_calc_cs
+     /tmp/ccyANkOR.s:327    .text.ibus_init:0000000000000000 $t
+     /tmp/ccyANkOR.s:334    .text.ibus_init:0000000000000000 ibus_init
+     /tmp/ccyANkOR.s:353    .text.ibus_init:000000000000000c $d
+     /tmp/ccyANkOR.s:358    .text.ibus_set_event_callback:0000000000000000 $t
+     /tmp/ccyANkOR.s:365    .text.ibus_set_event_callback:0000000000000000 ibus_set_event_callback
+     /tmp/ccyANkOR.s:383    .text.ibus_receive:0000000000000000 $t
+     /tmp/ccyANkOR.s:390    .text.ibus_receive:0000000000000000 ibus_receive
+     /tmp/ccyANkOR.s:662    .text.ibus_receive:0000000000000148 $d
+     /tmp/ccyANkOR.s:667    .text.ibus_make_packet:0000000000000000 $t
+     /tmp/ccyANkOR.s:674    .text.ibus_make_packet:0000000000000000 ibus_make_packet
+     /tmp/ccyANkOR.s:773    .text.ibus_make_sensor_request_packet:0000000000000000 $t
+     /tmp/ccyANkOR.s:780    .text.ibus_make_sensor_request_packet:0000000000000000 ibus_make_sensor_request_packet
+     /tmp/ccyANkOR.s:861    .text.ibus_make_sensor_request_packet:0000000000000044 $d
+     /tmp/ccyANkOR.s:868    .rodata.__func__.6583:0000000000000000 $d
+     /tmp/ccyANkOR.s:872    .rodata.__func__.6583:0000000000000000 __func__.6583
+     /tmp/ccyANkOR.s:875    .rodata.ibus_make_sensor_request_packet.str1.4:0000000000000000 $d
+     /tmp/ccyANkOR.s:883    .rodata.ibus_receive.str1.4:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+puts
+__assert_func

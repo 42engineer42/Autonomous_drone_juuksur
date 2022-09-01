@@ -1,0 +1,5 @@
+topics:
+  image: "/camera/image_raw"
+  height: '/telemetry/range' #"/move/results"
+height:
+  coefficient: 1

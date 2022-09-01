@@ -1,0 +1,367 @@
+ARM GAS  /tmp/ccjbpxQO.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"tfmini_stm32.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.tfmini_stm32_init,"ax",%progbits
+  18              		.align	1
+  19              		.global	tfmini_stm32_init
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	tfmini_stm32_init:
+  26              	.LFB126:
+  27              		.file 1 "Src/tfmini_stm32.c"
+   1:Src/tfmini_stm32.c **** #include "tfmini_stm32.h"
+   2:Src/tfmini_stm32.c **** 
+   3:Src/tfmini_stm32.c **** #include <assert.h>
+   4:Src/tfmini_stm32.c **** 
+   5:Src/tfmini_stm32.c **** void tfmini_stm32_init(TfminiStm32State *tfs, UART_HandleTypeDef *huart) {
+  28              		.loc 1 5 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 38B5     		push	{r3, r4, r5, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 16
+  36              		.cfi_offset 3, -16
+  37              		.cfi_offset 4, -12
+  38              		.cfi_offset 5, -8
+  39              		.cfi_offset 14, -4
+  40 0002 0446     		mov	r4, r0
+  41 0004 0D46     		mov	r5, r1
+   6:Src/tfmini_stm32.c ****     HAL_StatusTypeDef status;
+   7:Src/tfmini_stm32.c ****     tfs->huart = huart;
+  42              		.loc 1 7 0
+  43 0006 4165     		str	r1, [r0, #84]
+   8:Src/tfmini_stm32.c ****     tfs->rxReadPos = 0;
+  44              		.loc 1 8 0
+  45 0008 0023     		movs	r3, #0
+  46 000a 8373     		strb	r3, [r0, #14]
+   9:Src/tfmini_stm32.c ****     tfs->rxWritePos = 0;
+  47              		.loc 1 9 0
+  48 000c C373     		strb	r3, [r0, #15]
+  10:Src/tfmini_stm32.c ****     tfmini_init(&tfs->tfmini);
+ARM GAS  /tmp/ccjbpxQO.s 			page 2
+
+
+  49              		.loc 1 10 0
+  50 000e FFF7FEFF 		bl	tfmini_init
+  51              	.LVL1:
+  11:Src/tfmini_stm32.c ****     status = HAL_UART_Receive_IT(huart, &tfs->rxData, 1);
+  52              		.loc 1 11 0
+  53 0012 0122     		movs	r2, #1
+  54 0014 04F11001 		add	r1, r4, #16
+  55 0018 2846     		mov	r0, r5
+  56 001a FFF7FEFF 		bl	HAL_UART_Receive_IT
+  57              	.LVL2:
+  12:Src/tfmini_stm32.c ****     if(status != HAL_OK) {
+  58              		.loc 1 12 0
+  59 001e 00B9     		cbnz	r0, .L4
+  60              	.LVL3:
+  61              	.L1:
+  13:Src/tfmini_stm32.c ****         printf("Receive_IT failed in tfmini_stm32_init() code %d\r\n", status);
+  14:Src/tfmini_stm32.c ****     }
+  15:Src/tfmini_stm32.c **** }
+  62              		.loc 1 15 0
+  63 0020 38BD     		pop	{r3, r4, r5, pc}
+  64              	.LVL4:
+  65              	.L4:
+  66 0022 0146     		mov	r1, r0
+  13:Src/tfmini_stm32.c ****         printf("Receive_IT failed in tfmini_stm32_init() code %d\r\n", status);
+  67              		.loc 1 13 0
+  68 0024 0148     		ldr	r0, .L5
+  69              	.LVL5:
+  70 0026 FFF7FEFF 		bl	printf
+  71              	.LVL6:
+  72              		.loc 1 15 0
+  73 002a F9E7     		b	.L1
+  74              	.L6:
+  75              		.align	2
+  76              	.L5:
+  77 002c 00000000 		.word	.LC0
+  78              		.cfi_endproc
+  79              	.LFE126:
+  81              		.section	.text.tfmini_stm32_receive_complete,"ax",%progbits
+  82              		.align	1
+  83              		.global	tfmini_stm32_receive_complete
+  84              		.syntax unified
+  85              		.thumb
+  86              		.thumb_func
+  87              		.fpu fpv4-sp-d16
+  89              	tfmini_stm32_receive_complete:
+  90              	.LFB127:
+  16:Src/tfmini_stm32.c **** 
+  17:Src/tfmini_stm32.c **** void tfmini_stm32_receive_complete(TfminiStm32State *tfs) {
+  91              		.loc 1 17 0
+  92              		.cfi_startproc
+  93              		@ args = 0, pretend = 0, frame = 0
+  94              		@ frame_needed = 0, uses_anonymous_args = 0
+  95              	.LVL7:
+  96 0000 08B5     		push	{r3, lr}
+  97              	.LCFI1:
+  98              		.cfi_def_cfa_offset 8
+  99              		.cfi_offset 3, -8
+ARM GAS  /tmp/ccjbpxQO.s 			page 3
+
+
+ 100              		.cfi_offset 14, -4
+  18:Src/tfmini_stm32.c ****     HAL_StatusTypeDef status;
+  19:Src/tfmini_stm32.c ****     if(tfs->rxWritePos != tfs->rxReadPos + 64) {
+ 101              		.loc 1 19 0
+ 102 0002 C27B     		ldrb	r2, [r0, #15]	@ zero_extendqisi2
+ 103 0004 D2B2     		uxtb	r2, r2
+ 104 0006 837B     		ldrb	r3, [r0, #14]	@ zero_extendqisi2
+ 105 0008 4033     		adds	r3, r3, #64
+ 106 000a 9A42     		cmp	r2, r3
+ 107 000c 12D0     		beq	.L8
+  20:Src/tfmini_stm32.c ****         tfs->ringBuf[tfs->rxWritePos & 0x3F] = tfs->rxData;
+ 108              		.loc 1 20 0
+ 109 000e C37B     		ldrb	r3, [r0, #15]	@ zero_extendqisi2
+ 110 0010 03F03F03 		and	r3, r3, #63
+ 111 0014 027C     		ldrb	r2, [r0, #16]	@ zero_extendqisi2
+ 112 0016 0344     		add	r3, r3, r0
+ 113 0018 5A74     		strb	r2, [r3, #17]
+  21:Src/tfmini_stm32.c ****         tfs->rxWritePos++;
+ 114              		.loc 1 21 0
+ 115 001a C37B     		ldrb	r3, [r0, #15]	@ zero_extendqisi2
+ 116 001c 0133     		adds	r3, r3, #1
+ 117 001e DBB2     		uxtb	r3, r3
+ 118 0020 C373     		strb	r3, [r0, #15]
+  22:Src/tfmini_stm32.c ****     } else {
+  23:Src/tfmini_stm32.c ****         printf("Tfmini Rx buffer overflow! %d %d\r\n", tfs->rxWritePos, tfs->rxReadPos);
+  24:Src/tfmini_stm32.c ****         assert(0);
+  25:Src/tfmini_stm32.c ****     }
+  26:Src/tfmini_stm32.c ****     status = HAL_UART_Receive_IT(tfs->huart, &tfs->rxData, 1);
+ 119              		.loc 1 26 0
+ 120 0022 0122     		movs	r2, #1
+ 121 0024 00F11001 		add	r1, r0, #16
+ 122 0028 406D     		ldr	r0, [r0, #84]
+ 123              	.LVL8:
+ 124 002a FFF7FEFF 		bl	HAL_UART_Receive_IT
+ 125              	.LVL9:
+  27:Src/tfmini_stm32.c ****     if(status != HAL_OK) {
+ 126              		.loc 1 27 0
+ 127 002e 0146     		mov	r1, r0
+ 128 0030 58B9     		cbnz	r0, .L12
+ 129              	.LVL10:
+ 130              	.L7:
+  28:Src/tfmini_stm32.c ****         printf("Receive_IT() failed in tfmini_stm32_receive_complete() code %d\r\n", status);
+  29:Src/tfmini_stm32.c ****     }
+  30:Src/tfmini_stm32.c **** }
+ 131              		.loc 1 30 0
+ 132 0032 08BD     		pop	{r3, pc}
+ 133              	.LVL11:
+ 134              	.L8:
+  23:Src/tfmini_stm32.c ****         assert(0);
+ 135              		.loc 1 23 0
+ 136 0034 C17B     		ldrb	r1, [r0, #15]	@ zero_extendqisi2
+ 137 0036 827B     		ldrb	r2, [r0, #14]	@ zero_extendqisi2
+ 138 0038 0648     		ldr	r0, .L13
+ 139              	.LVL12:
+ 140 003a FFF7FEFF 		bl	printf
+ 141              	.LVL13:
+  24:Src/tfmini_stm32.c ****     }
+ARM GAS  /tmp/ccjbpxQO.s 			page 4
+
+
+ 142              		.loc 1 24 0
+ 143 003e 064B     		ldr	r3, .L13+4
+ 144 0040 064A     		ldr	r2, .L13+8
+ 145 0042 1821     		movs	r1, #24
+ 146 0044 0648     		ldr	r0, .L13+12
+ 147 0046 FFF7FEFF 		bl	__assert_func
+ 148              	.LVL14:
+ 149              	.L12:
+  28:Src/tfmini_stm32.c ****         printf("Receive_IT() failed in tfmini_stm32_receive_complete() code %d\r\n", status);
+ 150              		.loc 1 28 0
+ 151 004a 0648     		ldr	r0, .L13+16
+ 152              	.LVL15:
+ 153 004c FFF7FEFF 		bl	printf
+ 154              	.LVL16:
+ 155              		.loc 1 30 0
+ 156 0050 EFE7     		b	.L7
+ 157              	.L14:
+ 158 0052 00BF     		.align	2
+ 159              	.L13:
+ 160 0054 00000000 		.word	.LC1
+ 161 0058 24000000 		.word	.LC2
+ 162 005c 00000000 		.word	.LANCHOR0
+ 163 0060 28000000 		.word	.LC3
+ 164 0064 3C000000 		.word	.LC4
+ 165              		.cfi_endproc
+ 166              	.LFE127:
+ 168              		.section	.text.tfmini_stm32_process_rx,"ax",%progbits
+ 169              		.align	1
+ 170              		.global	tfmini_stm32_process_rx
+ 171              		.syntax unified
+ 172              		.thumb
+ 173              		.thumb_func
+ 174              		.fpu fpv4-sp-d16
+ 176              	tfmini_stm32_process_rx:
+ 177              	.LFB128:
+  31:Src/tfmini_stm32.c **** 
+  32:Src/tfmini_stm32.c **** void tfmini_stm32_process_rx(TfminiStm32State *tfs) {
+ 178              		.loc 1 32 0
+ 179              		.cfi_startproc
+ 180              		@ args = 0, pretend = 0, frame = 0
+ 181              		@ frame_needed = 0, uses_anonymous_args = 0
+ 182              	.LVL17:
+ 183 0000 10B5     		push	{r4, lr}
+ 184              	.LCFI2:
+ 185              		.cfi_def_cfa_offset 8
+ 186              		.cfi_offset 4, -8
+ 187              		.cfi_offset 14, -4
+ 188 0002 0446     		mov	r4, r0
+  33:Src/tfmini_stm32.c ****     uint8_t readPos;
+  34:Src/tfmini_stm32.c ****     while(tfs->rxReadPos != tfs->rxWritePos) {
+ 189              		.loc 1 34 0
+ 190 0004 0BE0     		b	.L16
+ 191              	.LVL18:
+ 192              	.L17:
+  35:Src/tfmini_stm32.c ****         readPos = tfs->rxReadPos & 0x3F;
+ 193              		.loc 1 35 0
+ 194 0006 A37B     		ldrb	r3, [r4, #14]	@ zero_extendqisi2
+ARM GAS  /tmp/ccjbpxQO.s 			page 5
+
+
+ 195 0008 03F03F03 		and	r3, r3, #63
+ 196              	.LVL19:
+  36:Src/tfmini_stm32.c ****         tfmini_receive(&tfs->tfmini, tfs->ringBuf[readPos]);
+ 197              		.loc 1 36 0
+ 198 000c 2344     		add	r3, r3, r4
+ 199              	.LVL20:
+ 200 000e 597C     		ldrb	r1, [r3, #17]	@ zero_extendqisi2
+ 201 0010 2046     		mov	r0, r4
+ 202 0012 FFF7FEFF 		bl	tfmini_receive
+ 203              	.LVL21:
+  37:Src/tfmini_stm32.c ****         tfs->rxReadPos++;
+ 204              		.loc 1 37 0
+ 205 0016 A37B     		ldrb	r3, [r4, #14]	@ zero_extendqisi2
+ 206 0018 0133     		adds	r3, r3, #1
+ 207 001a DBB2     		uxtb	r3, r3
+ 208 001c A373     		strb	r3, [r4, #14]
+ 209              	.L16:
+  34:Src/tfmini_stm32.c ****         readPos = tfs->rxReadPos & 0x3F;
+ 210              		.loc 1 34 0
+ 211 001e A27B     		ldrb	r2, [r4, #14]	@ zero_extendqisi2
+ 212 0020 D2B2     		uxtb	r2, r2
+ 213 0022 E37B     		ldrb	r3, [r4, #15]	@ zero_extendqisi2
+ 214 0024 DBB2     		uxtb	r3, r3
+ 215 0026 9A42     		cmp	r2, r3
+ 216 0028 EDD1     		bne	.L17
+  38:Src/tfmini_stm32.c ****     }
+  39:Src/tfmini_stm32.c **** }
+ 217              		.loc 1 39 0
+ 218 002a 10BD     		pop	{r4, pc}
+ 219              		.cfi_endproc
+ 220              	.LFE128:
+ 222              		.section	.rodata.__func__.9128,"a",%progbits
+ 223              		.align	2
+ 224              		.set	.LANCHOR0,. + 0
+ 227              	__func__.9128:
+ 228 0000 74666D69 		.ascii	"tfmini_stm32_receive_complete\000"
+ 228      6E695F73 
+ 228      746D3332 
+ 228      5F726563 
+ 228      65697665 
+ 229              		.section	.rodata.tfmini_stm32_init.str1.4,"aMS",%progbits,1
+ 230              		.align	2
+ 231              	.LC0:
+ 232 0000 52656365 		.ascii	"Receive_IT failed in tfmini_stm32_init() code %d\015"
+ 232      6976655F 
+ 232      49542066 
+ 232      61696C65 
+ 232      6420696E 
+ 233 0031 0A00     		.ascii	"\012\000"
+ 234              		.section	.rodata.tfmini_stm32_receive_complete.str1.4,"aMS",%progbits,1
+ 235              		.align	2
+ 236              	.LC1:
+ 237 0000 54666D69 		.ascii	"Tfmini Rx buffer overflow! %d %d\015\012\000"
+ 237      6E692052 
+ 237      78206275 
+ 237      66666572 
+ 237      206F7665 
+ARM GAS  /tmp/ccjbpxQO.s 			page 6
+
+
+ 238 0023 00       		.space	1
+ 239              	.LC2:
+ 240 0024 3000     		.ascii	"0\000"
+ 241 0026 0000     		.space	2
+ 242              	.LC3:
+ 243 0028 5372632F 		.ascii	"Src/tfmini_stm32.c\000"
+ 243      74666D69 
+ 243      6E695F73 
+ 243      746D3332 
+ 243      2E6300
+ 244 003b 00       		.space	1
+ 245              	.LC4:
+ 246 003c 52656365 		.ascii	"Receive_IT() failed in tfmini_stm32_receive_complet"
+ 246      6976655F 
+ 246      49542829 
+ 246      20666169 
+ 246      6C656420 
+ 247 006f 65282920 		.ascii	"e() code %d\015\012\000"
+ 247      636F6465 
+ 247      2025640D 
+ 247      0A00
+ 248              		.text
+ 249              	.Letext0:
+ 250              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 251              		.file 3 "/usr/include/newlib/sys/_stdint.h"
+ 252              		.file 4 "Inc/tfmini.h"
+ 253              		.file 5 "Drivers/CMSIS/Include/core_cm4.h"
+ 254              		.file 6 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/system_stm32f3xx.h"
+ 255              		.file 7 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/stm32f303xe.h"
+ 256              		.file 8 "/usr/include/newlib/sys/lock.h"
+ 257              		.file 9 "/usr/include/newlib/sys/_types.h"
+ 258              		.file 10 "/usr/lib/gcc/arm-none-eabi/7.3.1/include/stddef.h"
+ 259              		.file 11 "/usr/include/newlib/sys/reent.h"
+ 260              		.file 12 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_def.h"
+ 261              		.file 13 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_dma.h"
+ 262              		.file 14 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart.h"
+ 263              		.file 15 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h"
+ 264              		.file 16 "Inc/tfmini_stm32.h"
+ 265              		.file 17 "/usr/include/newlib/stdio.h"
+ 266              		.file 18 "/usr/include/newlib/assert.h"
+ARM GAS  /tmp/ccjbpxQO.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 tfmini_stm32.c
+     /tmp/ccjbpxQO.s:18     .text.tfmini_stm32_init:0000000000000000 $t
+     /tmp/ccjbpxQO.s:25     .text.tfmini_stm32_init:0000000000000000 tfmini_stm32_init
+     /tmp/ccjbpxQO.s:77     .text.tfmini_stm32_init:000000000000002c $d
+     /tmp/ccjbpxQO.s:82     .text.tfmini_stm32_receive_complete:0000000000000000 $t
+     /tmp/ccjbpxQO.s:89     .text.tfmini_stm32_receive_complete:0000000000000000 tfmini_stm32_receive_complete
+     /tmp/ccjbpxQO.s:160    .text.tfmini_stm32_receive_complete:0000000000000054 $d
+     /tmp/ccjbpxQO.s:169    .text.tfmini_stm32_process_rx:0000000000000000 $t
+     /tmp/ccjbpxQO.s:176    .text.tfmini_stm32_process_rx:0000000000000000 tfmini_stm32_process_rx
+     /tmp/ccjbpxQO.s:223    .rodata.__func__.9128:0000000000000000 $d
+     /tmp/ccjbpxQO.s:227    .rodata.__func__.9128:0000000000000000 __func__.9128
+     /tmp/ccjbpxQO.s:230    .rodata.tfmini_stm32_init.str1.4:0000000000000000 $d
+     /tmp/ccjbpxQO.s:235    .rodata.tfmini_stm32_receive_complete.str1.4:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+tfmini_init
+HAL_UART_Receive_IT
+printf
+__assert_func
+tfmini_receive

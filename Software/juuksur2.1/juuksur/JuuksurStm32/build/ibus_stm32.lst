@@ -1,0 +1,699 @@
+ARM GAS  /tmp/ccs4IMbc.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"ibus_stm32.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.ibus_stm32_init,"ax",%progbits
+  18              		.align	1
+  19              		.global	ibus_stm32_init
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	ibus_stm32_init:
+  26              	.LFB126:
+  27              		.file 1 "Src/ibus_stm32.c"
+   1:Src/ibus_stm32.c **** #include "ibus_stm32.h"
+   2:Src/ibus_stm32.c **** 
+   3:Src/ibus_stm32.c **** #include <stdio.h>
+   4:Src/ibus_stm32.c **** #include <assert.h>
+   5:Src/ibus_stm32.c **** 
+   6:Src/ibus_stm32.c **** void ibus_stm32_init(IbusStm32State *ibs, UART_HandleTypeDef *huart, uint8_t halfDuplex) {
+  28              		.loc 1 6 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 38B5     		push	{r3, r4, r5, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 16
+  36              		.cfi_offset 3, -16
+  37              		.cfi_offset 4, -12
+  38              		.cfi_offset 5, -8
+  39              		.cfi_offset 14, -4
+  40 0002 0446     		mov	r4, r0
+  41 0004 0D46     		mov	r5, r1
+   7:Src/ibus_stm32.c ****     HAL_StatusTypeDef status;
+   8:Src/ibus_stm32.c ****     ibs->huart = huart;
+  42              		.loc 1 8 0
+  43 0006 C0F8B410 		str	r1, [r0, #180]
+   9:Src/ibus_stm32.c ****     ibs->txBusy = 0;
+  44              		.loc 1 9 0
+  45 000a 0023     		movs	r3, #0
+  46 000c 80F85030 		strb	r3, [r0, #80]
+  10:Src/ibus_stm32.c ****     ibs->rxReadPos = 0;
+  47              		.loc 1 10 0
+  48 0010 80F85230 		strb	r3, [r0, #82]
+ARM GAS  /tmp/ccs4IMbc.s 			page 2
+
+
+  11:Src/ibus_stm32.c ****     ibs->rxWritePos = 0;
+  49              		.loc 1 11 0
+  50 0014 80F85330 		strb	r3, [r0, #83]
+  12:Src/ibus_stm32.c ****     ibs->halfDuplex = halfDuplex;
+  51              		.loc 1 12 0
+  52 0018 0270     		strb	r2, [r0]
+  13:Src/ibus_stm32.c ****     ibs->totalRx = 0;
+  53              		.loc 1 13 0
+  54 001a C0F8D830 		str	r3, [r0, #216]
+  14:Src/ibus_stm32.c ****     ibs->totalTx = 0;
+  55              		.loc 1 14 0
+  56 001e C0F8DC30 		str	r3, [r0, #220]
+  57              	.LVL1:
+  58              	.LBB2:
+  15:Src/ibus_stm32.c ****     for(int i = 0; i < 14; i++) {
+  59              		.loc 1 15 0
+  60 0022 07E0     		b	.L2
+  61              	.LVL2:
+  62              	.L3:
+  16:Src/ibus_stm32.c ****         ibs->txCh.channels[i] = 1500;
+  63              		.loc 1 16 0 discriminator 3
+  64 0024 03F11802 		add	r2, r3, #24
+  65 0028 04EB4202 		add	r2, r4, r2, lsl #1
+  66 002c 40F2DC51 		movw	r1, #1500
+  67 0030 9180     		strh	r1, [r2, #4]	@ movhi
+  15:Src/ibus_stm32.c ****     for(int i = 0; i < 14; i++) {
+  68              		.loc 1 15 0 discriminator 3
+  69 0032 0133     		adds	r3, r3, #1
+  70              	.LVL3:
+  71              	.L2:
+  15:Src/ibus_stm32.c ****     for(int i = 0; i < 14; i++) {
+  72              		.loc 1 15 0 is_stmt 0 discriminator 1
+  73 0034 0D2B     		cmp	r3, #13
+  74 0036 F5DD     		ble	.L3
+  75              	.LBE2:
+  17:Src/ibus_stm32.c ****     }
+  18:Src/ibus_stm32.c ****     ibus_init(&ibs->ibRx);
+  76              		.loc 1 18 0 is_stmt 1
+  77 0038 201D     		adds	r0, r4, #4
+  78              	.LVL4:
+  79 003a FFF7FEFF 		bl	ibus_init
+  80              	.LVL5:
+  19:Src/ibus_stm32.c ****     // start receiving
+  20:Src/ibus_stm32.c ****     //status = HAL_UART_Receive_IT(huart, ibs->itData, 32);
+  21:Src/ibus_stm32.c ****     status = HAL_UART_Receive_IT(huart, &ibs->rxData, 1);
+  81              		.loc 1 21 0
+  82 003e 0122     		movs	r2, #1
+  83 0040 04F15101 		add	r1, r4, #81
+  84 0044 2846     		mov	r0, r5
+  85 0046 FFF7FEFF 		bl	HAL_UART_Receive_IT
+  86              	.LVL6:
+  22:Src/ibus_stm32.c ****     if(status != HAL_OK) {
+  87              		.loc 1 22 0
+  88 004a 0146     		mov	r1, r0
+  89 004c 00B9     		cbnz	r0, .L6
+  90              	.LVL7:
+  91              	.L1:
+ARM GAS  /tmp/ccs4IMbc.s 			page 3
+
+
+  23:Src/ibus_stm32.c ****         printf("Receive_IT failed in ibus_stm32_init() code %d\r\n", status);
+  24:Src/ibus_stm32.c ****     }
+  25:Src/ibus_stm32.c **** }
+  92              		.loc 1 25 0
+  93 004e 38BD     		pop	{r3, r4, r5, pc}
+  94              	.LVL8:
+  95              	.L6:
+  23:Src/ibus_stm32.c ****         printf("Receive_IT failed in ibus_stm32_init() code %d\r\n", status);
+  96              		.loc 1 23 0
+  97 0050 0148     		ldr	r0, .L7
+  98              	.LVL9:
+  99 0052 FFF7FEFF 		bl	printf
+ 100              	.LVL10:
+ 101              		.loc 1 25 0
+ 102 0056 FAE7     		b	.L1
+ 103              	.L8:
+ 104              		.align	2
+ 105              	.L7:
+ 106 0058 00000000 		.word	.LC0
+ 107              		.cfi_endproc
+ 108              	.LFE126:
+ 110              		.section	.text.ibus_stm32_receive_complete,"ax",%progbits
+ 111              		.align	1
+ 112              		.global	ibus_stm32_receive_complete
+ 113              		.syntax unified
+ 114              		.thumb
+ 115              		.thumb_func
+ 116              		.fpu fpv4-sp-d16
+ 118              	ibus_stm32_receive_complete:
+ 119              	.LFB127:
+  26:Src/ibus_stm32.c **** 
+  27:Src/ibus_stm32.c **** void ibus_stm32_receive_complete(IbusStm32State *ibs) {
+ 120              		.loc 1 27 0
+ 121              		.cfi_startproc
+ 122              		@ args = 0, pretend = 0, frame = 0
+ 123              		@ frame_needed = 0, uses_anonymous_args = 0
+ 124              	.LVL11:
+ 125 0000 08B5     		push	{r3, lr}
+ 126              	.LCFI1:
+ 127              		.cfi_def_cfa_offset 8
+ 128              		.cfi_offset 3, -8
+ 129              		.cfi_offset 14, -4
+  28:Src/ibus_stm32.c ****     HAL_StatusTypeDef status;
+  29:Src/ibus_stm32.c ****     // NOTE: readPos can not be edited because this is called from interrupt and reading is done in
+  30:Src/ibus_stm32.c ****     if(ibs->rxWritePos != ibs->rxReadPos + RBUF_SIZE) {
+ 130              		.loc 1 30 0
+ 131 0002 90F85320 		ldrb	r2, [r0, #83]	@ zero_extendqisi2
+ 132 0006 D2B2     		uxtb	r2, r2
+ 133 0008 90F85230 		ldrb	r3, [r0, #82]	@ zero_extendqisi2
+ 134 000c 4033     		adds	r3, r3, #64
+ 135 000e 9A42     		cmp	r2, r3
+ 136 0010 18D0     		beq	.L10
+  31:Src/ibus_stm32.c ****         ibs->ringBuf[ibs->rxWritePos & RBUF_MASK] = ibs->rxData;
+ 137              		.loc 1 31 0
+ 138 0012 90F85330 		ldrb	r3, [r0, #83]	@ zero_extendqisi2
+ 139 0016 03F03F03 		and	r3, r3, #63
+ 140 001a 90F85120 		ldrb	r2, [r0, #81]	@ zero_extendqisi2
+ARM GAS  /tmp/ccs4IMbc.s 			page 4
+
+
+ 141 001e 0344     		add	r3, r3, r0
+ 142 0020 83F85420 		strb	r2, [r3, #84]
+  32:Src/ibus_stm32.c ****         ibs->rxWritePos++;
+ 143              		.loc 1 32 0
+ 144 0024 90F85330 		ldrb	r3, [r0, #83]	@ zero_extendqisi2
+ 145 0028 0133     		adds	r3, r3, #1
+ 146 002a DBB2     		uxtb	r3, r3
+ 147 002c 80F85330 		strb	r3, [r0, #83]
+  33:Src/ibus_stm32.c ****     } else {
+  34:Src/ibus_stm32.c ****         printf("IBus Rx buffer overflow! %d %d\r\n", ibs->rxWritePos, ibs->rxReadPos);
+  35:Src/ibus_stm32.c ****         assert(0);
+  36:Src/ibus_stm32.c ****     }
+  37:Src/ibus_stm32.c ****     status = HAL_UART_Receive_IT(ibs->huart, &ibs->rxData, 1);
+ 148              		.loc 1 37 0
+ 149 0030 0122     		movs	r2, #1
+ 150 0032 00F15101 		add	r1, r0, #81
+ 151 0036 D0F8B400 		ldr	r0, [r0, #180]
+ 152              	.LVL12:
+ 153 003a FFF7FEFF 		bl	HAL_UART_Receive_IT
+ 154              	.LVL13:
+  38:Src/ibus_stm32.c ****     if(status != HAL_OK) {
+ 155              		.loc 1 38 0
+ 156 003e 0146     		mov	r1, r0
+ 157 0040 68B9     		cbnz	r0, .L14
+ 158              	.LVL14:
+ 159              	.L9:
+  39:Src/ibus_stm32.c ****         printf("Receive_IT failed in ibus_stm32_receive complete() code %d\r\n", status);
+  40:Src/ibus_stm32.c ****     }
+  41:Src/ibus_stm32.c **** }
+ 160              		.loc 1 41 0
+ 161 0042 08BD     		pop	{r3, pc}
+ 162              	.LVL15:
+ 163              	.L10:
+  34:Src/ibus_stm32.c ****         assert(0);
+ 164              		.loc 1 34 0
+ 165 0044 90F85310 		ldrb	r1, [r0, #83]	@ zero_extendqisi2
+ 166 0048 90F85220 		ldrb	r2, [r0, #82]	@ zero_extendqisi2
+ 167 004c 0648     		ldr	r0, .L15
+ 168              	.LVL16:
+ 169 004e FFF7FEFF 		bl	printf
+ 170              	.LVL17:
+  35:Src/ibus_stm32.c ****     }
+ 171              		.loc 1 35 0
+ 172 0052 064B     		ldr	r3, .L15+4
+ 173 0054 064A     		ldr	r2, .L15+8
+ 174 0056 2321     		movs	r1, #35
+ 175 0058 0648     		ldr	r0, .L15+12
+ 176 005a FFF7FEFF 		bl	__assert_func
+ 177              	.LVL18:
+ 178              	.L14:
+  39:Src/ibus_stm32.c ****         printf("Receive_IT failed in ibus_stm32_receive complete() code %d\r\n", status);
+ 179              		.loc 1 39 0
+ 180 005e 0648     		ldr	r0, .L15+16
+ 181              	.LVL19:
+ 182 0060 FFF7FEFF 		bl	printf
+ 183              	.LVL20:
+ 184              		.loc 1 41 0
+ARM GAS  /tmp/ccs4IMbc.s 			page 5
+
+
+ 185 0064 EDE7     		b	.L9
+ 186              	.L16:
+ 187 0066 00BF     		.align	2
+ 188              	.L15:
+ 189 0068 00000000 		.word	.LC1
+ 190 006c 24000000 		.word	.LC2
+ 191 0070 00000000 		.word	.LANCHOR0
+ 192 0074 28000000 		.word	.LC3
+ 193 0078 3C000000 		.word	.LC4
+ 194              		.cfi_endproc
+ 195              	.LFE127:
+ 197              		.section	.text.ibus_stm32_process_rx,"ax",%progbits
+ 198              		.align	1
+ 199              		.global	ibus_stm32_process_rx
+ 200              		.syntax unified
+ 201              		.thumb
+ 202              		.thumb_func
+ 203              		.fpu fpv4-sp-d16
+ 205              	ibus_stm32_process_rx:
+ 206              	.LFB128:
+  42:Src/ibus_stm32.c **** 
+  43:Src/ibus_stm32.c **** void ibus_stm32_process_rx(IbusStm32State *ibs) {
+ 207              		.loc 1 43 0
+ 208              		.cfi_startproc
+ 209              		@ args = 0, pretend = 0, frame = 0
+ 210              		@ frame_needed = 0, uses_anonymous_args = 0
+ 211              	.LVL21:
+ 212 0000 10B5     		push	{r4, lr}
+ 213              	.LCFI2:
+ 214              		.cfi_def_cfa_offset 8
+ 215              		.cfi_offset 4, -8
+ 216              		.cfi_offset 14, -4
+ 217 0002 0446     		mov	r4, r0
+  44:Src/ibus_stm32.c ****     uint8_t readPos;
+  45:Src/ibus_stm32.c ****     while(ibs->rxReadPos != ibs->rxWritePos) {
+ 218              		.loc 1 45 0
+ 219 0004 14E0     		b	.L18
+ 220              	.LVL22:
+ 221              	.L19:
+  46:Src/ibus_stm32.c ****         readPos = ibs->rxReadPos & RBUF_MASK;
+ 222              		.loc 1 46 0
+ 223 0006 94F85230 		ldrb	r3, [r4, #82]	@ zero_extendqisi2
+ 224 000a 03F03F03 		and	r3, r3, #63
+ 225              	.LVL23:
+  47:Src/ibus_stm32.c ****         ibs->totalRx++;
+ 226              		.loc 1 47 0
+ 227 000e D4F8D820 		ldr	r2, [r4, #216]
+ 228 0012 0132     		adds	r2, r2, #1
+ 229 0014 C4F8D820 		str	r2, [r4, #216]
+  48:Src/ibus_stm32.c ****         ibus_receive(&ibs->ibRx, ibs->ringBuf[readPos]);
+ 230              		.loc 1 48 0
+ 231 0018 2344     		add	r3, r3, r4
+ 232              	.LVL24:
+ 233 001a 93F85410 		ldrb	r1, [r3, #84]	@ zero_extendqisi2
+ 234 001e 201D     		adds	r0, r4, #4
+ 235 0020 FFF7FEFF 		bl	ibus_receive
+ 236              	.LVL25:
+ARM GAS  /tmp/ccs4IMbc.s 			page 6
+
+
+  49:Src/ibus_stm32.c ****         //printf("%02x ", ibs->ringBuf[readPos]);
+  50:Src/ibus_stm32.c ****         ibs->rxReadPos++;
+ 237              		.loc 1 50 0
+ 238 0024 94F85230 		ldrb	r3, [r4, #82]	@ zero_extendqisi2
+ 239 0028 0133     		adds	r3, r3, #1
+ 240 002a DBB2     		uxtb	r3, r3
+ 241 002c 84F85230 		strb	r3, [r4, #82]
+ 242              	.L18:
+  45:Src/ibus_stm32.c ****         readPos = ibs->rxReadPos & RBUF_MASK;
+ 243              		.loc 1 45 0
+ 244 0030 94F85220 		ldrb	r2, [r4, #82]	@ zero_extendqisi2
+ 245 0034 D2B2     		uxtb	r2, r2
+ 246 0036 94F85330 		ldrb	r3, [r4, #83]	@ zero_extendqisi2
+ 247 003a DBB2     		uxtb	r3, r3
+ 248 003c 9A42     		cmp	r2, r3
+ 249 003e E2D1     		bne	.L19
+  51:Src/ibus_stm32.c ****     }
+  52:Src/ibus_stm32.c **** }
+ 250              		.loc 1 52 0
+ 251 0040 10BD     		pop	{r4, pc}
+ 252              		.cfi_endproc
+ 253              	.LFE128:
+ 255              		.section	.text.ibus_stm32_transmit_complete,"ax",%progbits
+ 256              		.align	1
+ 257              		.global	ibus_stm32_transmit_complete
+ 258              		.syntax unified
+ 259              		.thumb
+ 260              		.thumb_func
+ 261              		.fpu fpv4-sp-d16
+ 263              	ibus_stm32_transmit_complete:
+ 264              	.LFB129:
+  53:Src/ibus_stm32.c **** 
+  54:Src/ibus_stm32.c **** void ibus_stm32_transmit_complete(IbusStm32State *ibs) {
+ 265              		.loc 1 54 0
+ 266              		.cfi_startproc
+ 267              		@ args = 0, pretend = 0, frame = 0
+ 268              		@ frame_needed = 0, uses_anonymous_args = 0
+ 269              	.LVL26:
+ 270 0000 08B5     		push	{r3, lr}
+ 271              	.LCFI3:
+ 272              		.cfi_def_cfa_offset 8
+ 273              		.cfi_offset 3, -8
+ 274              		.cfi_offset 14, -4
+  55:Src/ibus_stm32.c ****     ibs->txBusy = 0;
+ 275              		.loc 1 55 0
+ 276 0002 0023     		movs	r3, #0
+ 277 0004 80F85030 		strb	r3, [r0, #80]
+  56:Src/ibus_stm32.c ****     if(ibs->halfDuplex == 1) {
+ 278              		.loc 1 56 0
+ 279 0008 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+ 280 000a 012B     		cmp	r3, #1
+ 281 000c 00D0     		beq	.L24
+ 282              	.LVL27:
+ 283              	.L21:
+  57:Src/ibus_stm32.c ****         HAL_HalfDuplex_EnableReceiver(ibs->huart);
+  58:Src/ibus_stm32.c ****     }
+  59:Src/ibus_stm32.c **** }
+ARM GAS  /tmp/ccs4IMbc.s 			page 7
+
+
+ 284              		.loc 1 59 0
+ 285 000e 08BD     		pop	{r3, pc}
+ 286              	.LVL28:
+ 287              	.L24:
+  57:Src/ibus_stm32.c ****         HAL_HalfDuplex_EnableReceiver(ibs->huart);
+ 288              		.loc 1 57 0
+ 289 0010 D0F8B400 		ldr	r0, [r0, #180]
+ 290              	.LVL29:
+ 291 0014 FFF7FEFF 		bl	HAL_HalfDuplex_EnableReceiver
+ 292              	.LVL30:
+ 293              		.loc 1 59 0
+ 294 0018 F9E7     		b	.L21
+ 295              		.cfi_endproc
+ 296              	.LFE129:
+ 298              		.section	.text.ibus_stm32_try_transmit,"ax",%progbits
+ 299              		.align	1
+ 300              		.global	ibus_stm32_try_transmit
+ 301              		.syntax unified
+ 302              		.thumb
+ 303              		.thumb_func
+ 304              		.fpu fpv4-sp-d16
+ 306              	ibus_stm32_try_transmit:
+ 307              	.LFB130:
+  60:Src/ibus_stm32.c **** 
+  61:Src/ibus_stm32.c **** void ibus_stm32_try_transmit(IbusStm32State *ibs) {
+ 308              		.loc 1 61 0
+ 309              		.cfi_startproc
+ 310              		@ args = 0, pretend = 0, frame = 0
+ 311              		@ frame_needed = 0, uses_anonymous_args = 0
+ 312              	.LVL31:
+ 313 0000 38B5     		push	{r3, r4, r5, lr}
+ 314              	.LCFI4:
+ 315              		.cfi_def_cfa_offset 16
+ 316              		.cfi_offset 3, -16
+ 317              		.cfi_offset 4, -12
+ 318              		.cfi_offset 5, -8
+ 319              		.cfi_offset 14, -4
+  62:Src/ibus_stm32.c ****     if(!ibs->txBusy) {
+ 320              		.loc 1 62 0
+ 321 0002 90F85030 		ldrb	r3, [r0, #80]	@ zero_extendqisi2
+ 322 0006 03B1     		cbz	r3, .L29
+ 323              	.LVL32:
+ 324              	.L25:
+  63:Src/ibus_stm32.c ****         ibs->totalTx += IBUS_PACKET_SIZE;
+  64:Src/ibus_stm32.c ****         ibus_make_packet(&ibs->txCh, ibs->txData, IBUS_PACKET_SIZE);
+  65:Src/ibus_stm32.c ****         HAL_StatusTypeDef status = HAL_UART_Transmit_IT(ibs->huart, ibs->txData, IBUS_PACKET_SIZE);
+  66:Src/ibus_stm32.c ****         if(status != HAL_OK) {
+  67:Src/ibus_stm32.c ****             printf("Transmit_IT failed in ibus_stm32_try_transmit! e: %d %p\r\n", status, ibs->huar
+  68:Src/ibus_stm32.c ****         }
+  69:Src/ibus_stm32.c ****         ibs->txBusy = 1;
+  70:Src/ibus_stm32.c ****     }
+  71:Src/ibus_stm32.c **** }
+ 325              		.loc 1 71 0
+ 326 0008 38BD     		pop	{r3, r4, r5, pc}
+ 327              	.LVL33:
+ 328              	.L29:
+ 329 000a 0446     		mov	r4, r0
+ARM GAS  /tmp/ccs4IMbc.s 			page 8
+
+
+ 330              	.LBB3:
+  63:Src/ibus_stm32.c ****         ibs->totalTx += IBUS_PACKET_SIZE;
+ 331              		.loc 1 63 0
+ 332 000c D0F8DC30 		ldr	r3, [r0, #220]
+ 333 0010 2033     		adds	r3, r3, #32
+ 334 0012 C0F8DC30 		str	r3, [r0, #220]
+  64:Src/ibus_stm32.c ****         HAL_StatusTypeDef status = HAL_UART_Transmit_IT(ibs->huart, ibs->txData, IBUS_PACKET_SIZE);
+ 335              		.loc 1 64 0
+ 336 0016 00F19405 		add	r5, r0, #148
+ 337 001a 2022     		movs	r2, #32
+ 338 001c 2946     		mov	r1, r5
+ 339 001e 3430     		adds	r0, r0, #52
+ 340              	.LVL34:
+ 341 0020 FFF7FEFF 		bl	ibus_make_packet
+ 342              	.LVL35:
+  65:Src/ibus_stm32.c ****         if(status != HAL_OK) {
+ 343              		.loc 1 65 0
+ 344 0024 2022     		movs	r2, #32
+ 345 0026 2946     		mov	r1, r5
+ 346 0028 D4F8B400 		ldr	r0, [r4, #180]
+ 347 002c FFF7FEFF 		bl	HAL_UART_Transmit_IT
+ 348              	.LVL36:
+  66:Src/ibus_stm32.c ****             printf("Transmit_IT failed in ibus_stm32_try_transmit! e: %d %p\r\n", status, ibs->huar
+ 349              		.loc 1 66 0
+ 350 0030 0146     		mov	r1, r0
+ 351 0032 18B9     		cbnz	r0, .L30
+ 352              	.LVL37:
+ 353              	.L27:
+  69:Src/ibus_stm32.c ****     }
+ 354              		.loc 1 69 0
+ 355 0034 0123     		movs	r3, #1
+ 356 0036 84F85030 		strb	r3, [r4, #80]
+ 357              	.LBE3:
+ 358              		.loc 1 71 0
+ 359 003a E5E7     		b	.L25
+ 360              	.LVL38:
+ 361              	.L30:
+ 362              	.LBB4:
+  67:Src/ibus_stm32.c ****         }
+ 363              		.loc 1 67 0
+ 364 003c D4F8B430 		ldr	r3, [r4, #180]
+ 365 0040 1A68     		ldr	r2, [r3]
+ 366 0042 0248     		ldr	r0, .L31
+ 367              	.LVL39:
+ 368 0044 FFF7FEFF 		bl	printf
+ 369              	.LVL40:
+ 370 0048 F4E7     		b	.L27
+ 371              	.L32:
+ 372 004a 00BF     		.align	2
+ 373              	.L31:
+ 374 004c 00000000 		.word	.LC5
+ 375              	.LBE4:
+ 376              		.cfi_endproc
+ 377              	.LFE130:
+ 379              		.section	.text.send_telemetry_sensor_request,"ax",%progbits
+ 380              		.align	1
+ 381              		.global	send_telemetry_sensor_request
+ARM GAS  /tmp/ccs4IMbc.s 			page 9
+
+
+ 382              		.syntax unified
+ 383              		.thumb
+ 384              		.thumb_func
+ 385              		.fpu fpv4-sp-d16
+ 387              	send_telemetry_sensor_request:
+ 388              	.LFB131:
+  72:Src/ibus_stm32.c **** 
+  73:Src/ibus_stm32.c **** // NOTE: this function obviously only works on half duplex uart
+  74:Src/ibus_stm32.c **** void send_telemetry_sensor_request(IbusStm32State *ibs, uint8_t sensorId) {
+ 389              		.loc 1 74 0
+ 390              		.cfi_startproc
+ 391              		@ args = 0, pretend = 0, frame = 0
+ 392              		@ frame_needed = 0, uses_anonymous_args = 0
+ 393              	.LVL41:
+ 394 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 395              	.LCFI5:
+ 396              		.cfi_def_cfa_offset 24
+ 397              		.cfi_offset 3, -24
+ 398              		.cfi_offset 4, -20
+ 399              		.cfi_offset 5, -16
+ 400              		.cfi_offset 6, -12
+ 401              		.cfi_offset 7, -8
+ 402              		.cfi_offset 14, -4
+ 403 0002 0446     		mov	r4, r0
+  75:Src/ibus_stm32.c ****   int16_t size = ibus_make_sensor_request_packet(IBUS_CMD_SENSOR_MEASUREMENT, sensorId, ibs->ibusRe
+ 404              		.loc 1 75 0
+ 405 0004 00F1B806 		add	r6, r0, #184
+ 406 0008 2023     		movs	r3, #32
+ 407 000a 3246     		mov	r2, r6
+ 408 000c A020     		movs	r0, #160
+ 409              	.LVL42:
+ 410 000e FFF7FEFF 		bl	ibus_make_sensor_request_packet
+ 411              	.LVL43:
+ 412 0012 05B2     		sxth	r5, r0
+ 413              	.LVL44:
+  76:Src/ibus_stm32.c ****   assert(size > 0);
+ 414              		.loc 1 76 0
+ 415 0014 002D     		cmp	r5, #0
+ 416 0016 10DD     		ble	.L36
+ 417 0018 0746     		mov	r7, r0
+  77:Src/ibus_stm32.c ****   HAL_HalfDuplex_EnableTransmitter(ibs->huart);
+ 418              		.loc 1 77 0
+ 419 001a D4F8B400 		ldr	r0, [r4, #180]
+ 420 001e FFF7FEFF 		bl	HAL_HalfDuplex_EnableTransmitter
+ 421              	.LVL45:
+  78:Src/ibus_stm32.c ****   HAL_UART_Transmit_DMA(ibs->huart, ibs->ibusReqBuf, size);
+ 422              		.loc 1 78 0
+ 423 0022 BAB2     		uxth	r2, r7
+ 424 0024 3146     		mov	r1, r6
+ 425 0026 D4F8B400 		ldr	r0, [r4, #180]
+ 426 002a FFF7FEFF 		bl	HAL_UART_Transmit_DMA
+ 427              	.LVL46:
+  79:Src/ibus_stm32.c ****   ibs->totalTx += size;
+ 428              		.loc 1 79 0
+ 429 002e D4F8DC30 		ldr	r3, [r4, #220]
+ 430 0032 2B44     		add	r3, r3, r5
+ 431 0034 C4F8DC30 		str	r3, [r4, #220]
+ARM GAS  /tmp/ccs4IMbc.s 			page 10
+
+
+  80:Src/ibus_stm32.c **** }
+ 432              		.loc 1 80 0
+ 433 0038 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 434              	.LVL47:
+ 435              	.L36:
+  76:Src/ibus_stm32.c ****   HAL_HalfDuplex_EnableTransmitter(ibs->huart);
+ 436              		.loc 1 76 0 discriminator 1
+ 437 003a 034B     		ldr	r3, .L37
+ 438 003c 034A     		ldr	r2, .L37+4
+ 439 003e 4C21     		movs	r1, #76
+ 440 0040 0348     		ldr	r0, .L37+8
+ 441 0042 FFF7FEFF 		bl	__assert_func
+ 442              	.LVL48:
+ 443              	.L38:
+ 444 0046 00BF     		.align	2
+ 445              	.L37:
+ 446 0048 00000000 		.word	.LC6
+ 447 004c 00000000 		.word	.LANCHOR1
+ 448 0050 28000000 		.word	.LC3
+ 449              		.cfi_endproc
+ 450              	.LFE131:
+ 452              		.section	.rodata.__func__.9198,"a",%progbits
+ 453              		.align	2
+ 454              		.set	.LANCHOR0,. + 0
+ 457              	__func__.9198:
+ 458 0000 69627573 		.ascii	"ibus_stm32_receive_complete\000"
+ 458      5F73746D 
+ 458      33325F72 
+ 458      65636569 
+ 458      76655F63 
+ 459              		.section	.rodata.__func__.9218,"a",%progbits
+ 460              		.align	2
+ 461              		.set	.LANCHOR1,. + 0
+ 464              	__func__.9218:
+ 465 0000 73656E64 		.ascii	"send_telemetry_sensor_request\000"
+ 465      5F74656C 
+ 465      656D6574 
+ 465      72795F73 
+ 465      656E736F 
+ 466              		.section	.rodata.ibus_stm32_init.str1.4,"aMS",%progbits,1
+ 467              		.align	2
+ 468              	.LC0:
+ 469 0000 52656365 		.ascii	"Receive_IT failed in ibus_stm32_init() code %d\015\012"
+ 469      6976655F 
+ 469      49542066 
+ 469      61696C65 
+ 469      6420696E 
+ 470 0030 00       		.ascii	"\000"
+ 471              		.section	.rodata.ibus_stm32_receive_complete.str1.4,"aMS",%progbits,1
+ 472              		.align	2
+ 473              	.LC1:
+ 474 0000 49427573 		.ascii	"IBus Rx buffer overflow! %d %d\015\012\000"
+ 474      20527820 
+ 474      62756666 
+ 474      6572206F 
+ 474      76657266 
+ 475 0021 000000   		.space	3
+ARM GAS  /tmp/ccs4IMbc.s 			page 11
+
+
+ 476              	.LC2:
+ 477 0024 3000     		.ascii	"0\000"
+ 478 0026 0000     		.space	2
+ 479              	.LC3:
+ 480 0028 5372632F 		.ascii	"Src/ibus_stm32.c\000"
+ 480      69627573 
+ 480      5F73746D 
+ 480      33322E63 
+ 480      00
+ 481 0039 000000   		.space	3
+ 482              	.LC4:
+ 483 003c 52656365 		.ascii	"Receive_IT failed in ibus_stm32_receive complete() "
+ 483      6976655F 
+ 483      49542066 
+ 483      61696C65 
+ 483      6420696E 
+ 484 006f 636F6465 		.ascii	"code %d\015\012\000"
+ 484      2025640D 
+ 484      0A00
+ 485              		.section	.rodata.ibus_stm32_try_transmit.str1.4,"aMS",%progbits,1
+ 486              		.align	2
+ 487              	.LC5:
+ 488 0000 5472616E 		.ascii	"Transmit_IT failed in ibus_stm32_try_transmit! e: %"
+ 488      736D6974 
+ 488      5F495420 
+ 488      6661696C 
+ 488      65642069 
+ 489 0033 64202570 		.ascii	"d %p\015\012\000"
+ 489      0D0A00
+ 490              		.section	.rodata.send_telemetry_sensor_request.str1.4,"aMS",%progbits,1
+ 491              		.align	2
+ 492              	.LC6:
+ 493 0000 73697A65 		.ascii	"size > 0\000"
+ 493      203E2030 
+ 493      00
+ 494              		.text
+ 495              	.Letext0:
+ 496              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 497              		.file 3 "/usr/include/newlib/sys/_stdint.h"
+ 498              		.file 4 "Inc/ibus.h"
+ 499              		.file 5 "Drivers/CMSIS/Include/core_cm4.h"
+ 500              		.file 6 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/system_stm32f3xx.h"
+ 501              		.file 7 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/stm32f303xe.h"
+ 502              		.file 8 "/usr/include/newlib/sys/lock.h"
+ 503              		.file 9 "/usr/include/newlib/sys/_types.h"
+ 504              		.file 10 "/usr/lib/gcc/arm-none-eabi/7.3.1/include/stddef.h"
+ 505              		.file 11 "/usr/include/newlib/sys/reent.h"
+ 506              		.file 12 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_def.h"
+ 507              		.file 13 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_dma.h"
+ 508              		.file 14 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart.h"
+ 509              		.file 15 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h"
+ 510              		.file 16 "Inc/ibus_stm32.h"
+ 511              		.file 17 "/usr/include/newlib/assert.h"
+ 512              		.file 18 "/usr/include/newlib/stdio.h"
+ARM GAS  /tmp/ccs4IMbc.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 ibus_stm32.c
+     /tmp/ccs4IMbc.s:18     .text.ibus_stm32_init:0000000000000000 $t
+     /tmp/ccs4IMbc.s:25     .text.ibus_stm32_init:0000000000000000 ibus_stm32_init
+     /tmp/ccs4IMbc.s:106    .text.ibus_stm32_init:0000000000000058 $d
+     /tmp/ccs4IMbc.s:111    .text.ibus_stm32_receive_complete:0000000000000000 $t
+     /tmp/ccs4IMbc.s:118    .text.ibus_stm32_receive_complete:0000000000000000 ibus_stm32_receive_complete
+     /tmp/ccs4IMbc.s:189    .text.ibus_stm32_receive_complete:0000000000000068 $d
+     /tmp/ccs4IMbc.s:198    .text.ibus_stm32_process_rx:0000000000000000 $t
+     /tmp/ccs4IMbc.s:205    .text.ibus_stm32_process_rx:0000000000000000 ibus_stm32_process_rx
+     /tmp/ccs4IMbc.s:256    .text.ibus_stm32_transmit_complete:0000000000000000 $t
+     /tmp/ccs4IMbc.s:263    .text.ibus_stm32_transmit_complete:0000000000000000 ibus_stm32_transmit_complete
+     /tmp/ccs4IMbc.s:299    .text.ibus_stm32_try_transmit:0000000000000000 $t
+     /tmp/ccs4IMbc.s:306    .text.ibus_stm32_try_transmit:0000000000000000 ibus_stm32_try_transmit
+     /tmp/ccs4IMbc.s:374    .text.ibus_stm32_try_transmit:000000000000004c $d
+     /tmp/ccs4IMbc.s:380    .text.send_telemetry_sensor_request:0000000000000000 $t
+     /tmp/ccs4IMbc.s:387    .text.send_telemetry_sensor_request:0000000000000000 send_telemetry_sensor_request
+     /tmp/ccs4IMbc.s:446    .text.send_telemetry_sensor_request:0000000000000048 $d
+     /tmp/ccs4IMbc.s:453    .rodata.__func__.9198:0000000000000000 $d
+     /tmp/ccs4IMbc.s:457    .rodata.__func__.9198:0000000000000000 __func__.9198
+     /tmp/ccs4IMbc.s:460    .rodata.__func__.9218:0000000000000000 $d
+     /tmp/ccs4IMbc.s:464    .rodata.__func__.9218:0000000000000000 __func__.9218
+     /tmp/ccs4IMbc.s:467    .rodata.ibus_stm32_init.str1.4:0000000000000000 $d
+     /tmp/ccs4IMbc.s:472    .rodata.ibus_stm32_receive_complete.str1.4:0000000000000000 $d
+     /tmp/ccs4IMbc.s:486    .rodata.ibus_stm32_try_transmit.str1.4:0000000000000000 $d
+     /tmp/ccs4IMbc.s:491    .rodata.send_telemetry_sensor_request.str1.4:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+ibus_init
+HAL_UART_Receive_IT
+printf
+__assert_func
+ibus_receive
+HAL_HalfDuplex_EnableReceiver
+ibus_make_packet
+HAL_UART_Transmit_IT
+ibus_make_sensor_request_packet
+HAL_HalfDuplex_EnableTransmitter
+HAL_UART_Transmit_DMA

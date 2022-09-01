@@ -1,0 +1,4 @@
+<launch>
+	<node pkg="hover" type="hover_node" name="hover_node" output="screen">
+	</node>
+</launch>

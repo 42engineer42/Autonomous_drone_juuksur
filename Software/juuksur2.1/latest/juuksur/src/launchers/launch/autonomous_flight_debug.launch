@@ -1,0 +1,4 @@
+<launch>
+	<node pkg="autonomous_flight" type="autonomous_flight_node" name="autonomous_flight_node" output="screen" launch-prefix="gnome-terminal -- gdb -ex run --args" >
+	</node>
+</launch>

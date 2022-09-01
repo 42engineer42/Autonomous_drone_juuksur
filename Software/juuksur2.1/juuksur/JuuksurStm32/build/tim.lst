@@ -1,0 +1,1247 @@
+ARM GAS  /tmp/ccHwgUrH.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"tim.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.MX_TIM6_Init,"ax",%progbits
+  18              		.align	1
+  19              		.global	MX_TIM6_Init
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	MX_TIM6_Init:
+  27              	.LFB126:
+  28              		.file 1 "Src/tim.c"
+   1:Src/tim.c     **** /**
+   2:Src/tim.c     ****   ******************************************************************************
+   3:Src/tim.c     ****   * File Name          : TIM.c
+   4:Src/tim.c     ****   * Description        : This file provides code for the configuration
+   5:Src/tim.c     ****   *                      of the TIM instances.
+   6:Src/tim.c     ****   ******************************************************************************
+   7:Src/tim.c     ****   ** This notice applies to any and all portions of this file
+   8:Src/tim.c     ****   * that are not between comment pairs USER CODE BEGIN and
+   9:Src/tim.c     ****   * USER CODE END. Other portions of this file, whether 
+  10:Src/tim.c     ****   * inserted by the user or by software development tools
+  11:Src/tim.c     ****   * are owned by their respective copyright owners.
+  12:Src/tim.c     ****   *
+  13:Src/tim.c     ****   * COPYRIGHT(c) 2019 STMicroelectronics
+  14:Src/tim.c     ****   *
+  15:Src/tim.c     ****   * Redistribution and use in source and binary forms, with or without modification,
+  16:Src/tim.c     ****   * are permitted provided that the following conditions are met:
+  17:Src/tim.c     ****   *   1. Redistributions of source code must retain the above copyright notice,
+  18:Src/tim.c     ****   *      this list of conditions and the following disclaimer.
+  19:Src/tim.c     ****   *   2. Redistributions in binary form must reproduce the above copyright notice,
+  20:Src/tim.c     ****   *      this list of conditions and the following disclaimer in the documentation
+  21:Src/tim.c     ****   *      and/or other materials provided with the distribution.
+  22:Src/tim.c     ****   *   3. Neither the name of STMicroelectronics nor the names of its contributors
+  23:Src/tim.c     ****   *      may be used to endorse or promote products derived from this software
+  24:Src/tim.c     ****   *      without specific prior written permission.
+  25:Src/tim.c     ****   *
+  26:Src/tim.c     ****   * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  27:Src/tim.c     ****   * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  28:Src/tim.c     ****   * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+  29:Src/tim.c     ****   * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+  30:Src/tim.c     ****   * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ARM GAS  /tmp/ccHwgUrH.s 			page 2
+
+
+  31:Src/tim.c     ****   * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+  32:Src/tim.c     ****   * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  33:Src/tim.c     ****   * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+  34:Src/tim.c     ****   * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  35:Src/tim.c     ****   * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  36:Src/tim.c     ****   *
+  37:Src/tim.c     ****   ******************************************************************************
+  38:Src/tim.c     ****   */
+  39:Src/tim.c     **** 
+  40:Src/tim.c     **** /* Includes ------------------------------------------------------------------*/
+  41:Src/tim.c     **** #include "tim.h"
+  42:Src/tim.c     **** 
+  43:Src/tim.c     **** /* USER CODE BEGIN 0 */
+  44:Src/tim.c     **** 
+  45:Src/tim.c     **** /* USER CODE END 0 */
+  46:Src/tim.c     **** 
+  47:Src/tim.c     **** TIM_HandleTypeDef htim6;
+  48:Src/tim.c     **** TIM_HandleTypeDef htim7;
+  49:Src/tim.c     **** 
+  50:Src/tim.c     **** /* TIM6 init function */
+  51:Src/tim.c     **** void MX_TIM6_Init(void)
+  52:Src/tim.c     **** {
+  29              		.loc 1 52 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 16
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 00B5     		push	{lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 4
+  36              		.cfi_offset 14, -4
+  37 0002 85B0     		sub	sp, sp, #20
+  38              	.LCFI1:
+  39              		.cfi_def_cfa_offset 24
+  53:Src/tim.c     ****   TIM_MasterConfigTypeDef sMasterConfig = {0};
+  40              		.loc 1 53 3 view .LVU1
+  41              		.loc 1 53 27 is_stmt 0 view .LVU2
+  42 0004 0023     		movs	r3, #0
+  43 0006 0193     		str	r3, [sp, #4]
+  44 0008 0293     		str	r3, [sp, #8]
+  45 000a 0393     		str	r3, [sp, #12]
+  54:Src/tim.c     **** 
+  55:Src/tim.c     ****   htim6.Instance = TIM6;
+  46              		.loc 1 55 3 is_stmt 1 view .LVU3
+  47              		.loc 1 55 18 is_stmt 0 view .LVU4
+  48 000c 0E48     		ldr	r0, .L7
+  49 000e 0F4A     		ldr	r2, .L7+4
+  50 0010 0260     		str	r2, [r0]
+  56:Src/tim.c     ****   htim6.Init.Prescaler = 18-1;
+  51              		.loc 1 56 3 is_stmt 1 view .LVU5
+  52              		.loc 1 56 24 is_stmt 0 view .LVU6
+  53 0012 1122     		movs	r2, #17
+  54 0014 4260     		str	r2, [r0, #4]
+  57:Src/tim.c     ****   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
+  55              		.loc 1 57 3 is_stmt 1 view .LVU7
+  56              		.loc 1 57 26 is_stmt 0 view .LVU8
+  57 0016 8360     		str	r3, [r0, #8]
+  58:Src/tim.c     ****   htim6.Init.Period = 56000-1;
+ARM GAS  /tmp/ccHwgUrH.s 			page 3
+
+
+  58              		.loc 1 58 3 is_stmt 1 view .LVU9
+  59              		.loc 1 58 21 is_stmt 0 view .LVU10
+  60 0018 4DF6BF22 		movw	r2, #55999
+  61 001c C260     		str	r2, [r0, #12]
+  59:Src/tim.c     ****   htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  62              		.loc 1 59 3 is_stmt 1 view .LVU11
+  63              		.loc 1 59 32 is_stmt 0 view .LVU12
+  64 001e 8361     		str	r3, [r0, #24]
+  60:Src/tim.c     ****   if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
+  65              		.loc 1 60 3 is_stmt 1 view .LVU13
+  66              		.loc 1 60 7 is_stmt 0 view .LVU14
+  67 0020 FFF7FEFF 		bl	HAL_TIM_Base_Init
+  68              	.LVL0:
+  69              		.loc 1 60 6 view .LVU15
+  70 0024 50B9     		cbnz	r0, .L5
+  71              	.L2:
+  61:Src/tim.c     ****   {
+  62:Src/tim.c     ****     Error_Handler();
+  63:Src/tim.c     ****   }
+  64:Src/tim.c     ****   sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  72              		.loc 1 64 3 is_stmt 1 view .LVU16
+  73              		.loc 1 64 37 is_stmt 0 view .LVU17
+  74 0026 0023     		movs	r3, #0
+  75 0028 0193     		str	r3, [sp, #4]
+  65:Src/tim.c     ****   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  76              		.loc 1 65 3 is_stmt 1 view .LVU18
+  77              		.loc 1 65 33 is_stmt 0 view .LVU19
+  78 002a 0393     		str	r3, [sp, #12]
+  66:Src/tim.c     ****   if (HAL_TIMEx_MasterConfigSynchronization(&htim6, &sMasterConfig) != HAL_OK)
+  79              		.loc 1 66 3 is_stmt 1 view .LVU20
+  80              		.loc 1 66 7 is_stmt 0 view .LVU21
+  81 002c 01A9     		add	r1, sp, #4
+  82 002e 0648     		ldr	r0, .L7
+  83 0030 FFF7FEFF 		bl	HAL_TIMEx_MasterConfigSynchronization
+  84              	.LVL1:
+  85              		.loc 1 66 6 view .LVU22
+  86 0034 28B9     		cbnz	r0, .L6
+  87              	.L1:
+  67:Src/tim.c     ****   {
+  68:Src/tim.c     ****     Error_Handler();
+  69:Src/tim.c     ****   }
+  70:Src/tim.c     **** 
+  71:Src/tim.c     **** }
+  88              		.loc 1 71 1 view .LVU23
+  89 0036 05B0     		add	sp, sp, #20
+  90              	.LCFI2:
+  91              		.cfi_remember_state
+  92              		.cfi_def_cfa_offset 4
+  93              		@ sp needed
+  94 0038 5DF804FB 		ldr	pc, [sp], #4
+  95              	.L5:
+  96              	.LCFI3:
+  97              		.cfi_restore_state
+  62:Src/tim.c     ****   }
+  98              		.loc 1 62 5 is_stmt 1 view .LVU24
+  99 003c FFF7FEFF 		bl	Error_Handler
+ 100              	.LVL2:
+ARM GAS  /tmp/ccHwgUrH.s 			page 4
+
+
+ 101 0040 F1E7     		b	.L2
+ 102              	.L6:
+  68:Src/tim.c     ****   }
+ 103              		.loc 1 68 5 view .LVU25
+ 104 0042 FFF7FEFF 		bl	Error_Handler
+ 105              	.LVL3:
+ 106              		.loc 1 71 1 is_stmt 0 view .LVU26
+ 107 0046 F6E7     		b	.L1
+ 108              	.L8:
+ 109              		.align	2
+ 110              	.L7:
+ 111 0048 00000000 		.word	htim6
+ 112 004c 00100040 		.word	1073745920
+ 113              		.cfi_endproc
+ 114              	.LFE126:
+ 116              		.section	.text.MX_TIM7_Init,"ax",%progbits
+ 117              		.align	1
+ 118              		.global	MX_TIM7_Init
+ 119              		.syntax unified
+ 120              		.thumb
+ 121              		.thumb_func
+ 122              		.fpu fpv4-sp-d16
+ 124              	MX_TIM7_Init:
+ 125              	.LFB127:
+  72:Src/tim.c     **** /* TIM7 init function */
+  73:Src/tim.c     **** void MX_TIM7_Init(void)
+  74:Src/tim.c     **** {
+ 126              		.loc 1 74 1 is_stmt 1 view -0
+ 127              		.cfi_startproc
+ 128              		@ args = 0, pretend = 0, frame = 16
+ 129              		@ frame_needed = 0, uses_anonymous_args = 0
+ 130 0000 00B5     		push	{lr}
+ 131              	.LCFI4:
+ 132              		.cfi_def_cfa_offset 4
+ 133              		.cfi_offset 14, -4
+ 134 0002 85B0     		sub	sp, sp, #20
+ 135              	.LCFI5:
+ 136              		.cfi_def_cfa_offset 24
+  75:Src/tim.c     ****   TIM_MasterConfigTypeDef sMasterConfig = {0};
+ 137              		.loc 1 75 3 view .LVU28
+ 138              		.loc 1 75 27 is_stmt 0 view .LVU29
+ 139 0004 0023     		movs	r3, #0
+ 140 0006 0193     		str	r3, [sp, #4]
+ 141 0008 0293     		str	r3, [sp, #8]
+ 142 000a 0393     		str	r3, [sp, #12]
+  76:Src/tim.c     **** 
+  77:Src/tim.c     ****   htim7.Instance = TIM7;
+ 143              		.loc 1 77 3 is_stmt 1 view .LVU30
+ 144              		.loc 1 77 18 is_stmt 0 view .LVU31
+ 145 000c 0E48     		ldr	r0, .L15
+ 146 000e 0F4A     		ldr	r2, .L15+4
+ 147 0010 0260     		str	r2, [r0]
+  78:Src/tim.c     ****   htim7.Init.Prescaler = 18-1;
+ 148              		.loc 1 78 3 is_stmt 1 view .LVU32
+ 149              		.loc 1 78 24 is_stmt 0 view .LVU33
+ 150 0012 1122     		movs	r2, #17
+ 151 0014 4260     		str	r2, [r0, #4]
+ARM GAS  /tmp/ccHwgUrH.s 			page 5
+
+
+  79:Src/tim.c     ****   htim7.Init.CounterMode = TIM_COUNTERMODE_UP;
+ 152              		.loc 1 79 3 is_stmt 1 view .LVU34
+ 153              		.loc 1 79 26 is_stmt 0 view .LVU35
+ 154 0016 8360     		str	r3, [r0, #8]
+  80:Src/tim.c     ****   htim7.Init.Period = 53000-1;
+ 155              		.loc 1 80 3 is_stmt 1 view .LVU36
+ 156              		.loc 1 80 21 is_stmt 0 view .LVU37
+ 157 0018 4CF60772 		movw	r2, #52999
+ 158 001c C260     		str	r2, [r0, #12]
+  81:Src/tim.c     ****   htim7.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+ 159              		.loc 1 81 3 is_stmt 1 view .LVU38
+ 160              		.loc 1 81 32 is_stmt 0 view .LVU39
+ 161 001e 8361     		str	r3, [r0, #24]
+  82:Src/tim.c     ****   if (HAL_TIM_Base_Init(&htim7) != HAL_OK)
+ 162              		.loc 1 82 3 is_stmt 1 view .LVU40
+ 163              		.loc 1 82 7 is_stmt 0 view .LVU41
+ 164 0020 FFF7FEFF 		bl	HAL_TIM_Base_Init
+ 165              	.LVL4:
+ 166              		.loc 1 82 6 view .LVU42
+ 167 0024 50B9     		cbnz	r0, .L13
+ 168              	.L10:
+  83:Src/tim.c     ****   {
+  84:Src/tim.c     ****     Error_Handler();
+  85:Src/tim.c     ****   }
+  86:Src/tim.c     ****   sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+ 169              		.loc 1 86 3 is_stmt 1 view .LVU43
+ 170              		.loc 1 86 37 is_stmt 0 view .LVU44
+ 171 0026 0023     		movs	r3, #0
+ 172 0028 0193     		str	r3, [sp, #4]
+  87:Src/tim.c     ****   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+ 173              		.loc 1 87 3 is_stmt 1 view .LVU45
+ 174              		.loc 1 87 33 is_stmt 0 view .LVU46
+ 175 002a 0393     		str	r3, [sp, #12]
+  88:Src/tim.c     ****   if (HAL_TIMEx_MasterConfigSynchronization(&htim7, &sMasterConfig) != HAL_OK)
+ 176              		.loc 1 88 3 is_stmt 1 view .LVU47
+ 177              		.loc 1 88 7 is_stmt 0 view .LVU48
+ 178 002c 01A9     		add	r1, sp, #4
+ 179 002e 0648     		ldr	r0, .L15
+ 180 0030 FFF7FEFF 		bl	HAL_TIMEx_MasterConfigSynchronization
+ 181              	.LVL5:
+ 182              		.loc 1 88 6 view .LVU49
+ 183 0034 28B9     		cbnz	r0, .L14
+ 184              	.L9:
+  89:Src/tim.c     ****   {
+  90:Src/tim.c     ****     Error_Handler();
+  91:Src/tim.c     ****   }
+  92:Src/tim.c     **** 
+  93:Src/tim.c     **** }
+ 185              		.loc 1 93 1 view .LVU50
+ 186 0036 05B0     		add	sp, sp, #20
+ 187              	.LCFI6:
+ 188              		.cfi_remember_state
+ 189              		.cfi_def_cfa_offset 4
+ 190              		@ sp needed
+ 191 0038 5DF804FB 		ldr	pc, [sp], #4
+ 192              	.L13:
+ 193              	.LCFI7:
+ARM GAS  /tmp/ccHwgUrH.s 			page 6
+
+
+ 194              		.cfi_restore_state
+  84:Src/tim.c     ****   }
+ 195              		.loc 1 84 5 is_stmt 1 view .LVU51
+ 196 003c FFF7FEFF 		bl	Error_Handler
+ 197              	.LVL6:
+ 198 0040 F1E7     		b	.L10
+ 199              	.L14:
+  90:Src/tim.c     ****   }
+ 200              		.loc 1 90 5 view .LVU52
+ 201 0042 FFF7FEFF 		bl	Error_Handler
+ 202              	.LVL7:
+ 203              		.loc 1 93 1 is_stmt 0 view .LVU53
+ 204 0046 F6E7     		b	.L9
+ 205              	.L16:
+ 206              		.align	2
+ 207              	.L15:
+ 208 0048 00000000 		.word	htim7
+ 209 004c 00140040 		.word	1073746944
+ 210              		.cfi_endproc
+ 211              	.LFE127:
+ 213              		.section	.text.HAL_TIM_Base_MspInit,"ax",%progbits
+ 214              		.align	1
+ 215              		.global	HAL_TIM_Base_MspInit
+ 216              		.syntax unified
+ 217              		.thumb
+ 218              		.thumb_func
+ 219              		.fpu fpv4-sp-d16
+ 221              	HAL_TIM_Base_MspInit:
+ 222              	.LVL8:
+ 223              	.LFB128:
+  94:Src/tim.c     **** 
+  95:Src/tim.c     **** void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* tim_baseHandle)
+  96:Src/tim.c     **** {
+ 224              		.loc 1 96 1 is_stmt 1 view -0
+ 225              		.cfi_startproc
+ 226              		@ args = 0, pretend = 0, frame = 8
+ 227              		@ frame_needed = 0, uses_anonymous_args = 0
+ 228              		.loc 1 96 1 is_stmt 0 view .LVU55
+ 229 0000 00B5     		push	{lr}
+ 230              	.LCFI8:
+ 231              		.cfi_def_cfa_offset 4
+ 232              		.cfi_offset 14, -4
+ 233 0002 83B0     		sub	sp, sp, #12
+ 234              	.LCFI9:
+ 235              		.cfi_def_cfa_offset 16
+  97:Src/tim.c     **** 
+  98:Src/tim.c     ****   if(tim_baseHandle->Instance==TIM6)
+ 236              		.loc 1 98 3 is_stmt 1 view .LVU56
+ 237              		.loc 1 98 20 is_stmt 0 view .LVU57
+ 238 0004 0368     		ldr	r3, [r0]
+ 239              		.loc 1 98 5 view .LVU58
+ 240 0006 174A     		ldr	r2, .L23
+ 241 0008 9342     		cmp	r3, r2
+ 242 000a 05D0     		beq	.L21
+  99:Src/tim.c     ****   {
+ 100:Src/tim.c     ****   /* USER CODE BEGIN TIM6_MspInit 0 */
+ 101:Src/tim.c     **** 
+ARM GAS  /tmp/ccHwgUrH.s 			page 7
+
+
+ 102:Src/tim.c     ****   /* USER CODE END TIM6_MspInit 0 */
+ 103:Src/tim.c     ****     /* TIM6 clock enable */
+ 104:Src/tim.c     ****     __HAL_RCC_TIM6_CLK_ENABLE();
+ 105:Src/tim.c     **** 
+ 106:Src/tim.c     ****     /* TIM6 interrupt Init */
+ 107:Src/tim.c     ****     HAL_NVIC_SetPriority(TIM6_DAC_IRQn, 2, 0);
+ 108:Src/tim.c     ****     HAL_NVIC_EnableIRQ(TIM6_DAC_IRQn);
+ 109:Src/tim.c     ****   /* USER CODE BEGIN TIM6_MspInit 1 */
+ 110:Src/tim.c     **** 
+ 111:Src/tim.c     ****   /* USER CODE END TIM6_MspInit 1 */
+ 112:Src/tim.c     ****   }
+ 113:Src/tim.c     ****   else if(tim_baseHandle->Instance==TIM7)
+ 243              		.loc 1 113 8 is_stmt 1 view .LVU59
+ 244              		.loc 1 113 10 is_stmt 0 view .LVU60
+ 245 000c 164A     		ldr	r2, .L23+4
+ 246 000e 9342     		cmp	r3, r2
+ 247 0010 15D0     		beq	.L22
+ 248              	.LVL9:
+ 249              	.L17:
+ 114:Src/tim.c     ****   {
+ 115:Src/tim.c     ****   /* USER CODE BEGIN TIM7_MspInit 0 */
+ 116:Src/tim.c     **** 
+ 117:Src/tim.c     ****   /* USER CODE END TIM7_MspInit 0 */
+ 118:Src/tim.c     ****     /* TIM7 clock enable */
+ 119:Src/tim.c     ****     __HAL_RCC_TIM7_CLK_ENABLE();
+ 120:Src/tim.c     **** 
+ 121:Src/tim.c     ****     /* TIM7 interrupt Init */
+ 122:Src/tim.c     ****     HAL_NVIC_SetPriority(TIM7_IRQn, 2, 0);
+ 123:Src/tim.c     ****     HAL_NVIC_EnableIRQ(TIM7_IRQn);
+ 124:Src/tim.c     ****   /* USER CODE BEGIN TIM7_MspInit 1 */
+ 125:Src/tim.c     **** 
+ 126:Src/tim.c     ****   /* USER CODE END TIM7_MspInit 1 */
+ 127:Src/tim.c     ****   }
+ 128:Src/tim.c     **** }
+ 250              		.loc 1 128 1 view .LVU61
+ 251 0012 03B0     		add	sp, sp, #12
+ 252              	.LCFI10:
+ 253              		.cfi_remember_state
+ 254              		.cfi_def_cfa_offset 4
+ 255              		@ sp needed
+ 256 0014 5DF804FB 		ldr	pc, [sp], #4
+ 257              	.LVL10:
+ 258              	.L21:
+ 259              	.LCFI11:
+ 260              		.cfi_restore_state
+ 104:Src/tim.c     **** 
+ 261              		.loc 1 104 5 is_stmt 1 view .LVU62
+ 262              	.LBB2:
+ 104:Src/tim.c     **** 
+ 263              		.loc 1 104 5 view .LVU63
+ 104:Src/tim.c     **** 
+ 264              		.loc 1 104 5 view .LVU64
+ 265 0018 144B     		ldr	r3, .L23+8
+ 266 001a DA69     		ldr	r2, [r3, #28]
+ 267 001c 42F01002 		orr	r2, r2, #16
+ 268 0020 DA61     		str	r2, [r3, #28]
+ 104:Src/tim.c     **** 
+ARM GAS  /tmp/ccHwgUrH.s 			page 8
+
+
+ 269              		.loc 1 104 5 view .LVU65
+ 270 0022 DB69     		ldr	r3, [r3, #28]
+ 271 0024 03F01003 		and	r3, r3, #16
+ 272 0028 0093     		str	r3, [sp]
+ 104:Src/tim.c     **** 
+ 273              		.loc 1 104 5 view .LVU66
+ 274 002a 009B     		ldr	r3, [sp]
+ 275              	.LBE2:
+ 104:Src/tim.c     **** 
+ 276              		.loc 1 104 5 view .LVU67
+ 107:Src/tim.c     ****     HAL_NVIC_EnableIRQ(TIM6_DAC_IRQn);
+ 277              		.loc 1 107 5 view .LVU68
+ 278 002c 0022     		movs	r2, #0
+ 279 002e 0221     		movs	r1, #2
+ 280 0030 3620     		movs	r0, #54
+ 281              	.LVL11:
+ 107:Src/tim.c     ****     HAL_NVIC_EnableIRQ(TIM6_DAC_IRQn);
+ 282              		.loc 1 107 5 is_stmt 0 view .LVU69
+ 283 0032 FFF7FEFF 		bl	HAL_NVIC_SetPriority
+ 284              	.LVL12:
+ 108:Src/tim.c     ****   /* USER CODE BEGIN TIM6_MspInit 1 */
+ 285              		.loc 1 108 5 is_stmt 1 view .LVU70
+ 286 0036 3620     		movs	r0, #54
+ 287 0038 FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
+ 288              	.LVL13:
+ 289 003c E9E7     		b	.L17
+ 290              	.LVL14:
+ 291              	.L22:
+ 119:Src/tim.c     **** 
+ 292              		.loc 1 119 5 view .LVU71
+ 293              	.LBB3:
+ 119:Src/tim.c     **** 
+ 294              		.loc 1 119 5 view .LVU72
+ 119:Src/tim.c     **** 
+ 295              		.loc 1 119 5 view .LVU73
+ 296 003e 0B4B     		ldr	r3, .L23+8
+ 297 0040 DA69     		ldr	r2, [r3, #28]
+ 298 0042 42F02002 		orr	r2, r2, #32
+ 299 0046 DA61     		str	r2, [r3, #28]
+ 119:Src/tim.c     **** 
+ 300              		.loc 1 119 5 view .LVU74
+ 301 0048 DB69     		ldr	r3, [r3, #28]
+ 302 004a 03F02003 		and	r3, r3, #32
+ 303 004e 0193     		str	r3, [sp, #4]
+ 119:Src/tim.c     **** 
+ 304              		.loc 1 119 5 view .LVU75
+ 305 0050 019B     		ldr	r3, [sp, #4]
+ 306              	.LBE3:
+ 119:Src/tim.c     **** 
+ 307              		.loc 1 119 5 view .LVU76
+ 122:Src/tim.c     ****     HAL_NVIC_EnableIRQ(TIM7_IRQn);
+ 308              		.loc 1 122 5 view .LVU77
+ 309 0052 0022     		movs	r2, #0
+ 310 0054 0221     		movs	r1, #2
+ 311 0056 3720     		movs	r0, #55
+ 312              	.LVL15:
+ 122:Src/tim.c     ****     HAL_NVIC_EnableIRQ(TIM7_IRQn);
+ARM GAS  /tmp/ccHwgUrH.s 			page 9
+
+
+ 313              		.loc 1 122 5 is_stmt 0 view .LVU78
+ 314 0058 FFF7FEFF 		bl	HAL_NVIC_SetPriority
+ 315              	.LVL16:
+ 123:Src/tim.c     ****   /* USER CODE BEGIN TIM7_MspInit 1 */
+ 316              		.loc 1 123 5 is_stmt 1 view .LVU79
+ 317 005c 3720     		movs	r0, #55
+ 318 005e FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
+ 319              	.LVL17:
+ 320              		.loc 1 128 1 is_stmt 0 view .LVU80
+ 321 0062 D6E7     		b	.L17
+ 322              	.L24:
+ 323              		.align	2
+ 324              	.L23:
+ 325 0064 00100040 		.word	1073745920
+ 326 0068 00140040 		.word	1073746944
+ 327 006c 00100240 		.word	1073876992
+ 328              		.cfi_endproc
+ 329              	.LFE128:
+ 331              		.section	.text.HAL_TIM_Base_MspDeInit,"ax",%progbits
+ 332              		.align	1
+ 333              		.global	HAL_TIM_Base_MspDeInit
+ 334              		.syntax unified
+ 335              		.thumb
+ 336              		.thumb_func
+ 337              		.fpu fpv4-sp-d16
+ 339              	HAL_TIM_Base_MspDeInit:
+ 340              	.LVL18:
+ 341              	.LFB129:
+ 129:Src/tim.c     **** 
+ 130:Src/tim.c     **** void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* tim_baseHandle)
+ 131:Src/tim.c     **** {
+ 342              		.loc 1 131 1 is_stmt 1 view -0
+ 343              		.cfi_startproc
+ 344              		@ args = 0, pretend = 0, frame = 0
+ 345              		@ frame_needed = 0, uses_anonymous_args = 0
+ 346              		.loc 1 131 1 is_stmt 0 view .LVU82
+ 347 0000 08B5     		push	{r3, lr}
+ 348              	.LCFI12:
+ 349              		.cfi_def_cfa_offset 8
+ 350              		.cfi_offset 3, -8
+ 351              		.cfi_offset 14, -4
+ 132:Src/tim.c     **** 
+ 133:Src/tim.c     ****   if(tim_baseHandle->Instance==TIM6)
+ 352              		.loc 1 133 3 is_stmt 1 view .LVU83
+ 353              		.loc 1 133 20 is_stmt 0 view .LVU84
+ 354 0002 0368     		ldr	r3, [r0]
+ 355              		.loc 1 133 5 view .LVU85
+ 356 0004 0D4A     		ldr	r2, .L31
+ 357 0006 9342     		cmp	r3, r2
+ 358 0008 03D0     		beq	.L29
+ 134:Src/tim.c     ****   {
+ 135:Src/tim.c     ****   /* USER CODE BEGIN TIM6_MspDeInit 0 */
+ 136:Src/tim.c     **** 
+ 137:Src/tim.c     ****   /* USER CODE END TIM6_MspDeInit 0 */
+ 138:Src/tim.c     ****     /* Peripheral clock disable */
+ 139:Src/tim.c     ****     __HAL_RCC_TIM6_CLK_DISABLE();
+ 140:Src/tim.c     **** 
+ARM GAS  /tmp/ccHwgUrH.s 			page 10
+
+
+ 141:Src/tim.c     ****     /* TIM6 interrupt Deinit */
+ 142:Src/tim.c     ****     HAL_NVIC_DisableIRQ(TIM6_DAC_IRQn);
+ 143:Src/tim.c     ****   /* USER CODE BEGIN TIM6_MspDeInit 1 */
+ 144:Src/tim.c     **** 
+ 145:Src/tim.c     ****   /* USER CODE END TIM6_MspDeInit 1 */
+ 146:Src/tim.c     ****   }
+ 147:Src/tim.c     ****   else if(tim_baseHandle->Instance==TIM7)
+ 359              		.loc 1 147 8 is_stmt 1 view .LVU86
+ 360              		.loc 1 147 10 is_stmt 0 view .LVU87
+ 361 000a 0D4A     		ldr	r2, .L31+4
+ 362 000c 9342     		cmp	r3, r2
+ 363 000e 0AD0     		beq	.L30
+ 364              	.LVL19:
+ 365              	.L25:
+ 148:Src/tim.c     ****   {
+ 149:Src/tim.c     ****   /* USER CODE BEGIN TIM7_MspDeInit 0 */
+ 150:Src/tim.c     **** 
+ 151:Src/tim.c     ****   /* USER CODE END TIM7_MspDeInit 0 */
+ 152:Src/tim.c     ****     /* Peripheral clock disable */
+ 153:Src/tim.c     ****     __HAL_RCC_TIM7_CLK_DISABLE();
+ 154:Src/tim.c     **** 
+ 155:Src/tim.c     ****     /* TIM7 interrupt Deinit */
+ 156:Src/tim.c     ****     HAL_NVIC_DisableIRQ(TIM7_IRQn);
+ 157:Src/tim.c     ****   /* USER CODE BEGIN TIM7_MspDeInit 1 */
+ 158:Src/tim.c     **** 
+ 159:Src/tim.c     ****   /* USER CODE END TIM7_MspDeInit 1 */
+ 160:Src/tim.c     ****   }
+ 161:Src/tim.c     **** } 
+ 366              		.loc 1 161 1 view .LVU88
+ 367 0010 08BD     		pop	{r3, pc}
+ 368              	.LVL20:
+ 369              	.L29:
+ 139:Src/tim.c     **** 
+ 370              		.loc 1 139 5 is_stmt 1 view .LVU89
+ 371 0012 02F50032 		add	r2, r2, #131072
+ 372 0016 D369     		ldr	r3, [r2, #28]
+ 373 0018 23F01003 		bic	r3, r3, #16
+ 374 001c D361     		str	r3, [r2, #28]
+ 142:Src/tim.c     ****   /* USER CODE BEGIN TIM6_MspDeInit 1 */
+ 375              		.loc 1 142 5 view .LVU90
+ 376 001e 3620     		movs	r0, #54
+ 377              	.LVL21:
+ 142:Src/tim.c     ****   /* USER CODE BEGIN TIM6_MspDeInit 1 */
+ 378              		.loc 1 142 5 is_stmt 0 view .LVU91
+ 379 0020 FFF7FEFF 		bl	HAL_NVIC_DisableIRQ
+ 380              	.LVL22:
+ 381 0024 F4E7     		b	.L25
+ 382              	.LVL23:
+ 383              	.L30:
+ 153:Src/tim.c     **** 
+ 384              		.loc 1 153 5 is_stmt 1 view .LVU92
+ 385 0026 02F5FE32 		add	r2, r2, #130048
+ 386 002a D369     		ldr	r3, [r2, #28]
+ 387 002c 23F02003 		bic	r3, r3, #32
+ 388 0030 D361     		str	r3, [r2, #28]
+ 156:Src/tim.c     ****   /* USER CODE BEGIN TIM7_MspDeInit 1 */
+ 389              		.loc 1 156 5 view .LVU93
+ARM GAS  /tmp/ccHwgUrH.s 			page 11
+
+
+ 390 0032 3720     		movs	r0, #55
+ 391              	.LVL24:
+ 156:Src/tim.c     ****   /* USER CODE BEGIN TIM7_MspDeInit 1 */
+ 392              		.loc 1 156 5 is_stmt 0 view .LVU94
+ 393 0034 FFF7FEFF 		bl	HAL_NVIC_DisableIRQ
+ 394              	.LVL25:
+ 395              		.loc 1 161 1 view .LVU95
+ 396 0038 EAE7     		b	.L25
+ 397              	.L32:
+ 398 003a 00BF     		.align	2
+ 399              	.L31:
+ 400 003c 00100040 		.word	1073745920
+ 401 0040 00140040 		.word	1073746944
+ 402              		.cfi_endproc
+ 403              	.LFE129:
+ 405              		.section	.text.HAL_TIM_PeriodElapsedCallback,"ax",%progbits
+ 406              		.align	1
+ 407              		.global	HAL_TIM_PeriodElapsedCallback
+ 408              		.syntax unified
+ 409              		.thumb
+ 410              		.thumb_func
+ 411              		.fpu fpv4-sp-d16
+ 413              	HAL_TIM_PeriodElapsedCallback:
+ 414              	.LVL26:
+ 415              	.LFB130:
+ 162:Src/tim.c     **** 
+ 163:Src/tim.c     **** /* USER CODE BEGIN 1 */
+ 164:Src/tim.c     **** 
+ 165:Src/tim.c     **** void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+ 416              		.loc 1 165 61 is_stmt 1 view -0
+ 417              		.cfi_startproc
+ 418              		@ args = 0, pretend = 0, frame = 0
+ 419              		@ frame_needed = 0, uses_anonymous_args = 0
+ 420              		.loc 1 165 61 is_stmt 0 view .LVU97
+ 421 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+ 422              	.LCFI13:
+ 423              		.cfi_def_cfa_offset 24
+ 424              		.cfi_offset 4, -24
+ 425              		.cfi_offset 5, -20
+ 426              		.cfi_offset 6, -16
+ 427              		.cfi_offset 7, -12
+ 428              		.cfi_offset 8, -8
+ 429              		.cfi_offset 14, -4
+ 430 0004 0446     		mov	r4, r0
+ 166:Src/tim.c     ****   int i;
+ 431              		.loc 1 166 3 is_stmt 1 view .LVU98
+ 167:Src/tim.c     ****   uint32_t curTick = HAL_GetTick();
+ 432              		.loc 1 167 3 view .LVU99
+ 433              		.loc 1 167 22 is_stmt 0 view .LVU100
+ 434 0006 FFF7FEFF 		bl	HAL_GetTick
+ 435              	.LVL27:
+ 168:Src/tim.c     ****   if(htim->Instance == TIM6) { // TIM6 is used to send data to Pi and FC
+ 436              		.loc 1 168 3 is_stmt 1 view .LVU101
+ 437              		.loc 1 168 10 is_stmt 0 view .LVU102
+ 438 000a 2368     		ldr	r3, [r4]
+ 439              		.loc 1 168 5 view .LVU103
+ 440 000c 5A4A     		ldr	r2, .L59
+ARM GAS  /tmp/ccHwgUrH.s 			page 12
+
+
+ 441 000e 9342     		cmp	r3, r2
+ 442 0010 05D0     		beq	.L56
+ 169:Src/tim.c     ****       // TODO: distance to ground, yaw, pitch, roll
+ 170:Src/tim.c     ****       // STM -> PI
+ 171:Src/tim.c     ****       //piIbus.txCh.channels[i] = 1503;
+ 172:Src/tim.c     ****       piIbus.txCh.channels[0] = tfmini.tfmini.dist;
+ 173:Src/tim.c     ****       // TODO: does this behave correclty? (assigning signed to unsigned, should be twos complement
+ 174:Src/tim.c     ****       piIbus.txCh.channels[1] = *((uint16_t*)&telYaw);
+ 175:Src/tim.c     ****       piIbus.txCh.channels[2] = *((uint16_t*)&telPitch);
+ 176:Src/tim.c     ****       piIbus.txCh.channels[3] = *((uint16_t*)&telRoll);
+ 177:Src/tim.c     ****       piIbus.txCh.channels[4] = *((uint16_t*)&telAccX);
+ 178:Src/tim.c     ****       piIbus.txCh.channels[5] = *((uint16_t*)&telAccY);
+ 179:Src/tim.c     ****       piIbus.txCh.channels[6] = *((uint16_t*)&telAccZ);
+ 180:Src/tim.c     ****       for(i = 7; i < 14; i++) {
+ 181:Src/tim.c     ****           piIbus.txCh.channels[i] = rxChannels.channels[i];
+ 182:Src/tim.c     ****       }
+ 183:Src/tim.c     ****       ibus_stm32_try_transmit(&piIbus);
+ 184:Src/tim.c     **** 
+ 185:Src/tim.c     ****       // RX/PI -> FC
+ 186:Src/tim.c     ****       // TODO: real data and switching between pi and rx channels
+ 187:Src/tim.c     ****       uint8_t useManualMode = rxChannels.channels[AUTO_MODE_CH] < 1800;
+ 188:Src/tim.c     ****       if(useManualMode) { // manual mode
+ 189:Src/tim.c     ****           // 0 - roll, 1 - pitch, 2 - throttle, 3 - yaw
+ 190:Src/tim.c     ****           for(i = 0; i < 14; i++) {
+ 191:Src/tim.c     ****               rxIbus.txCh.channels[i] = rxChannels.channels[i];
+ 192:Src/tim.c     ****           }
+ 193:Src/tim.c     ****       } else { // autonomous mode
+ 194:Src/tim.c     ****           uint8_t useFailsafe = (curTick - lastPiData) > 1000;
+ 195:Src/tim.c     ****           // init failsafe state when we either go into failsafe mode or we are already in failsafe
+ 196:Src/tim.c     ****           if((!failsafePrev && useFailsafe) || (useFailsafe && manualPrev && !useManualMode)) {
+ 197:Src/tim.c     ****               failsafe_pi_ctrl_lost(&failsafe, curTick, tfmini.tfmini.dist);
+ 198:Src/tim.c     ****           }
+ 199:Src/tim.c     ****           if(!useFailsafe) { // HAL uses 1ms tick by default
+ 200:Src/tim.c     ****               for(i = 0; i < 14; i++) {
+ 201:Src/tim.c     ****                   if(i != AUTO_MODE_CH) {
+ 202:Src/tim.c     ****                       rxIbus.txCh.channels[i] = piChannels.channels[i];
+ 203:Src/tim.c     ****                   } else {
+ 204:Src/tim.c     ****                       rxIbus.txCh.channels[i] = rxChannels.channels[i];
+ 205:Src/tim.c     ****                   }
+ 206:Src/tim.c     ****               }
+ 207:Src/tim.c     ****           } else {
+ 208:Src/tim.c     ****               // TODO: is this fast enough to be done in this interrupt?
+ 209:Src/tim.c     ****               uint16_t throttle = failsafe_autohover_update2(&failsafe, curTick, tfmini.tfmini.dist
+ 210:Src/tim.c     ****               // TODO: use PID controller to keep height constant
+ 211:Src/tim.c     ****               // currently we just hope the throttle is OK and set angles to 0
+ 212:Src/tim.c     ****               rxIbus.txCh.channels[0] = IBUS_CHANNEL_DEFAULT;   // roll
+ 213:Src/tim.c     ****               rxIbus.txCh.channels[1] = IBUS_CHANNEL_DEFAULT;   // pitch
+ 214:Src/tim.c     ****               rxIbus.txCh.channels[2] = throttle; // throttle
+ 215:Src/tim.c     ****               rxIbus.txCh.channels[3] = IBUS_CHANNEL_DEFAULT;   // yaw
+ 216:Src/tim.c     ****               rxIbus.txCh.channels[4] = 2000; // arm
+ 217:Src/tim.c     ****               rxIbus.txCh.channels[6] = 1000 + tfmini.tfmini.dist;
+ 218:Src/tim.c     ****               rxIbus.txCh.channels[7] = 1000 + (uint16_t)failsafe.holdHeightCM;
+ 219:Src/tim.c     ****           }
+ 220:Src/tim.c     ****           failsafePrev = useFailsafe;
+ 221:Src/tim.c     ****       }
+ 222:Src/tim.c     ****       manualPrev = useManualMode;
+ 223:Src/tim.c     ****       ibus_stm32_try_transmit(&rxIbus);
+ARM GAS  /tmp/ccHwgUrH.s 			page 13
+
+
+ 224:Src/tim.c     ****   }
+ 225:Src/tim.c     ****   else if(htim->Instance == TIM7) { // TIM7 is used to get telemetry from FC (yaw, pitch, roll etc)
+ 443              		.loc 1 225 8 is_stmt 1 view .LVU104
+ 444              		.loc 1 225 10 is_stmt 0 view .LVU105
+ 445 0012 5A4A     		ldr	r2, .L59+4
+ 446 0014 9342     		cmp	r3, r2
+ 447 0016 00F0A980 		beq	.L57
+ 448              	.LVL28:
+ 449              	.L33:
+ 226:Src/tim.c     ****       // NOTE: this should trigger IBUS_CMD_SENSOR_MEASUREMENT in ibus_event callback
+ 227:Src/tim.c     ****       send_telemetry_sensor_request(&telIbus, 1);
+ 228:Src/tim.c     ****   }
+ 229:Src/tim.c     **** }
+ 450              		.loc 1 229 1 view .LVU106
+ 451 001a BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+ 452              	.LVL29:
+ 453              	.L56:
+ 454              		.loc 1 229 1 view .LVU107
+ 455 001e 0546     		mov	r5, r0
+ 456              	.LBB4:
+ 172:Src/tim.c     ****       // TODO: does this behave correclty? (assigning signed to unsigned, should be twos complement
+ 457              		.loc 1 172 7 is_stmt 1 view .LVU108
+ 172:Src/tim.c     ****       // TODO: does this behave correclty? (assigning signed to unsigned, should be twos complement
+ 458              		.loc 1 172 46 is_stmt 0 view .LVU109
+ 459 0020 574B     		ldr	r3, .L59+8
+ 460 0022 5A88     		ldrh	r2, [r3, #2]
+ 172:Src/tim.c     ****       // TODO: does this behave correclty? (assigning signed to unsigned, should be twos complement
+ 461              		.loc 1 172 31 view .LVU110
+ 462 0024 574B     		ldr	r3, .L59+12
+ 463 0026 9A86     		strh	r2, [r3, #52]	@ movhi
+ 174:Src/tim.c     ****       piIbus.txCh.channels[2] = *((uint16_t*)&telPitch);
+ 464              		.loc 1 174 7 is_stmt 1 view .LVU111
+ 174:Src/tim.c     ****       piIbus.txCh.channels[2] = *((uint16_t*)&telPitch);
+ 465              		.loc 1 174 33 is_stmt 0 view .LVU112
+ 466 0028 574A     		ldr	r2, .L59+16
+ 467 002a 1288     		ldrh	r2, [r2]
+ 174:Src/tim.c     ****       piIbus.txCh.channels[2] = *((uint16_t*)&telPitch);
+ 468              		.loc 1 174 31 view .LVU113
+ 469 002c DA86     		strh	r2, [r3, #54]	@ movhi
+ 175:Src/tim.c     ****       piIbus.txCh.channels[3] = *((uint16_t*)&telRoll);
+ 470              		.loc 1 175 7 is_stmt 1 view .LVU114
+ 175:Src/tim.c     ****       piIbus.txCh.channels[3] = *((uint16_t*)&telRoll);
+ 471              		.loc 1 175 33 is_stmt 0 view .LVU115
+ 472 002e 574A     		ldr	r2, .L59+20
+ 473 0030 1288     		ldrh	r2, [r2]
+ 175:Src/tim.c     ****       piIbus.txCh.channels[3] = *((uint16_t*)&telRoll);
+ 474              		.loc 1 175 31 view .LVU116
+ 475 0032 1A87     		strh	r2, [r3, #56]	@ movhi
+ 176:Src/tim.c     ****       piIbus.txCh.channels[4] = *((uint16_t*)&telAccX);
+ 476              		.loc 1 176 7 is_stmt 1 view .LVU117
+ 176:Src/tim.c     ****       piIbus.txCh.channels[4] = *((uint16_t*)&telAccX);
+ 477              		.loc 1 176 33 is_stmt 0 view .LVU118
+ 478 0034 564A     		ldr	r2, .L59+24
+ 479 0036 1288     		ldrh	r2, [r2]
+ 176:Src/tim.c     ****       piIbus.txCh.channels[4] = *((uint16_t*)&telAccX);
+ 480              		.loc 1 176 31 view .LVU119
+ 481 0038 5A87     		strh	r2, [r3, #58]	@ movhi
+ARM GAS  /tmp/ccHwgUrH.s 			page 14
+
+
+ 177:Src/tim.c     ****       piIbus.txCh.channels[5] = *((uint16_t*)&telAccY);
+ 482              		.loc 1 177 7 is_stmt 1 view .LVU120
+ 177:Src/tim.c     ****       piIbus.txCh.channels[5] = *((uint16_t*)&telAccY);
+ 483              		.loc 1 177 33 is_stmt 0 view .LVU121
+ 484 003a 564A     		ldr	r2, .L59+28
+ 485 003c 1288     		ldrh	r2, [r2]
+ 177:Src/tim.c     ****       piIbus.txCh.channels[5] = *((uint16_t*)&telAccY);
+ 486              		.loc 1 177 31 view .LVU122
+ 487 003e 9A87     		strh	r2, [r3, #60]	@ movhi
+ 178:Src/tim.c     ****       piIbus.txCh.channels[6] = *((uint16_t*)&telAccZ);
+ 488              		.loc 1 178 7 is_stmt 1 view .LVU123
+ 178:Src/tim.c     ****       piIbus.txCh.channels[6] = *((uint16_t*)&telAccZ);
+ 489              		.loc 1 178 33 is_stmt 0 view .LVU124
+ 490 0040 554A     		ldr	r2, .L59+32
+ 491 0042 1288     		ldrh	r2, [r2]
+ 178:Src/tim.c     ****       piIbus.txCh.channels[6] = *((uint16_t*)&telAccZ);
+ 492              		.loc 1 178 31 view .LVU125
+ 493 0044 DA87     		strh	r2, [r3, #62]	@ movhi
+ 179:Src/tim.c     ****       for(i = 7; i < 14; i++) {
+ 494              		.loc 1 179 7 is_stmt 1 view .LVU126
+ 179:Src/tim.c     ****       for(i = 7; i < 14; i++) {
+ 495              		.loc 1 179 33 is_stmt 0 view .LVU127
+ 496 0046 554A     		ldr	r2, .L59+36
+ 497 0048 1288     		ldrh	r2, [r2]
+ 179:Src/tim.c     ****       for(i = 7; i < 14; i++) {
+ 498              		.loc 1 179 31 view .LVU128
+ 499 004a A3F84020 		strh	r2, [r3, #64]	@ movhi
+ 180:Src/tim.c     ****           piIbus.txCh.channels[i] = rxChannels.channels[i];
+ 500              		.loc 1 180 7 is_stmt 1 view .LVU129
+ 501              	.LVL30:
+ 180:Src/tim.c     ****           piIbus.txCh.channels[i] = rxChannels.channels[i];
+ 502              		.loc 1 180 13 is_stmt 0 view .LVU130
+ 503 004e 0723     		movs	r3, #7
+ 180:Src/tim.c     ****           piIbus.txCh.channels[i] = rxChannels.channels[i];
+ 504              		.loc 1 180 7 view .LVU131
+ 505 0050 09E0     		b	.L35
+ 506              	.LVL31:
+ 507              	.L36:
+ 181:Src/tim.c     ****       }
+ 508              		.loc 1 181 11 is_stmt 1 discriminator 3 view .LVU132
+ 181:Src/tim.c     ****       }
+ 509              		.loc 1 181 56 is_stmt 0 discriminator 3 view .LVU133
+ 510 0052 534A     		ldr	r2, .L59+40
+ 511 0054 32F81310 		ldrh	r1, [r2, r3, lsl #1]
+ 181:Src/tim.c     ****       }
+ 512              		.loc 1 181 35 discriminator 3 view .LVU134
+ 513 0058 03F11804 		add	r4, r3, #24
+ 514 005c 494A     		ldr	r2, .L59+12
+ 515 005e 02EB4402 		add	r2, r2, r4, lsl #1
+ 516 0062 9180     		strh	r1, [r2, #4]	@ movhi
+ 180:Src/tim.c     ****           piIbus.txCh.channels[i] = rxChannels.channels[i];
+ 517              		.loc 1 180 26 is_stmt 1 discriminator 3 view .LVU135
+ 180:Src/tim.c     ****           piIbus.txCh.channels[i] = rxChannels.channels[i];
+ 518              		.loc 1 180 27 is_stmt 0 discriminator 3 view .LVU136
+ 519 0064 0133     		adds	r3, r3, #1
+ 520              	.LVL32:
+ 521              	.L35:
+ARM GAS  /tmp/ccHwgUrH.s 			page 15
+
+
+ 180:Src/tim.c     ****           piIbus.txCh.channels[i] = rxChannels.channels[i];
+ 522              		.loc 1 180 18 is_stmt 1 discriminator 1 view .LVU137
+ 180:Src/tim.c     ****           piIbus.txCh.channels[i] = rxChannels.channels[i];
+ 523              		.loc 1 180 7 is_stmt 0 discriminator 1 view .LVU138
+ 524 0066 0D2B     		cmp	r3, #13
+ 525 0068 F3DD     		ble	.L36
+ 183:Src/tim.c     **** 
+ 526              		.loc 1 183 7 is_stmt 1 view .LVU139
+ 527 006a 4648     		ldr	r0, .L59+12
+ 528              	.LVL33:
+ 183:Src/tim.c     **** 
+ 529              		.loc 1 183 7 is_stmt 0 view .LVU140
+ 530 006c FFF7FEFF 		bl	ibus_stm32_try_transmit
+ 531              	.LVL34:
+ 187:Src/tim.c     ****       if(useManualMode) { // manual mode
+ 532              		.loc 1 187 7 is_stmt 1 view .LVU141
+ 187:Src/tim.c     ****       if(useManualMode) { // manual mode
+ 533              		.loc 1 187 50 is_stmt 0 view .LVU142
+ 534 0070 4B4B     		ldr	r3, .L59+40
+ 535 0072 5B89     		ldrh	r3, [r3, #10]
+ 187:Src/tim.c     ****       if(useManualMode) { // manual mode
+ 536              		.loc 1 187 65 view .LVU143
+ 537 0074 B3F5E16F 		cmp	r3, #1800
+ 538 0078 2CBF     		ite	cs
+ 539 007a 0024     		movcs	r4, #0
+ 540 007c 0124     		movcc	r4, #1
+ 541              	.LVL35:
+ 188:Src/tim.c     ****           // 0 - roll, 1 - pitch, 2 - throttle, 3 - yaw
+ 542              		.loc 1 188 7 is_stmt 1 view .LVU144
+ 188:Src/tim.c     ****           // 0 - roll, 1 - pitch, 2 - throttle, 3 - yaw
+ 543              		.loc 1 188 9 is_stmt 0 view .LVU145
+ 544 007e B3F5E16F 		cmp	r3, #1800
+ 545 0082 1ED3     		bcc	.L51
+ 546              	.LBB5:
+ 194:Src/tim.c     ****           // init failsafe state when we either go into failsafe mode or we are already in failsafe
+ 547              		.loc 1 194 11 is_stmt 1 view .LVU146
+ 194:Src/tim.c     ****           // init failsafe state when we either go into failsafe mode or we are already in failsafe
+ 548              		.loc 1 194 42 is_stmt 0 view .LVU147
+ 549 0084 474B     		ldr	r3, .L59+44
+ 550 0086 1F68     		ldr	r7, [r3]
+ 551 0088 EF1B     		subs	r7, r5, r7
+ 194:Src/tim.c     ****           // init failsafe state when we either go into failsafe mode or we are already in failsafe
+ 552              		.loc 1 194 56 view .LVU148
+ 553 008a B7F57A7F 		cmp	r7, #1000
+ 554 008e 94BF     		ite	ls
+ 555 0090 0026     		movls	r6, #0
+ 556 0092 0126     		movhi	r6, #1
+ 557              	.LVL36:
+ 196:Src/tim.c     ****               failsafe_pi_ctrl_lost(&failsafe, curTick, tfmini.tfmini.dist);
+ 558              		.loc 1 196 11 is_stmt 1 view .LVU149
+ 196:Src/tim.c     ****               failsafe_pi_ctrl_lost(&failsafe, curTick, tfmini.tfmini.dist);
+ 559              		.loc 1 196 15 is_stmt 0 view .LVU150
+ 560 0094 444B     		ldr	r3, .L59+48
+ 561 0096 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 196:Src/tim.c     ****               failsafe_pi_ctrl_lost(&failsafe, curTick, tfmini.tfmini.dist);
+ 562              		.loc 1 196 13 view .LVU151
+ 563 0098 13B9     		cbnz	r3, .L41
+ARM GAS  /tmp/ccHwgUrH.s 			page 16
+
+
+ 196:Src/tim.c     ****               failsafe_pi_ctrl_lost(&failsafe, curTick, tfmini.tfmini.dist);
+ 564              		.loc 1 196 29 discriminator 1 view .LVU152
+ 565 009a B7F57A7F 		cmp	r7, #1000
+ 566 009e 05D8     		bhi	.L42
+ 567              	.L41:
+ 196:Src/tim.c     ****               failsafe_pi_ctrl_lost(&failsafe, curTick, tfmini.tfmini.dist);
+ 568              		.loc 1 196 45 discriminator 3 view .LVU153
+ 569 00a0 B7F57A7F 		cmp	r7, #1000
+ 570 00a4 08D9     		bls	.L43
+ 196:Src/tim.c     ****               failsafe_pi_ctrl_lost(&failsafe, curTick, tfmini.tfmini.dist);
+ 571              		.loc 1 196 61 discriminator 4 view .LVU154
+ 572 00a6 414B     		ldr	r3, .L59+52
+ 573 00a8 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 574 00aa 2BB1     		cbz	r3, .L43
+ 575              	.L42:
+ 197:Src/tim.c     ****           }
+ 576              		.loc 1 197 15 is_stmt 1 view .LVU155
+ 577 00ac 344B     		ldr	r3, .L59+8
+ 578 00ae 5A88     		ldrh	r2, [r3, #2]
+ 579 00b0 2946     		mov	r1, r5
+ 580 00b2 3F48     		ldr	r0, .L59+56
+ 581 00b4 FFF7FEFF 		bl	failsafe_pi_ctrl_lost
+ 582              	.LVL37:
+ 583              	.L43:
+ 199:Src/tim.c     ****               for(i = 0; i < 14; i++) {
+ 584              		.loc 1 199 11 view .LVU156
+ 199:Src/tim.c     ****               for(i = 0; i < 14; i++) {
+ 585              		.loc 1 199 13 is_stmt 0 view .LVU157
+ 586 00b8 B7F57A7F 		cmp	r7, #1000
+ 587 00bc 27D8     		bhi	.L58
+ 200:Src/tim.c     ****                   if(i != AUTO_MODE_CH) {
+ 588              		.loc 1 200 21 view .LVU158
+ 589 00be 0023     		movs	r3, #0
+ 590 00c0 17E0     		b	.L44
+ 591              	.LVL38:
+ 592              	.L51:
+ 200:Src/tim.c     ****                   if(i != AUTO_MODE_CH) {
+ 593              		.loc 1 200 21 view .LVU159
+ 594              	.LBE5:
+ 190:Src/tim.c     ****               rxIbus.txCh.channels[i] = rxChannels.channels[i];
+ 595              		.loc 1 190 17 view .LVU160
+ 596 00c2 0023     		movs	r3, #0
+ 597              	.L37:
+ 598              	.LVL39:
+ 190:Src/tim.c     ****               rxIbus.txCh.channels[i] = rxChannels.channels[i];
+ 599              		.loc 1 190 22 is_stmt 1 discriminator 1 view .LVU161
+ 190:Src/tim.c     ****               rxIbus.txCh.channels[i] = rxChannels.channels[i];
+ 600              		.loc 1 190 11 is_stmt 0 discriminator 1 view .LVU162
+ 601 00c4 0D2B     		cmp	r3, #13
+ 602 00c6 4BDC     		bgt	.L40
+ 191:Src/tim.c     ****           }
+ 603              		.loc 1 191 15 is_stmt 1 discriminator 3 view .LVU163
+ 191:Src/tim.c     ****           }
+ 604              		.loc 1 191 60 is_stmt 0 discriminator 3 view .LVU164
+ 605 00c8 354A     		ldr	r2, .L59+40
+ 606 00ca 32F81310 		ldrh	r1, [r2, r3, lsl #1]
+ 191:Src/tim.c     ****           }
+ARM GAS  /tmp/ccHwgUrH.s 			page 17
+
+
+ 607              		.loc 1 191 39 discriminator 3 view .LVU165
+ 608 00ce 03F11800 		add	r0, r3, #24
+ 609 00d2 384A     		ldr	r2, .L59+60
+ 610 00d4 02EB4002 		add	r2, r2, r0, lsl #1
+ 611 00d8 9180     		strh	r1, [r2, #4]	@ movhi
+ 190:Src/tim.c     ****               rxIbus.txCh.channels[i] = rxChannels.channels[i];
+ 612              		.loc 1 190 30 is_stmt 1 discriminator 3 view .LVU166
+ 190:Src/tim.c     ****               rxIbus.txCh.channels[i] = rxChannels.channels[i];
+ 613              		.loc 1 190 31 is_stmt 0 discriminator 3 view .LVU167
+ 614 00da 0133     		adds	r3, r3, #1
+ 615              	.LVL40:
+ 190:Src/tim.c     ****               rxIbus.txCh.channels[i] = rxChannels.channels[i];
+ 616              		.loc 1 190 31 discriminator 3 view .LVU168
+ 617 00dc F2E7     		b	.L37
+ 618              	.LVL41:
+ 619              	.L46:
+ 620              	.LBB7:
+ 204:Src/tim.c     ****                   }
+ 621              		.loc 1 204 23 is_stmt 1 view .LVU169
+ 204:Src/tim.c     ****                   }
+ 622              		.loc 1 204 68 is_stmt 0 view .LVU170
+ 623 00de 304A     		ldr	r2, .L59+40
+ 624 00e0 32F81300 		ldrh	r0, [r2, r3, lsl #1]
+ 204:Src/tim.c     ****                   }
+ 625              		.loc 1 204 47 view .LVU171
+ 626 00e4 03F11802 		add	r2, r3, #24
+ 627 00e8 3249     		ldr	r1, .L59+60
+ 628 00ea 01EB4202 		add	r2, r1, r2, lsl #1
+ 629 00ee 9080     		strh	r0, [r2, #4]	@ movhi
+ 630              	.L47:
+ 200:Src/tim.c     ****                   if(i != AUTO_MODE_CH) {
+ 631              		.loc 1 200 34 is_stmt 1 discriminator 2 view .LVU172
+ 200:Src/tim.c     ****                   if(i != AUTO_MODE_CH) {
+ 632              		.loc 1 200 35 is_stmt 0 discriminator 2 view .LVU173
+ 633 00f0 0133     		adds	r3, r3, #1
+ 634              	.LVL42:
+ 635              	.L44:
+ 200:Src/tim.c     ****                   if(i != AUTO_MODE_CH) {
+ 636              		.loc 1 200 26 is_stmt 1 discriminator 1 view .LVU174
+ 200:Src/tim.c     ****                   if(i != AUTO_MODE_CH) {
+ 637              		.loc 1 200 15 is_stmt 0 discriminator 1 view .LVU175
+ 638 00f2 0D2B     		cmp	r3, #13
+ 639 00f4 32DC     		bgt	.L49
+ 201:Src/tim.c     ****                       rxIbus.txCh.channels[i] = piChannels.channels[i];
+ 640              		.loc 1 201 19 is_stmt 1 view .LVU176
+ 201:Src/tim.c     ****                       rxIbus.txCh.channels[i] = piChannels.channels[i];
+ 641              		.loc 1 201 21 is_stmt 0 view .LVU177
+ 642 00f6 052B     		cmp	r3, #5
+ 643 00f8 F1D0     		beq	.L46
+ 202:Src/tim.c     ****                   } else {
+ 644              		.loc 1 202 23 is_stmt 1 view .LVU178
+ 202:Src/tim.c     ****                   } else {
+ 645              		.loc 1 202 68 is_stmt 0 view .LVU179
+ 646 00fa 2F4A     		ldr	r2, .L59+64
+ 647 00fc 32F81300 		ldrh	r0, [r2, r3, lsl #1]
+ 202:Src/tim.c     ****                   } else {
+ 648              		.loc 1 202 47 view .LVU180
+ARM GAS  /tmp/ccHwgUrH.s 			page 18
+
+
+ 649 0100 03F11802 		add	r2, r3, #24
+ 650 0104 2B49     		ldr	r1, .L59+60
+ 651 0106 01EB4202 		add	r2, r1, r2, lsl #1
+ 652 010a 9080     		strh	r0, [r2, #4]	@ movhi
+ 653 010c F0E7     		b	.L47
+ 654              	.LVL43:
+ 655              	.L58:
+ 656              	.LBB6:
+ 209:Src/tim.c     ****               // TODO: use PID controller to keep height constant
+ 657              		.loc 1 209 15 is_stmt 1 view .LVU181
+ 209:Src/tim.c     ****               // TODO: use PID controller to keep height constant
+ 658              		.loc 1 209 35 is_stmt 0 view .LVU182
+ 659 010e DFF87080 		ldr	r8, .L59+8
+ 660 0112 274F     		ldr	r7, .L59+56
+ 661 0114 214B     		ldr	r3, .L59+36
+ 662 0116 B3F90030 		ldrsh	r3, [r3]
+ 663 011a B8F80220 		ldrh	r2, [r8, #2]
+ 664 011e 2946     		mov	r1, r5
+ 665 0120 3846     		mov	r0, r7
+ 666 0122 FFF7FEFF 		bl	failsafe_autohover_update2
+ 667              	.LVL44:
+ 212:Src/tim.c     ****               rxIbus.txCh.channels[1] = IBUS_CHANNEL_DEFAULT;   // pitch
+ 668              		.loc 1 212 15 is_stmt 1 view .LVU183
+ 212:Src/tim.c     ****               rxIbus.txCh.channels[1] = IBUS_CHANNEL_DEFAULT;   // pitch
+ 669              		.loc 1 212 39 is_stmt 0 view .LVU184
+ 670 0126 234B     		ldr	r3, .L59+60
+ 671 0128 40F2DC52 		movw	r2, #1500
+ 672 012c 9A86     		strh	r2, [r3, #52]	@ movhi
+ 213:Src/tim.c     ****               rxIbus.txCh.channels[2] = throttle; // throttle
+ 673              		.loc 1 213 15 is_stmt 1 view .LVU185
+ 213:Src/tim.c     ****               rxIbus.txCh.channels[2] = throttle; // throttle
+ 674              		.loc 1 213 39 is_stmt 0 view .LVU186
+ 675 012e DA86     		strh	r2, [r3, #54]	@ movhi
+ 214:Src/tim.c     ****               rxIbus.txCh.channels[3] = IBUS_CHANNEL_DEFAULT;   // yaw
+ 676              		.loc 1 214 15 is_stmt 1 view .LVU187
+ 214:Src/tim.c     ****               rxIbus.txCh.channels[3] = IBUS_CHANNEL_DEFAULT;   // yaw
+ 677              		.loc 1 214 39 is_stmt 0 view .LVU188
+ 678 0130 1887     		strh	r0, [r3, #56]	@ movhi
+ 215:Src/tim.c     ****               rxIbus.txCh.channels[4] = 2000; // arm
+ 679              		.loc 1 215 15 is_stmt 1 view .LVU189
+ 215:Src/tim.c     ****               rxIbus.txCh.channels[4] = 2000; // arm
+ 680              		.loc 1 215 39 is_stmt 0 view .LVU190
+ 681 0132 5A87     		strh	r2, [r3, #58]	@ movhi
+ 216:Src/tim.c     ****               rxIbus.txCh.channels[6] = 1000 + tfmini.tfmini.dist;
+ 682              		.loc 1 216 15 is_stmt 1 view .LVU191
+ 216:Src/tim.c     ****               rxIbus.txCh.channels[6] = 1000 + tfmini.tfmini.dist;
+ 683              		.loc 1 216 39 is_stmt 0 view .LVU192
+ 684 0134 4FF4FA62 		mov	r2, #2000
+ 685 0138 9A87     		strh	r2, [r3, #60]	@ movhi
+ 217:Src/tim.c     ****               rxIbus.txCh.channels[7] = 1000 + (uint16_t)failsafe.holdHeightCM;
+ 686              		.loc 1 217 15 is_stmt 1 view .LVU193
+ 217:Src/tim.c     ****               rxIbus.txCh.channels[7] = 1000 + (uint16_t)failsafe.holdHeightCM;
+ 687              		.loc 1 217 61 is_stmt 0 view .LVU194
+ 688 013a B8F80220 		ldrh	r2, [r8, #2]
+ 217:Src/tim.c     ****               rxIbus.txCh.channels[7] = 1000 + (uint16_t)failsafe.holdHeightCM;
+ 689              		.loc 1 217 46 view .LVU195
+ 690 013e 02F57A72 		add	r2, r2, #1000
+ARM GAS  /tmp/ccHwgUrH.s 			page 19
+
+
+ 217:Src/tim.c     ****               rxIbus.txCh.channels[7] = 1000 + (uint16_t)failsafe.holdHeightCM;
+ 691              		.loc 1 217 39 view .LVU196
+ 692 0142 A3F84020 		strh	r2, [r3, #64]	@ movhi
+ 218:Src/tim.c     ****           }
+ 693              		.loc 1 218 15 is_stmt 1 view .LVU197
+ 218:Src/tim.c     ****           }
+ 694              		.loc 1 218 66 is_stmt 0 view .LVU198
+ 695 0146 D7ED017A 		vldr.32	s15, [r7, #4]
+ 218:Src/tim.c     ****           }
+ 696              		.loc 1 218 48 view .LVU199
+ 697 014a FCEEE77A 		vcvt.u32.f32	s15, s15
+ 698 014e 17EE902A 		vmov	r2, s15	@ int
+ 699 0152 92B2     		uxth	r2, r2
+ 218:Src/tim.c     ****           }
+ 700              		.loc 1 218 46 view .LVU200
+ 701 0154 02F57A72 		add	r2, r2, #1000
+ 218:Src/tim.c     ****           }
+ 702              		.loc 1 218 39 view .LVU201
+ 703 0158 A3F84220 		strh	r2, [r3, #66]	@ movhi
+ 704              	.LVL45:
+ 705              	.L49:
+ 218:Src/tim.c     ****           }
+ 706              		.loc 1 218 39 view .LVU202
+ 707              	.LBE6:
+ 220:Src/tim.c     ****       }
+ 708              		.loc 1 220 11 is_stmt 1 view .LVU203
+ 220:Src/tim.c     ****       }
+ 709              		.loc 1 220 24 is_stmt 0 view .LVU204
+ 710 015c 124B     		ldr	r3, .L59+48
+ 711 015e 1E70     		strb	r6, [r3]
+ 712              	.LVL46:
+ 713              	.L40:
+ 220:Src/tim.c     ****       }
+ 714              		.loc 1 220 24 view .LVU205
+ 715              	.LBE7:
+ 222:Src/tim.c     ****       ibus_stm32_try_transmit(&rxIbus);
+ 716              		.loc 1 222 7 is_stmt 1 view .LVU206
+ 222:Src/tim.c     ****       ibus_stm32_try_transmit(&rxIbus);
+ 717              		.loc 1 222 18 is_stmt 0 view .LVU207
+ 718 0160 124B     		ldr	r3, .L59+52
+ 719 0162 1C70     		strb	r4, [r3]
+ 223:Src/tim.c     ****   }
+ 720              		.loc 1 223 7 is_stmt 1 view .LVU208
+ 721 0164 1348     		ldr	r0, .L59+60
+ 722 0166 FFF7FEFF 		bl	ibus_stm32_try_transmit
+ 723              	.LVL47:
+ 724              	.LBE4:
+ 725 016a 56E7     		b	.L33
+ 726              	.LVL48:
+ 727              	.L57:
+ 227:Src/tim.c     ****   }
+ 728              		.loc 1 227 7 view .LVU209
+ 729 016c 0121     		movs	r1, #1
+ 730 016e 1348     		ldr	r0, .L59+68
+ 731              	.LVL49:
+ 227:Src/tim.c     ****   }
+ 732              		.loc 1 227 7 is_stmt 0 view .LVU210
+ARM GAS  /tmp/ccHwgUrH.s 			page 20
+
+
+ 733 0170 FFF7FEFF 		bl	send_telemetry_sensor_request
+ 734              	.LVL50:
+ 735              		.loc 1 229 1 view .LVU211
+ 736 0174 51E7     		b	.L33
+ 737              	.L60:
+ 738 0176 00BF     		.align	2
+ 739              	.L59:
+ 740 0178 00100040 		.word	1073745920
+ 741 017c 00140040 		.word	1073746944
+ 742 0180 00000000 		.word	tfmini
+ 743 0184 00000000 		.word	piIbus
+ 744 0188 00000000 		.word	telYaw
+ 745 018c 00000000 		.word	telPitch
+ 746 0190 00000000 		.word	telRoll
+ 747 0194 00000000 		.word	telAccX
+ 748 0198 00000000 		.word	telAccY
+ 749 019c 00000000 		.word	telAccZ
+ 750 01a0 00000000 		.word	rxChannels
+ 751 01a4 00000000 		.word	lastPiData
+ 752 01a8 00000000 		.word	failsafePrev
+ 753 01ac 00000000 		.word	manualPrev
+ 754 01b0 00000000 		.word	failsafe
+ 755 01b4 00000000 		.word	rxIbus
+ 756 01b8 00000000 		.word	piChannels
+ 757 01bc 00000000 		.word	telIbus
+ 758              		.cfi_endproc
+ 759              	.LFE130:
+ 761              		.comm	htim7,64,4
+ 762              		.comm	htim6,64,4
+ 763              		.text
+ 764              	.Letext0:
+ 765              		.file 2 "/usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h"
+ 766              		.file 3 "Drivers/CMSIS/Include/core_cm4.h"
+ 767              		.file 4 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/system_stm32f3xx.h"
+ 768              		.file 5 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/stm32f303xe.h"
+ 769              		.file 6 "/usr/lib/gcc/arm-none-eabi/9.2.1/include/stddef.h"
+ 770              		.file 7 "/usr/include/newlib/sys/_types.h"
+ 771              		.file 8 "/usr/include/newlib/sys/reent.h"
+ 772              		.file 9 "/usr/include/newlib/sys/lock.h"
+ 773              		.file 10 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_def.h"
+ 774              		.file 11 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_dma.h"
+ 775              		.file 12 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim.h"
+ 776              		.file 13 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_tim_ex.h"
+ 777              		.file 14 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart.h"
+ 778              		.file 15 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h"
+ 779              		.file 16 "Inc/ibus.h"
+ 780              		.file 17 "Inc/ibus_stm32.h"
+ 781              		.file 18 "Inc/tfmini.h"
+ 782              		.file 19 "Inc/tfmini_stm32.h"
+ 783              		.file 20 "Inc/failsafe.h"
+ 784              		.file 21 "Inc/main.h"
+ 785              		.file 22 "Inc/tim.h"
+ 786              		.file 23 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_cortex.h"
+ARM GAS  /tmp/ccHwgUrH.s 			page 21
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 tim.c
+     /tmp/ccHwgUrH.s:18     .text.MX_TIM6_Init:0000000000000000 $t
+     /tmp/ccHwgUrH.s:26     .text.MX_TIM6_Init:0000000000000000 MX_TIM6_Init
+     /tmp/ccHwgUrH.s:111    .text.MX_TIM6_Init:0000000000000048 $d
+                            *COM*:0000000000000040 htim6
+     /tmp/ccHwgUrH.s:117    .text.MX_TIM7_Init:0000000000000000 $t
+     /tmp/ccHwgUrH.s:124    .text.MX_TIM7_Init:0000000000000000 MX_TIM7_Init
+     /tmp/ccHwgUrH.s:208    .text.MX_TIM7_Init:0000000000000048 $d
+                            *COM*:0000000000000040 htim7
+     /tmp/ccHwgUrH.s:214    .text.HAL_TIM_Base_MspInit:0000000000000000 $t
+     /tmp/ccHwgUrH.s:221    .text.HAL_TIM_Base_MspInit:0000000000000000 HAL_TIM_Base_MspInit
+     /tmp/ccHwgUrH.s:325    .text.HAL_TIM_Base_MspInit:0000000000000064 $d
+     /tmp/ccHwgUrH.s:332    .text.HAL_TIM_Base_MspDeInit:0000000000000000 $t
+     /tmp/ccHwgUrH.s:339    .text.HAL_TIM_Base_MspDeInit:0000000000000000 HAL_TIM_Base_MspDeInit
+     /tmp/ccHwgUrH.s:400    .text.HAL_TIM_Base_MspDeInit:000000000000003c $d
+     /tmp/ccHwgUrH.s:406    .text.HAL_TIM_PeriodElapsedCallback:0000000000000000 $t
+     /tmp/ccHwgUrH.s:413    .text.HAL_TIM_PeriodElapsedCallback:0000000000000000 HAL_TIM_PeriodElapsedCallback
+     /tmp/ccHwgUrH.s:740    .text.HAL_TIM_PeriodElapsedCallback:0000000000000178 $d
+
+UNDEFINED SYMBOLS
+HAL_TIM_Base_Init
+HAL_TIMEx_MasterConfigSynchronization
+Error_Handler
+HAL_NVIC_SetPriority
+HAL_NVIC_EnableIRQ
+HAL_NVIC_DisableIRQ
+HAL_GetTick
+ibus_stm32_try_transmit
+failsafe_pi_ctrl_lost
+failsafe_autohover_update2
+send_telemetry_sensor_request
+tfmini
+piIbus
+telYaw
+telPitch
+telRoll
+telAccX
+telAccY
+telAccZ
+rxChannels
+lastPiData
+failsafePrev
+manualPrev
+failsafe
+rxIbus
+piChannels
+telIbus

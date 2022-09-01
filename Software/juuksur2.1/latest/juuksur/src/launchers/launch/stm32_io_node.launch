@@ -1,0 +1,4 @@
+<launch>
+	<node pkg="stm32_io" type="stm32_io_node" name="stm32_io_node" output="screen">
+	</node>
+</launch>

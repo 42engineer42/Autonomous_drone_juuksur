@@ -1,0 +1,214 @@
+ARM GAS  /tmp/ccolpFOs.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"dma.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.MX_DMA_Init,"ax",%progbits
+  18              		.align	1
+  19              		.global	MX_DMA_Init
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	MX_DMA_Init:
+  27              	.LFB126:
+  28              		.file 1 "Src/dma.c"
+   1:Src/dma.c     **** /**
+   2:Src/dma.c     ****   ******************************************************************************
+   3:Src/dma.c     ****   * File Name          : dma.c
+   4:Src/dma.c     ****   * Description        : This file provides code for the configuration
+   5:Src/dma.c     ****   *                      of all the requested memory to memory DMA transfers.
+   6:Src/dma.c     ****   ******************************************************************************
+   7:Src/dma.c     ****   ** This notice applies to any and all portions of this file
+   8:Src/dma.c     ****   * that are not between comment pairs USER CODE BEGIN and
+   9:Src/dma.c     ****   * USER CODE END. Other portions of this file, whether 
+  10:Src/dma.c     ****   * inserted by the user or by software development tools
+  11:Src/dma.c     ****   * are owned by their respective copyright owners.
+  12:Src/dma.c     ****   *
+  13:Src/dma.c     ****   * COPYRIGHT(c) 2019 STMicroelectronics
+  14:Src/dma.c     ****   *
+  15:Src/dma.c     ****   * Redistribution and use in source and binary forms, with or without modification,
+  16:Src/dma.c     ****   * are permitted provided that the following conditions are met:
+  17:Src/dma.c     ****   *   1. Redistributions of source code must retain the above copyright notice,
+  18:Src/dma.c     ****   *      this list of conditions and the following disclaimer.
+  19:Src/dma.c     ****   *   2. Redistributions in binary form must reproduce the above copyright notice,
+  20:Src/dma.c     ****   *      this list of conditions and the following disclaimer in the documentation
+  21:Src/dma.c     ****   *      and/or other materials provided with the distribution.
+  22:Src/dma.c     ****   *   3. Neither the name of STMicroelectronics nor the names of its contributors
+  23:Src/dma.c     ****   *      may be used to endorse or promote products derived from this software
+  24:Src/dma.c     ****   *      without specific prior written permission.
+  25:Src/dma.c     ****   *
+  26:Src/dma.c     ****   * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  27:Src/dma.c     ****   * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+  28:Src/dma.c     ****   * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+  29:Src/dma.c     ****   * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+  30:Src/dma.c     ****   * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ARM GAS  /tmp/ccolpFOs.s 			page 2
+
+
+  31:Src/dma.c     ****   * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+  32:Src/dma.c     ****   * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+  33:Src/dma.c     ****   * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+  34:Src/dma.c     ****   * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  35:Src/dma.c     ****   * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  36:Src/dma.c     ****   *
+  37:Src/dma.c     ****   ******************************************************************************
+  38:Src/dma.c     ****   */
+  39:Src/dma.c     **** /* Includes ------------------------------------------------------------------*/
+  40:Src/dma.c     **** #include "dma.h"
+  41:Src/dma.c     **** 
+  42:Src/dma.c     **** /* USER CODE BEGIN 0 */
+  43:Src/dma.c     **** 
+  44:Src/dma.c     **** /* USER CODE END 0 */
+  45:Src/dma.c     **** 
+  46:Src/dma.c     **** /*----------------------------------------------------------------------------*/
+  47:Src/dma.c     **** /* Configure DMA                                                              */
+  48:Src/dma.c     **** /*----------------------------------------------------------------------------*/
+  49:Src/dma.c     **** 
+  50:Src/dma.c     **** /* USER CODE BEGIN 1 */
+  51:Src/dma.c     **** 
+  52:Src/dma.c     **** /* USER CODE END 1 */
+  53:Src/dma.c     **** 
+  54:Src/dma.c     **** /** 
+  55:Src/dma.c     ****   * Enable DMA controller clock
+  56:Src/dma.c     ****   */
+  57:Src/dma.c     **** void MX_DMA_Init(void) 
+  58:Src/dma.c     **** {
+  29              		.loc 1 58 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 8
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 00B5     		push	{lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 4
+  36              		.cfi_offset 14, -4
+  37 0002 83B0     		sub	sp, sp, #12
+  38              	.LCFI1:
+  39              		.cfi_def_cfa_offset 16
+  59:Src/dma.c     ****   /* DMA controller clock enable */
+  60:Src/dma.c     ****   __HAL_RCC_DMA1_CLK_ENABLE();
+  40              		.loc 1 60 3 view .LVU1
+  41              	.LBB2:
+  42              		.loc 1 60 3 view .LVU2
+  43              		.loc 1 60 3 view .LVU3
+  44 0004 124B     		ldr	r3, .L3
+  45 0006 5A69     		ldr	r2, [r3, #20]
+  46 0008 42F00102 		orr	r2, r2, #1
+  47 000c 5A61     		str	r2, [r3, #20]
+  48              		.loc 1 60 3 view .LVU4
+  49 000e 5B69     		ldr	r3, [r3, #20]
+  50 0010 03F00103 		and	r3, r3, #1
+  51 0014 0193     		str	r3, [sp, #4]
+  52              		.loc 1 60 3 view .LVU5
+  53 0016 019B     		ldr	r3, [sp, #4]
+  54              	.LBE2:
+  55              		.loc 1 60 3 view .LVU6
+ARM GAS  /tmp/ccolpFOs.s 			page 3
+
+
+  61:Src/dma.c     **** 
+  62:Src/dma.c     ****   /* DMA interrupt init */
+  63:Src/dma.c     ****   /* DMA1_Channel2_IRQn interrupt configuration */
+  64:Src/dma.c     ****   HAL_NVIC_SetPriority(DMA1_Channel2_IRQn, 1, 0);
+  56              		.loc 1 64 3 view .LVU7
+  57 0018 0022     		movs	r2, #0
+  58 001a 0121     		movs	r1, #1
+  59 001c 0C20     		movs	r0, #12
+  60 001e FFF7FEFF 		bl	HAL_NVIC_SetPriority
+  61              	.LVL0:
+  65:Src/dma.c     ****   HAL_NVIC_EnableIRQ(DMA1_Channel2_IRQn);
+  62              		.loc 1 65 3 view .LVU8
+  63 0022 0C20     		movs	r0, #12
+  64 0024 FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
+  65              	.LVL1:
+  66:Src/dma.c     ****   /* DMA1_Channel4_IRQn interrupt configuration */
+  67:Src/dma.c     ****   HAL_NVIC_SetPriority(DMA1_Channel4_IRQn, 1, 0);
+  66              		.loc 1 67 3 view .LVU9
+  67 0028 0022     		movs	r2, #0
+  68 002a 0121     		movs	r1, #1
+  69 002c 0E20     		movs	r0, #14
+  70 002e FFF7FEFF 		bl	HAL_NVIC_SetPriority
+  71              	.LVL2:
+  68:Src/dma.c     ****   HAL_NVIC_EnableIRQ(DMA1_Channel4_IRQn);
+  72              		.loc 1 68 3 view .LVU10
+  73 0032 0E20     		movs	r0, #14
+  74 0034 FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
+  75              	.LVL3:
+  69:Src/dma.c     ****   /* DMA1_Channel7_IRQn interrupt configuration */
+  70:Src/dma.c     ****   HAL_NVIC_SetPriority(DMA1_Channel7_IRQn, 1, 0);
+  76              		.loc 1 70 3 view .LVU11
+  77 0038 0022     		movs	r2, #0
+  78 003a 0121     		movs	r1, #1
+  79 003c 1120     		movs	r0, #17
+  80 003e FFF7FEFF 		bl	HAL_NVIC_SetPriority
+  81              	.LVL4:
+  71:Src/dma.c     ****   HAL_NVIC_EnableIRQ(DMA1_Channel7_IRQn);
+  82              		.loc 1 71 3 view .LVU12
+  83 0042 1120     		movs	r0, #17
+  84 0044 FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
+  85              	.LVL5:
+  72:Src/dma.c     **** 
+  73:Src/dma.c     **** }
+  86              		.loc 1 73 1 is_stmt 0 view .LVU13
+  87 0048 03B0     		add	sp, sp, #12
+  88              	.LCFI2:
+  89              		.cfi_def_cfa_offset 4
+  90              		@ sp needed
+  91 004a 5DF804FB 		ldr	pc, [sp], #4
+  92              	.L4:
+  93 004e 00BF     		.align	2
+  94              	.L3:
+  95 0050 00100240 		.word	1073876992
+  96              		.cfi_endproc
+  97              	.LFE126:
+  99              		.text
+ 100              	.Letext0:
+ARM GAS  /tmp/ccolpFOs.s 			page 4
+
+
+ 101              		.file 2 "/usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h"
+ 102              		.file 3 "Drivers/CMSIS/Include/core_cm4.h"
+ 103              		.file 4 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/system_stm32f3xx.h"
+ 104              		.file 5 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/stm32f303xe.h"
+ 105              		.file 6 "/usr/lib/gcc/arm-none-eabi/9.2.1/include/stddef.h"
+ 106              		.file 7 "/usr/include/newlib/sys/_types.h"
+ 107              		.file 8 "/usr/include/newlib/sys/reent.h"
+ 108              		.file 9 "/usr/include/newlib/sys/lock.h"
+ 109              		.file 10 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_def.h"
+ 110              		.file 11 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_dma.h"
+ 111              		.file 12 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_uart.h"
+ 112              		.file 13 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h"
+ 113              		.file 14 "Inc/ibus.h"
+ 114              		.file 15 "Inc/ibus_stm32.h"
+ 115              		.file 16 "Inc/tfmini.h"
+ 116              		.file 17 "Inc/tfmini_stm32.h"
+ 117              		.file 18 "Inc/failsafe.h"
+ 118              		.file 19 "Inc/main.h"
+ 119              		.file 20 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_cortex.h"
+ARM GAS  /tmp/ccolpFOs.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 dma.c
+     /tmp/ccolpFOs.s:18     .text.MX_DMA_Init:0000000000000000 $t
+     /tmp/ccolpFOs.s:26     .text.MX_DMA_Init:0000000000000000 MX_DMA_Init
+     /tmp/ccolpFOs.s:95     .text.MX_DMA_Init:0000000000000050 $d
+
+UNDEFINED SYMBOLS
+HAL_NVIC_SetPriority
+HAL_NVIC_EnableIRQ

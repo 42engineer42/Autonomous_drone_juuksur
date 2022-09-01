@@ -1,0 +1,15 @@
+<launch>
+    <include file="$(find launchers)/launch/go.launch"/>
+
+    <node name="rosbag" pkg="rosbag" type="record"
+        args="-o /home/pi/bagfiles/
+                /camera/image_raw
+                /vision/image_debug
+                /switch/input
+                /fc/attitude
+                /fc/raw_imu
+                /vision/results
+                /path/results
+                /path/image_debug
+                /move/results"/>
+</launch>

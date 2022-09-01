@@ -1,0 +1,495 @@
+ARM GAS  /tmp/ccdj4PtH.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"failsafe.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.pid_init,"ax",%progbits
+  18              		.align	1
+  19              		.global	pid_init
+  20              		.arch armv7e-m
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  24              		.fpu fpv4-sp-d16
+  26              	pid_init:
+  27              	.LVL0:
+  28              	.LFB0:
+  29              		.file 1 "Src/failsafe.c"
+   1:Src/failsafe.c **** #include "failsafe.h"
+   2:Src/failsafe.c **** 
+   3:Src/failsafe.c **** #define MIN(a,b) ((a)<(b)?(a):(b)) 
+   4:Src/failsafe.c **** #define MAX(a,b) ((a)>(b)?(a):(b)) 
+   5:Src/failsafe.c **** #define CLAMP(x, low, high)  (((x) > (high)) ? (high) : (((x) < (low)) ? (low) : (x)))
+   6:Src/failsafe.c **** 
+   7:Src/failsafe.c **** #define USE_VELOCITY 1
+   8:Src/failsafe.c **** 
+   9:Src/failsafe.c **** #ifdef USE_VELOCITY
+  10:Src/failsafe.c **** #define MAX_SPEED 5.0f // cm/s
+  11:Src/failsafe.c **** #define MAX_THROTTLE 1550.0f
+  12:Src/failsafe.c **** #define THROTTLE_GAIN 80.0f
+  13:Src/failsafe.c **** #define THROTTLE_INITIAL 1250 // estimated hovering value
+  14:Src/failsafe.c **** #define THROTTLE_REDUCE_FACTOR 0.3f
+  15:Src/failsafe.c **** #else
+  16:Src/failsafe.c **** #define MAX_ACC 2.0f
+  17:Src/failsafe.c **** #define MAX_THROTTLE 1550
+  18:Src/failsafe.c **** #define THROTTLE_GAIN 550.0f
+  19:Src/failsafe.c **** #define THROTTLE_INITIAL 1250 // estimated hovering value
+  20:Src/failsafe.c **** #define 
+  21:Src/failsafe.c **** #endif
+  22:Src/failsafe.c **** 
+  23:Src/failsafe.c **** void pid_init(PidState *ps, float kp, float ki, float kd) {
+  30              		.loc 1 23 59 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		@ link register save eliminated.
+  24:Src/failsafe.c ****     ps->prevErr = 0.0f;
+ARM GAS  /tmp/ccdj4PtH.s 			page 2
+
+
+  35              		.loc 1 24 5 view .LVU1
+  36              		.loc 1 24 17 is_stmt 0 view .LVU2
+  37 0000 0023     		movs	r3, #0
+  38 0002 C360     		str	r3, [r0, #12]	@ float
+  25:Src/failsafe.c ****     ps->integral = 0.0f;
+  39              		.loc 1 25 5 is_stmt 1 view .LVU3
+  40              		.loc 1 25 18 is_stmt 0 view .LVU4
+  41 0004 0361     		str	r3, [r0, #16]	@ float
+  26:Src/failsafe.c ****     ps->kp = kp;
+  42              		.loc 1 26 5 is_stmt 1 view .LVU5
+  43              		.loc 1 26 12 is_stmt 0 view .LVU6
+  44 0006 80ED000A 		vstr.32	s0, [r0]
+  27:Src/failsafe.c ****     ps->ki = ki;
+  45              		.loc 1 27 5 is_stmt 1 view .LVU7
+  46              		.loc 1 27 12 is_stmt 0 view .LVU8
+  47 000a C0ED010A 		vstr.32	s1, [r0, #4]
+  28:Src/failsafe.c ****     ps->kd = kd;
+  48              		.loc 1 28 5 is_stmt 1 view .LVU9
+  49              		.loc 1 28 12 is_stmt 0 view .LVU10
+  50 000e 80ED021A 		vstr.32	s2, [r0, #8]
+  29:Src/failsafe.c **** }
+  51              		.loc 1 29 1 view .LVU11
+  52 0012 7047     		bx	lr
+  53              		.cfi_endproc
+  54              	.LFE0:
+  56              		.section	.text.pid_update,"ax",%progbits
+  57              		.align	1
+  58              		.global	pid_update
+  59              		.syntax unified
+  60              		.thumb
+  61              		.thumb_func
+  62              		.fpu fpv4-sp-d16
+  64              	pid_update:
+  65              	.LVL1:
+  66              	.LFB1:
+  30:Src/failsafe.c **** 
+  31:Src/failsafe.c **** float pid_update(PidState *ps, float measurement, float target, float dt) {
+  67              		.loc 1 31 75 is_stmt 1 view -0
+  68              		.cfi_startproc
+  69              		@ args = 0, pretend = 0, frame = 0
+  70              		@ frame_needed = 0, uses_anonymous_args = 0
+  71              		@ link register save eliminated.
+  32:Src/failsafe.c ****     float error = target - measurement;
+  72              		.loc 1 32 5 view .LVU13
+  73              		.loc 1 32 11 is_stmt 0 view .LVU14
+  74 0000 70EEC00A 		vsub.f32	s1, s1, s0
+  75              	.LVL2:
+  33:Src/failsafe.c ****     ps->integral = CLAMP(ps->integral + error * dt, -100.0f, 100.0f);
+  76              		.loc 1 33 5 is_stmt 1 view .LVU15
+  77              		.loc 1 33 20 is_stmt 0 view .LVU16
+  78 0004 D0ED047A 		vldr.32	s15, [r0, #16]
+  79 0008 20EE810A 		vmul.f32	s0, s1, s2
+  80              	.LVL3:
+  81              		.loc 1 33 20 view .LVU17
+  82 000c 77EE807A 		vadd.f32	s15, s15, s0
+  83 0010 9FED167A 		vldr.32	s14, .L7
+  84 0014 F4EEC77A 		vcmpe.f32	s15, s14
+ARM GAS  /tmp/ccdj4PtH.s 			page 3
+
+
+  85 0018 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+  86 001c 09DC     		bgt	.L5
+  87              		.loc 1 33 20 discriminator 2 view .LVU18
+  88 001e 9FED147A 		vldr.32	s14, .L7+4
+  89 0022 F4EEC77A 		vcmpe.f32	s15, s14
+  90 0026 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+  91 002a 04D5     		bpl	.L3
+  92              		.loc 1 33 20 view .LVU19
+  93 002c F0EE477A 		vmov.f32	s15, s14
+  94 0030 01E0     		b	.L3
+  95              	.L5:
+  96 0032 DFED0E7A 		vldr.32	s15, .L7
+  97              	.L3:
+  98              		.loc 1 33 18 discriminator 8 view .LVU20
+  99 0036 C0ED047A 		vstr.32	s15, [r0, #16]
+  34:Src/failsafe.c ****     float derivative = (error - ps->prevErr) / dt;
+ 100              		.loc 1 34 5 is_stmt 1 discriminator 8 view .LVU21
+ 101              		.loc 1 34 35 is_stmt 0 discriminator 8 view .LVU22
+ 102 003a 90ED037A 		vldr.32	s14, [r0, #12]
+ 103              		.loc 1 34 31 discriminator 8 view .LVU23
+ 104 003e 30EEC77A 		vsub.f32	s14, s1, s14
+ 105              		.loc 1 34 11 discriminator 8 view .LVU24
+ 106 0042 C7EE016A 		vdiv.f32	s13, s14, s2
+ 107              	.LVL4:
+  35:Src/failsafe.c ****     float output = ps->kp*error + ps->ki*ps->integral + ps->kd*derivative;
+ 108              		.loc 1 35 5 is_stmt 1 discriminator 8 view .LVU25
+ 109              		.loc 1 35 22 is_stmt 0 discriminator 8 view .LVU26
+ 110 0046 90ED000A 		vldr.32	s0, [r0]
+ 111              		.loc 1 35 26 discriminator 8 view .LVU27
+ 112 004a 20EE200A 		vmul.f32	s0, s0, s1
+ 113              		.loc 1 35 37 discriminator 8 view .LVU28
+ 114 004e 90ED017A 		vldr.32	s14, [r0, #4]
+ 115              		.loc 1 35 41 discriminator 8 view .LVU29
+ 116 0052 67EE277A 		vmul.f32	s15, s14, s15
+ 117              		.loc 1 35 33 discriminator 8 view .LVU30
+ 118 0056 70EE277A 		vadd.f32	s15, s0, s15
+ 119              		.loc 1 35 59 discriminator 8 view .LVU31
+ 120 005a 90ED020A 		vldr.32	s0, [r0, #8]
+ 121              		.loc 1 35 63 discriminator 8 view .LVU32
+ 122 005e 20EE260A 		vmul.f32	s0, s0, s13
+ 123              	.LVL5:
+  36:Src/failsafe.c ****     ps->prevErr = error;
+ 124              		.loc 1 36 5 is_stmt 1 discriminator 8 view .LVU33
+ 125              		.loc 1 36 17 is_stmt 0 discriminator 8 view .LVU34
+ 126 0062 C0ED030A 		vstr.32	s1, [r0, #12]
+  37:Src/failsafe.c ****     return output;
+ 127              		.loc 1 37 5 is_stmt 1 discriminator 8 view .LVU35
+  38:Src/failsafe.c **** }
+ 128              		.loc 1 38 1 is_stmt 0 discriminator 8 view .LVU36
+ 129 0066 37EE800A 		vadd.f32	s0, s15, s0
+ 130              	.LVL6:
+ 131              		.loc 1 38 1 discriminator 8 view .LVU37
+ 132 006a 7047     		bx	lr
+ 133              	.L8:
+ 134              		.align	2
+ 135              	.L7:
+ 136 006c 0000C842 		.word	1120403456
+ARM GAS  /tmp/ccdj4PtH.s 			page 4
+
+
+ 137 0070 0000C8C2 		.word	3267887104
+ 138              		.cfi_endproc
+ 139              	.LFE1:
+ 141              		.section	.text.failsafe_pi_ctrl_lost,"ax",%progbits
+ 142              		.align	1
+ 143              		.global	failsafe_pi_ctrl_lost
+ 144              		.syntax unified
+ 145              		.thumb
+ 146              		.thumb_func
+ 147              		.fpu fpv4-sp-d16
+ 149              	failsafe_pi_ctrl_lost:
+ 150              	.LVL7:
+ 151              	.LFB2:
+  39:Src/failsafe.c **** 
+  40:Src/failsafe.c **** void failsafe_pi_ctrl_lost(FailsafeState *fs, uint32_t curTick, uint16_t curHeight) {
+ 152              		.loc 1 40 85 is_stmt 1 view -0
+ 153              		.cfi_startproc
+ 154              		@ args = 0, pretend = 0, frame = 0
+ 155              		@ frame_needed = 0, uses_anonymous_args = 0
+ 156              		@ link register save eliminated.
+ 157              		.loc 1 40 85 is_stmt 0 view .LVU39
+ 158 0000 07EE902A 		vmov	s15, r2	@ int
+  41:Src/failsafe.c ****     //pid_init(&fs->pid, AUTOHOVER_KP, AUTOHOVER_KI, AUTOHOVER_KD);
+  42:Src/failsafe.c ****     fs->lastUpdateTick = curTick;
+ 159              		.loc 1 42 5 is_stmt 1 view .LVU40
+ 160              		.loc 1 42 24 is_stmt 0 view .LVU41
+ 161 0004 0160     		str	r1, [r0]
+  43:Src/failsafe.c ****     //fs->holdHeightCM = (float)curHeight/* / 100.0f*/;
+  44:Src/failsafe.c ****     fs->holdHeightCM = 100.0f;
+ 162              		.loc 1 44 5 is_stmt 1 view .LVU42
+ 163              		.loc 1 44 22 is_stmt 0 view .LVU43
+ 164 0006 044B     		ldr	r3, .L10
+ 165 0008 4360     		str	r3, [r0, #4]	@ float
+  45:Src/failsafe.c ****     fs->curThrottle = THROTTLE_INITIAL;
+ 166              		.loc 1 45 5 is_stmt 1 view .LVU44
+ 167              		.loc 1 45 21 is_stmt 0 view .LVU45
+ 168 000a 044B     		ldr	r3, .L10+4
+ 169 000c 8360     		str	r3, [r0, #8]	@ float
+  46:Src/failsafe.c ****     fs->lastHeight = (float)curHeight;
+ 170              		.loc 1 46 5 is_stmt 1 view .LVU46
+ 171              		.loc 1 46 22 is_stmt 0 view .LVU47
+ 172 000e F8EE677A 		vcvt.f32.u32	s15, s15
+ 173              		.loc 1 46 20 view .LVU48
+ 174 0012 C0ED037A 		vstr.32	s15, [r0, #12]
+  47:Src/failsafe.c **** }
+ 175              		.loc 1 47 1 view .LVU49
+ 176 0016 7047     		bx	lr
+ 177              	.L11:
+ 178              		.align	2
+ 179              	.L10:
+ 180 0018 0000C842 		.word	1120403456
+ 181 001c 00409C44 		.word	1151090688
+ 182              		.cfi_endproc
+ 183              	.LFE2:
+ 185              		.section	.text.failsafe_autohover_update2,"ax",%progbits
+ 186              		.align	1
+ 187              		.global	failsafe_autohover_update2
+ARM GAS  /tmp/ccdj4PtH.s 			page 5
+
+
+ 188              		.syntax unified
+ 189              		.thumb
+ 190              		.thumb_func
+ 191              		.fpu fpv4-sp-d16
+ 193              	failsafe_autohover_update2:
+ 194              	.LVL8:
+ 195              	.LFB3:
+  48:Src/failsafe.c **** 
+  49:Src/failsafe.c **** // with special sauce !
+  50:Src/failsafe.c **** uint16_t failsafe_autohover_update2(FailsafeState *fs, uint32_t curTick, uint16_t curHeightCM, int1
+ 196              		.loc 1 50 116 is_stmt 1 view -0
+ 197              		.cfi_startproc
+ 198              		@ args = 0, pretend = 0, frame = 0
+ 199              		@ frame_needed = 0, uses_anonymous_args = 0
+ 200              		@ link register save eliminated.
+ 201              		.loc 1 50 116 is_stmt 0 view .LVU51
+ 202 0000 07EE902A 		vmov	s15, r2	@ int
+  51:Src/failsafe.c ****     uint32_t tickDif = curTick - fs->lastUpdateTick;
+ 203              		.loc 1 51 5 is_stmt 1 view .LVU52
+ 204              		.loc 1 51 36 is_stmt 0 view .LVU53
+ 205 0004 0368     		ldr	r3, [r0]
+ 206              	.LVL9:
+ 207              		.loc 1 51 14 view .LVU54
+ 208 0006 CB1A     		subs	r3, r1, r3
+ 209              	.LVL10:
+  52:Src/failsafe.c ****     if(tickDif >= 10) {
+ 210              		.loc 1 52 5 is_stmt 1 view .LVU55
+ 211              		.loc 1 52 7 is_stmt 0 view .LVU56
+ 212 0008 092B     		cmp	r3, #9
+ 213 000a 68D9     		bls	.L13
+ 214              	.LBB2:
+  53:Src/failsafe.c ****         // time delta
+  54:Src/failsafe.c ****         float dt = (float)tickDif / 1000.0f; // time delta in sec
+ 215              		.loc 1 54 9 is_stmt 1 view .LVU57
+ 216              		.loc 1 54 20 is_stmt 0 view .LVU58
+ 217 000c 07EE103A 		vmov	s14, r3	@ int
+ 218 0010 B8EE477A 		vcvt.f32.u32	s14, s14
+ 219              		.loc 1 54 15 view .LVU59
+ 220 0014 DFED366A 		vldr.32	s13, .L28
+ 221 0018 C7EE265A 		vdiv.f32	s11, s14, s13
+ 222              	.LVL11:
+  55:Src/failsafe.c ****         float verticalSpeed = ((float)curHeightCM - (float)fs->lastHeight)/dt;
+ 223              		.loc 1 55 9 is_stmt 1 view .LVU60
+ 224              		.loc 1 55 32 is_stmt 0 view .LVU61
+ 225 001c B8EE676A 		vcvt.f32.u32	s12, s15
+ 226              		.loc 1 55 62 view .LVU62
+ 227 0020 D0ED036A 		vldr.32	s13, [r0, #12]
+ 228              		.loc 1 55 51 view .LVU63
+ 229 0024 76EE666A 		vsub.f32	s13, s12, s13
+ 230              		.loc 1 55 15 view .LVU64
+ 231 0028 86EEA55A 		vdiv.f32	s10, s13, s11
+ 232              	.LVL12:
+  56:Src/failsafe.c ****         // lower than set point -> positive
+  57:Src/failsafe.c ****         // higher than set point -> negative
+  58:Src/failsafe.c ****         float heightError = fs->holdHeightCM - curHeightCM;
+ 233              		.loc 1 58 9 is_stmt 1 view .LVU65
+ 234              		.loc 1 58 31 is_stmt 0 view .LVU66
+ARM GAS  /tmp/ccdj4PtH.s 			page 6
+
+
+ 235 002c D0ED016A 		vldr.32	s13, [r0, #4]
+ 236              		.loc 1 58 46 view .LVU67
+ 237 0030 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 238              		.loc 1 58 15 view .LVU68
+ 239 0034 76EEE76A 		vsub.f32	s13, s13, s15
+ 240              	.LVL13:
+  59:Src/failsafe.c ****         float heightErrorScalar = CLAMP(heightError / curHeightCM, -1.0f, 1.0f);
+ 241              		.loc 1 59 9 is_stmt 1 view .LVU69
+ 242              		.loc 1 59 35 is_stmt 0 view .LVU70
+ 243 0038 86EEA77A 		vdiv.f32	s14, s13, s15
+ 244 003c F7EE007A 		vmov.f32	s15, #1.0e+0
+ 245 0040 B4EEE77A 		vcmpe.f32	s14, s15
+ 246 0044 F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 247 0048 2DDD     		ble	.L27
+ 248 004a B7EE007A 		vmov.f32	s14, #1.0e+0
+ 249              	.L14:
+ 250              	.LVL14:
+  60:Src/failsafe.c ****         // higher than 9.8 acceleration is up
+  61:Src/failsafe.c ****         // lower than 9.8 acceleration is down
+  62:Src/failsafe.c **** #ifndef USE_VELOCITY
+  63:Src/failsafe.c ****         float accTarget = (MAX_ACC * heightErrorScalar) + 9.85; 
+  64:Src/failsafe.c ****         float accError = accTarget - (curAccZCMS/100.0f);
+  65:Src/failsafe.c ****         float finalScalar = accError / MAX_ACC;;
+  66:Src/failsafe.c **** #else 
+  67:Src/failsafe.c ****         float speedTarget = (MAX_SPEED * heightErrorScalar);
+ 251              		.loc 1 67 9 is_stmt 1 discriminator 8 view .LVU71
+ 252              		.loc 1 67 15 is_stmt 0 discriminator 8 view .LVU72
+ 253 004e F1EE046A 		vmov.f32	s13, #5.0e+0
+ 254              	.LVL15:
+ 255              		.loc 1 67 15 discriminator 8 view .LVU73
+ 256 0052 27EE267A 		vmul.f32	s14, s14, s13
+ 257              	.LVL16:
+  68:Src/failsafe.c ****         float speedError = speedTarget - verticalSpeed;
+ 258              		.loc 1 68 9 is_stmt 1 discriminator 8 view .LVU74
+ 259              		.loc 1 68 15 is_stmt 0 discriminator 8 view .LVU75
+ 260 0056 37EE457A 		vsub.f32	s14, s14, s10
+ 261              	.LVL17:
+  69:Src/failsafe.c ****         float finalScalar = speedError / MAX_SPEED;
+ 262              		.loc 1 69 9 is_stmt 1 discriminator 8 view .LVU76
+ 263              		.loc 1 69 15 is_stmt 0 discriminator 8 view .LVU77
+ 264 005a C7EE267A 		vdiv.f32	s15, s14, s13
+ 265              	.LVL18:
+  70:Src/failsafe.c **** #endif
+  71:Src/failsafe.c ****         // accError positive -> move up (increase throttle)
+  72:Src/failsafe.c ****         /*if(accErrorScalar > 0) {
+  73:Src/failsafe.c ****             fs->curThrottle += abs(10*accErrorScalar);
+  74:Src/failsafe.c ****         } else {
+  75:Src/failsafe.c ****             fs->curThrottle -= abs(10*accErrorScalar);
+  76:Src/failsafe.c ****         }*/
+  77:Src/failsafe.c ****         float throttleChange = ((float)THROTTLE_GAIN*finalScalar*dt);
+ 266              		.loc 1 77 9 is_stmt 1 discriminator 8 view .LVU78
+ 267              		.loc 1 77 53 is_stmt 0 discriminator 8 view .LVU79
+ 268 005e 9FED257A 		vldr.32	s14, .L28+4
+ 269              	.LVL19:
+ 270              		.loc 1 77 53 discriminator 8 view .LVU80
+ 271 0062 67EE877A 		vmul.f32	s15, s15, s14
+ 272              	.LVL20:
+ARM GAS  /tmp/ccdj4PtH.s 			page 7
+
+
+ 273              		.loc 1 77 15 discriminator 8 view .LVU81
+ 274 0066 67EEA57A 		vmul.f32	s15, s15, s11
+ 275              	.LVL21:
+  78:Src/failsafe.c ****         if(throttleChange > 0.0f) {
+ 276              		.loc 1 78 9 is_stmt 1 discriminator 8 view .LVU82
+ 277              		.loc 1 78 11 is_stmt 0 discriminator 8 view .LVU83
+ 278 006a F5EEC07A 		vcmpe.f32	s15, #0
+ 279 006e F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 280 0072 22DD     		ble	.L26
+  79:Src/failsafe.c ****             fs->curThrottle += throttleChange;
+ 281              		.loc 1 79 13 is_stmt 1 view .LVU84
+ 282              		.loc 1 79 29 is_stmt 0 view .LVU85
+ 283 0074 90ED027A 		vldr.32	s14, [r0, #8]
+ 284 0078 77EE277A 		vadd.f32	s15, s14, s15
+ 285              	.LVL22:
+ 286              		.loc 1 79 29 view .LVU86
+ 287 007c C0ED027A 		vstr.32	s15, [r0, #8]
+ 288              	.L18:
+  80:Src/failsafe.c ****         } else {
+  81:Src/failsafe.c ****             fs->curThrottle += THROTTLE_REDUCE_FACTOR*throttleChange;
+  82:Src/failsafe.c ****         }
+  83:Src/failsafe.c ****         fs->curThrottle = CLAMP(fs->curThrottle, 1000.0f, MAX_THROTTLE);
+ 289              		.loc 1 83 9 is_stmt 1 view .LVU87
+ 290              		.loc 1 83 27 is_stmt 0 view .LVU88
+ 291 0080 D0ED027A 		vldr.32	s15, [r0, #8]
+ 292 0084 9FED1C7A 		vldr.32	s14, .L28+8
+ 293 0088 F4EEC77A 		vcmpe.f32	s15, s14
+ 294 008c F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 295 0090 1EDC     		bgt	.L22
+ 296              		.loc 1 83 27 discriminator 2 view .LVU89
+ 297 0092 9FED177A 		vldr.32	s14, .L28
+ 298 0096 F4EEC77A 		vcmpe.f32	s15, s14
+ 299 009a F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 300 009e 19D5     		bpl	.L19
+ 301              		.loc 1 83 27 view .LVU90
+ 302 00a0 F0EE477A 		vmov.f32	s15, s14
+ 303 00a4 16E0     		b	.L19
+ 304              	.LVL23:
+ 305              	.L27:
+  59:Src/failsafe.c ****         // higher than 9.8 acceleration is up
+ 306              		.loc 1 59 35 discriminator 2 view .LVU91
+ 307 00a6 FFEE007A 		vmov.f32	s15, #-1.0e+0
+ 308 00aa B4EEE77A 		vcmpe.f32	s14, s15
+ 309 00ae F1EE10FA 		vmrs	APSR_nzcv, FPSCR
+ 310 00b2 CCD5     		bpl	.L14
+  59:Src/failsafe.c ****         // higher than 9.8 acceleration is up
+ 311              		.loc 1 59 35 view .LVU92
+ 312 00b4 B0EE677A 		vmov.f32	s14, s15
+ 313 00b8 C9E7     		b	.L14
+ 314              	.LVL24:
+ 315              	.L26:
+  81:Src/failsafe.c ****         }
+ 316              		.loc 1 81 13 is_stmt 1 view .LVU93
+  81:Src/failsafe.c ****         }
+ 317              		.loc 1 81 54 is_stmt 0 view .LVU94
+ 318 00ba 9FED107A 		vldr.32	s14, .L28+12
+ 319 00be 67EE877A 		vmul.f32	s15, s15, s14
+ARM GAS  /tmp/ccdj4PtH.s 			page 8
+
+
+ 320              	.LVL25:
+  81:Src/failsafe.c ****         }
+ 321              		.loc 1 81 29 view .LVU95
+ 322 00c2 90ED027A 		vldr.32	s14, [r0, #8]
+ 323 00c6 77EE277A 		vadd.f32	s15, s14, s15
+ 324 00ca C0ED027A 		vstr.32	s15, [r0, #8]
+ 325 00ce D7E7     		b	.L18
+ 326              	.L22:
+ 327              		.loc 1 83 27 view .LVU96
+ 328 00d0 DFED097A 		vldr.32	s15, .L28+8
+ 329              	.L19:
+ 330              		.loc 1 83 25 discriminator 8 view .LVU97
+ 331 00d4 C0ED027A 		vstr.32	s15, [r0, #8]
+  84:Src/failsafe.c ****         fs->lastUpdateTick = curTick;
+ 332              		.loc 1 84 9 is_stmt 1 discriminator 8 view .LVU98
+ 333              		.loc 1 84 28 is_stmt 0 discriminator 8 view .LVU99
+ 334 00d8 0160     		str	r1, [r0]
+  85:Src/failsafe.c ****         fs->lastHeight = (float)curHeightCM;
+ 335              		.loc 1 85 9 is_stmt 1 discriminator 8 view .LVU100
+ 336              		.loc 1 85 24 is_stmt 0 discriminator 8 view .LVU101
+ 337 00da 80ED036A 		vstr.32	s12, [r0, #12]
+ 338              	.LVL26:
+ 339              	.L13:
+ 340              		.loc 1 85 24 discriminator 8 view .LVU102
+ 341              	.LBE2:
+  86:Src/failsafe.c ****     }
+  87:Src/failsafe.c ****     return (uint16_t)fs->curThrottle;
+ 342              		.loc 1 87 5 is_stmt 1 view .LVU103
+ 343              		.loc 1 87 24 is_stmt 0 view .LVU104
+ 344 00de D0ED027A 		vldr.32	s15, [r0, #8]
+ 345              		.loc 1 87 12 view .LVU105
+ 346 00e2 FCEEE77A 		vcvt.u32.f32	s15, s15
+  88:Src/failsafe.c **** }
+ 347              		.loc 1 88 1 view .LVU106
+ 348 00e6 17EE903A 		vmov	r3, s15	@ int
+ 349              	.LVL27:
+ 350              		.loc 1 88 1 view .LVU107
+ 351 00ea 98B2     		uxth	r0, r3
+ 352              	.LVL28:
+ 353              		.loc 1 88 1 view .LVU108
+ 354 00ec 7047     		bx	lr
+ 355              	.L29:
+ 356 00ee 00BF     		.align	2
+ 357              	.L28:
+ 358 00f0 00007A44 		.word	1148846080
+ 359 00f4 0000A042 		.word	1117782016
+ 360 00f8 00C0C144 		.word	1153548288
+ 361 00fc 9A99993E 		.word	1050253722
+ 362              		.cfi_endproc
+ 363              	.LFE3:
+ 365              		.text
+ 366              	.Letext0:
+ 367              		.file 2 "/usr/lib/gcc/arm-none-eabi/9.2.1/include/stdint.h"
+ 368              		.file 3 "Inc/failsafe.h"
+ARM GAS  /tmp/ccdj4PtH.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 failsafe.c
+     /tmp/ccdj4PtH.s:18     .text.pid_init:0000000000000000 $t
+     /tmp/ccdj4PtH.s:26     .text.pid_init:0000000000000000 pid_init
+     /tmp/ccdj4PtH.s:57     .text.pid_update:0000000000000000 $t
+     /tmp/ccdj4PtH.s:64     .text.pid_update:0000000000000000 pid_update
+     /tmp/ccdj4PtH.s:136    .text.pid_update:000000000000006c $d
+     /tmp/ccdj4PtH.s:142    .text.failsafe_pi_ctrl_lost:0000000000000000 $t
+     /tmp/ccdj4PtH.s:149    .text.failsafe_pi_ctrl_lost:0000000000000000 failsafe_pi_ctrl_lost
+     /tmp/ccdj4PtH.s:180    .text.failsafe_pi_ctrl_lost:0000000000000018 $d
+     /tmp/ccdj4PtH.s:186    .text.failsafe_autohover_update2:0000000000000000 $t
+     /tmp/ccdj4PtH.s:193    .text.failsafe_autohover_update2:0000000000000000 failsafe_autohover_update2
+     /tmp/ccdj4PtH.s:358    .text.failsafe_autohover_update2:00000000000000f0 $d
+
+NO UNDEFINED SYMBOLS

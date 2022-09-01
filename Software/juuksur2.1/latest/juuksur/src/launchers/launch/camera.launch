@@ -1,0 +1,6 @@
+<launch>
+    <rosparam command="load" file="$(find launchers)/params/cameraParams.yml"/>
+
+    <node name="camera" pkg="camera" type="camera_node" output="screen"/>
+</launch>
+
