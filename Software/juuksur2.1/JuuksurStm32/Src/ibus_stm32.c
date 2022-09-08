@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <assert.h>
 
+extern UART_HandleTypeDef huart2;
+
 void ibus_stm32_init(IbusStm32State *ibs, UART_HandleTypeDef *huart, uint8_t halfDuplex) {
     HAL_StatusTypeDef status;
     ibs->huart = huart;
@@ -26,16 +28,25 @@ void ibus_stm32_init(IbusStm32State *ibs, UART_HandleTypeDef *huart, uint8_t hal
 
 void ibus_stm32_receive_complete(IbusStm32State *ibs) {
     HAL_StatusTypeDef status;
+    char fuck[200];
+    int len = sprintf(fuck, "ibus_stm32_receive_complete()\r\n");
+    HAL_UART_Transmit(&huart2, fuck, len, 100);
     // NOTE: readPos can not be edited because this is called from interrupt and reading is done in main loop
     if(ibs->rxWritePos != ibs->rxReadPos + RBUF_SIZE) {
         ibs->ringBuf[ibs->rxWritePos & RBUF_MASK] = ibs->rxData;
         ibs->rxWritePos++;
     } else {
+        char fuck[200];
+        int len = sprintf(fuck, "IBus Rx buffer overflow! %d %d\r\n", ibs->rxWritePos, ibs->rxReadPos);
+        HAL_UART_Transmit(&huart2, fuck, len, 100);
         printf("IBus Rx buffer overflow! %d %d\r\n", ibs->rxWritePos, ibs->rxReadPos);
         assert(0);
     }
     status = HAL_UART_Receive_IT(ibs->huart, &ibs->rxData, 1);
     if(status != HAL_OK) {
+        char fuck[200];
+        int len = sprintf(fuck, "Receive_IT failed in ibus_stm32_receive complete() code %d\r\n", status);
+        HAL_UART_Transmit(&huart2, fuck, len, 100);
         printf("Receive_IT failed in ibus_stm32_receive complete() code %d\r\n", status);
     }
 }
@@ -46,7 +57,9 @@ void ibus_stm32_process_rx(IbusStm32State *ibs) {
         readPos = ibs->rxReadPos & RBUF_MASK;
         ibs->totalRx++;
         ibus_receive(&ibs->ibRx, ibs->ringBuf[readPos]);
-        //printf("%02x ", ibs->ringBuf[readPos]);
+
+        // printf("%02x ", ibs->ringBuf[readPos]);
+
         ibs->rxReadPos++;
     }
 }

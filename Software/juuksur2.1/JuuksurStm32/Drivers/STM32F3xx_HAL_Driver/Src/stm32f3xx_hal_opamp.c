@@ -96,14 +96,14 @@
       (++) The compilation define  USE_HAL_OPAMP_REGISTER_CALLBACKS when set to 1
            allows the user to configure dynamically the driver callbacks.
 
-      (++) Use Functions @ref HAL_OPAMP_RegisterCallback() to register a user callback,
+      (++) Use Functions HAL_OPAMP_RegisterCallback() to register a user callback,
            it allows to register following callbacks:
       (+++) MspInitCallback         : OPAMP MspInit.
       (+++) MspDeInitCallback       : OPAMP MspFeInit.
            This function takes as parameters the HAL peripheral handle, the Callback ID
            and a pointer to the user callback function.
 
-      (++) Use function @ref HAL_OPAMP_UnRegisterCallback() to reset a callback to the default
+      (++) Use function HAL_OPAMP_UnRegisterCallback() to reset a callback to the default
            weak (surcharged) function. It allows to reset following callbacks:
       (+++) MspInitCallback         : OPAMP MspInit.
       (+++) MspDeInitCallback       : OPAMP MspdeInit.
@@ -273,15 +273,15 @@ HAL_StatusTypeDef HAL_OPAMP_Init(OPAMP_HandleTypeDef *hopamp)
     assert_param(IS_OPAMP_FUNCTIONAL_NORMALMODE(hopamp->Init.Mode));
     assert_param(IS_OPAMP_NONINVERTING_INPUT(hopamp->Init.NonInvertingInput));
 
+#if (USE_HAL_OPAMP_REGISTER_CALLBACKS == 1)
     if (hopamp->State == HAL_OPAMP_STATE_RESET)
     {
-#if (USE_HAL_OPAMP_REGISTER_CALLBACKS == 1)
       if (hopamp->MspInitCallback == NULL)
       {
         hopamp->MspInitCallback = HAL_OPAMP_MspInit;
       }
-#endif /* USE_HAL_OPAMP_REGISTER_CALLBACKS */
     }
+#endif /* USE_HAL_OPAMP_REGISTER_CALLBACKS */
 
     if ((hopamp->Init.Mode) == OPAMP_STANDALONE_MODE)
     {

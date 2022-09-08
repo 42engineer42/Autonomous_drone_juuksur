@@ -6,7 +6,7 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2017 STMicroelectronics.
+  * <h2><center>&copy; Copyright (c) 2016 STMicroelectronics.
   * All rights reserved.</center></h2>
   *
   * This software component is licensed by ST under BSD 3-Clause license,
@@ -953,7 +953,7 @@ typedef void (* pHRTIM_TIMxCallbackTypeDef)(HRTIM_HandleTypeDef *hhrtim,    /*!<
   * @{
   * @brief Constants defining the polarity of a timer output
   */
-#define HRTIM_OUTPUTPOLARITY_HIGH    (0x00000000U)           /*!< Output is acitve HIGH */
+#define HRTIM_OUTPUTPOLARITY_HIGH    (0x00000000U)           /*!< Output is active HIGH */
 #define HRTIM_OUTPUTPOLARITY_LOW     (HRTIM_OUTR_POL1)       /*!< Output is active LOW */
 /**
   * @}
@@ -1003,7 +1003,7 @@ typedef void (* pHRTIM_TIMxCallbackTypeDef)(HRTIM_HandleTypeDef *hhrtim,    /*!<
 /** @defgroup HRTIM_Output_Reset_Source HRTIM Output Reset Source
   * @{
   * @brief Constants defining the events that can be selected to configure the
-  *        set crossbar of a timer output
+  *        reset crossbar of a timer output
   */
 #define HRTIM_OUTPUTRESET_NONE       0x00000000U                      /*!< Reset the output reset crossbar */
 #define HRTIM_OUTPUTRESET_RESYNC     (HRTIM_RST1R_RESYNC)             /*!< Timer reset event coming solely from software or SYNC input forces the output to its inactive state */
@@ -1017,15 +1017,15 @@ typedef void (* pHRTIM_TIMxCallbackTypeDef)(HRTIM_HandleTypeDef *hhrtim,    /*!<
 #define HRTIM_OUTPUTRESET_MASTERCMP2 (HRTIM_RST1R_MSTCMP2)            /*!< Master Timer compare 2 event forces the output to its inactive state */
 #define HRTIM_OUTPUTRESET_MASTERCMP3 (HRTIM_RST1R_MSTCMP3)            /*!< Master Timer compare 3 event forces the output to its inactive state */
 #define HRTIM_OUTPUTRESET_MASTERCMP4 (HRTIM_RST1R_MSTCMP4)            /*!< Master Timer compare 4 event forces the output to its inactive state */
-#define HRTIM_OUTPUTRESET_TIMEV_1    (HRTIM_SET1R_TIMEVNT1)           /*!< Timer event 1 forces the output to its active state */
-#define HRTIM_OUTPUTRESET_TIMEV_2    (HRTIM_SET1R_TIMEVNT2)           /*!< Timer event 2 forces the output to its active state */
-#define HRTIM_OUTPUTRESET_TIMEV_3    (HRTIM_SET1R_TIMEVNT3)           /*!< Timer event 3 forces the output to its active state */
-#define HRTIM_OUTPUTRESET_TIMEV_4    (HRTIM_SET1R_TIMEVNT4)           /*!< Timer event 4 forces the output to its active state */
-#define HRTIM_OUTPUTRESET_TIMEV_5    (HRTIM_SET1R_TIMEVNT5)           /*!< Timer event 5 forces the output to its active state */
-#define HRTIM_OUTPUTRESET_TIMEV_6    (HRTIM_SET1R_TIMEVNT6)           /*!< Timer event 6 forces the output to its active state */
-#define HRTIM_OUTPUTRESET_TIMEV_7    (HRTIM_SET1R_TIMEVNT7)           /*!< Timer event 7 forces the output to its active state */
-#define HRTIM_OUTPUTRESET_TIMEV_8    (HRTIM_SET1R_TIMEVNT8)           /*!< Timer event 8 forces the output to its active state */
-#define HRTIM_OUTPUTRESET_TIMEV_9    (HRTIM_SET1R_TIMEVNT9)           /*!< Timer event 9 forces the output to its active state */
+#define HRTIM_OUTPUTRESET_TIMEV_1    (HRTIM_RST1R_TIMEVNT1)           /*!< Timer event 1 forces the output to its active state */
+#define HRTIM_OUTPUTRESET_TIMEV_2    (HRTIM_RST1R_TIMEVNT2)           /*!< Timer event 2 forces the output to its active state */
+#define HRTIM_OUTPUTRESET_TIMEV_3    (HRTIM_RST1R_TIMEVNT3)           /*!< Timer event 3 forces the output to its active state */
+#define HRTIM_OUTPUTRESET_TIMEV_4    (HRTIM_RST1R_TIMEVNT4)           /*!< Timer event 4 forces the output to its active state */
+#define HRTIM_OUTPUTRESET_TIMEV_5    (HRTIM_RST1R_TIMEVNT5)           /*!< Timer event 5 forces the output to its active state */
+#define HRTIM_OUTPUTRESET_TIMEV_6    (HRTIM_RST1R_TIMEVNT6)           /*!< Timer event 6 forces the output to its active state */
+#define HRTIM_OUTPUTRESET_TIMEV_7    (HRTIM_RST1R_TIMEVNT7)           /*!< Timer event 7 forces the output to its active state */
+#define HRTIM_OUTPUTRESET_TIMEV_8    (HRTIM_RST1R_TIMEVNT8)           /*!< Timer event 8 forces the output to its active state */
+#define HRTIM_OUTPUTRESET_TIMEV_9    (HRTIM_RST1R_TIMEVNT9)           /*!< Timer event 9 forces the output to its active state */
 #define HRTIM_OUTPUTRESET_EEV_1      (HRTIM_RST1R_EXTVNT1)            /*!< External event 1 forces the output to its inactive state */
 #define HRTIM_OUTPUTRESET_EEV_2      (HRTIM_RST1R_EXTVNT2)            /*!< External event 2 forces the output to its inactive state */
 #define HRTIM_OUTPUTRESET_EEV_3      (HRTIM_RST1R_EXTVNT3)            /*!< External event 3 forces the output to its inactive state */
@@ -1137,9 +1137,6 @@ typedef void (* pHRTIM_TIMxCallbackTypeDef)(HRTIM_HandleTypeDef *hhrtim,    /*!<
 /**
   * @}
   */
-/**
-  * @}
-  */
 
 /** @defgroup HRTIM_Timer_External_Event_Filter HRTIM Timer External Event Filter
   * @{
@@ -1147,21 +1144,21 @@ typedef void (* pHRTIM_TIMxCallbackTypeDef)(HRTIM_HandleTypeDef *hhrtim,    /*!<
   *        by a timer
   */
 #define HRTIM_TIMEVENTFILTER_NONE             (0x00000000U)
-#define HRTIM_TIMEVENTFILTER_BLANKINGCMP1     (HRTIM_EEFR1_EE1FLTR_0)                                                                                                                           /*!< Blanking from counter reset/roll-over to Compare 1U */
-#define HRTIM_TIMEVENTFILTER_BLANKINGCMP2     (HRTIM_EEFR1_EE1FLTR_1)                                                                                                                           /*!< Blanking from counter reset/roll-over to Compare 2U */
-#define HRTIM_TIMEVENTFILTER_BLANKINGCMP3     (HRTIM_EEFR1_EE1FLTR_1 | HRTIM_EEFR1_EE1FLTR_0)                                                                                                   /*!< Blanking from counter reset/roll-over to Compare 3U */
-#define HRTIM_TIMEVENTFILTER_BLANKINGCMP4     (HRTIM_EEFR1_EE1FLTR_2)                                                                                                                           /*!< Blanking from counter reset/roll-over to Compare 4U */
-#define HRTIM_TIMEVENTFILTER_BLANKINGFLTR1    (HRTIM_EEFR1_EE1FLTR_2 | HRTIM_EEFR1_EE1FLTR_0)                                                                                                   /*!< Blanking from another timing unit: TIMFLTR1 source */
-#define HRTIM_TIMEVENTFILTER_BLANKINGFLTR2    (HRTIM_EEFR1_EE1FLTR_2 | HRTIM_EEFR1_EE1FLTR_1)                                                                                                   /*!< Blanking from another timing unit: TIMFLTR2 source */
-#define HRTIM_TIMEVENTFILTER_BLANKINGFLTR3    (HRTIM_EEFR1_EE1FLTR_2 | HRTIM_EEFR1_EE1FLTR_1 | HRTIM_EEFR1_EE1FLTR_0)                                                                           /*!< Blanking from another timing unit: TIMFLTR3 source */
-#define HRTIM_TIMEVENTFILTER_BLANKINGFLTR4    (HRTIM_EEFR1_EE1FLTR_3)                                                                                                                           /*!< Blanking from another timing unit: TIMFLTR4 source */
-#define HRTIM_TIMEVENTFILTER_BLANKINGFLTR5    (HRTIM_EEFR1_EE1FLTR_3 | HRTIM_EEFR1_EE1FLTR_0)                                                                                                   /*!< Blanking from another timing unit: TIMFLTR5 source */
-#define HRTIM_TIMEVENTFILTER_BLANKINGFLTR6    (HRTIM_EEFR1_EE1FLTR_3 | HRTIM_EEFR1_EE1FLTR_1)                                                                                                   /*!< Blanking from another timing unit: TIMFLTR6 source */
-#define HRTIM_TIMEVENTFILTER_BLANKINGFLTR7    (HRTIM_EEFR1_EE1FLTR_3 | HRTIM_EEFR1_EE1FLTR_1 | HRTIM_EEFR1_EE1FLTR_0)                                                                           /*!< Blanking from another timing unit: TIMFLTR7 source */
-#define HRTIM_TIMEVENTFILTER_BLANKINGFLTR8    (HRTIM_EEFR1_EE1FLTR_3 | HRTIM_EEFR1_EE1FLTR_2)                                                                                                   /*!< Blanking from another timing unit: TIMFLTR8 source */
-#define HRTIM_TIMEVENTFILTER_WINDOWINGCMP2    (HRTIM_EEFR1_EE1FLTR_3 | HRTIM_EEFR1_EE1FLTR_2 | HRTIM_EEFR1_EE1FLTR_0)                                                                           /*!< Windowing from counter reset/roll-over to Compare 2U */
-#define HRTIM_TIMEVENTFILTER_WINDOWINGCMP3    (HRTIM_EEFR1_EE1FLTR_3 | HRTIM_EEFR1_EE1FLTR_2 | HRTIM_EEFR1_EE1FLTR_1)                                                                           /*!< Windowing from counter reset/roll-over to Compare 3U */
-#define HRTIM_TIMEVENTFILTER_WINDOWINGTIM     (HRTIM_EEFR1_EE1FLTR_3 | HRTIM_EEFR1_EE1FLTR_2 | HRTIM_EEFR1_EE1FLTR_1 | HRTIM_EEFR1_EE1FLTR_3 | HRTIM_EEFR1_EE1FLTR_2 | HRTIM_EEFR1_EE1FLTR_0)  /*!< Windowing from another timing unit: TIMWIN source */
+#define HRTIM_TIMEVENTFILTER_BLANKINGCMP1     (HRTIM_EEFR1_EE1FLTR_0)                                                                          /*!< Blanking from counter reset/roll-over to Compare 1U  */
+#define HRTIM_TIMEVENTFILTER_BLANKINGCMP2     (HRTIM_EEFR1_EE1FLTR_1)                                                                          /*!< Blanking from counter reset/roll-over to Compare 2U  */
+#define HRTIM_TIMEVENTFILTER_BLANKINGCMP3     (HRTIM_EEFR1_EE1FLTR_1 | HRTIM_EEFR1_EE1FLTR_0)                                                  /*!< Blanking from counter reset/roll-over to Compare 3U  */
+#define HRTIM_TIMEVENTFILTER_BLANKINGCMP4     (HRTIM_EEFR1_EE1FLTR_2)                                                                          /*!< Blanking from counter reset/roll-over to Compare 4U  */
+#define HRTIM_TIMEVENTFILTER_BLANKINGFLTR1    (HRTIM_EEFR1_EE1FLTR_2 | HRTIM_EEFR1_EE1FLTR_0)                                                  /*!< Blanking from another timing unit: TIMFLTR1 source   */
+#define HRTIM_TIMEVENTFILTER_BLANKINGFLTR2    (HRTIM_EEFR1_EE1FLTR_2 | HRTIM_EEFR1_EE1FLTR_1)                                                  /*!< Blanking from another timing unit: TIMFLTR2 source   */
+#define HRTIM_TIMEVENTFILTER_BLANKINGFLTR3    (HRTIM_EEFR1_EE1FLTR_2 | HRTIM_EEFR1_EE1FLTR_1 | HRTIM_EEFR1_EE1FLTR_0)                          /*!< Blanking from another timing unit: TIMFLTR3 source   */
+#define HRTIM_TIMEVENTFILTER_BLANKINGFLTR4    (HRTIM_EEFR1_EE1FLTR_3)                                                                          /*!< Blanking from another timing unit: TIMFLTR4 source   */
+#define HRTIM_TIMEVENTFILTER_BLANKINGFLTR5    (HRTIM_EEFR1_EE1FLTR_3 | HRTIM_EEFR1_EE1FLTR_0)                                                  /*!< Blanking from another timing unit: TIMFLTR5 source   */
+#define HRTIM_TIMEVENTFILTER_BLANKINGFLTR6    (HRTIM_EEFR1_EE1FLTR_3 | HRTIM_EEFR1_EE1FLTR_1)                                                  /*!< Blanking from another timing unit: TIMFLTR6 source   */
+#define HRTIM_TIMEVENTFILTER_BLANKINGFLTR7    (HRTIM_EEFR1_EE1FLTR_3 | HRTIM_EEFR1_EE1FLTR_1 | HRTIM_EEFR1_EE1FLTR_0)                          /*!< Blanking from another timing unit: TIMFLTR7 source   */
+#define HRTIM_TIMEVENTFILTER_BLANKINGFLTR8    (HRTIM_EEFR1_EE1FLTR_3 | HRTIM_EEFR1_EE1FLTR_2)                                                  /*!< Blanking from another timing unit: TIMFLTR8 source   */
+#define HRTIM_TIMEVENTFILTER_WINDOWINGCMP2    (HRTIM_EEFR1_EE1FLTR_3 | HRTIM_EEFR1_EE1FLTR_2 | HRTIM_EEFR1_EE1FLTR_0)                          /*!< Windowing from counter reset/roll-over to Compare 2U */
+#define HRTIM_TIMEVENTFILTER_WINDOWINGCMP3    (HRTIM_EEFR1_EE1FLTR_3 | HRTIM_EEFR1_EE1FLTR_2 | HRTIM_EEFR1_EE1FLTR_1)                          /*!< Windowing from counter reset/roll-over to Compare 3U */
+#define HRTIM_TIMEVENTFILTER_WINDOWINGTIM     (HRTIM_EEFR1_EE1FLTR_3 | HRTIM_EEFR1_EE1FLTR_2 | HRTIM_EEFR1_EE1FLTR_1 | HRTIM_EEFR1_EE1FLTR_0)  /*!< Windowing from another timing unit: TIMWIN source    */
 /**
   * @}
   */
@@ -1735,11 +1732,11 @@ typedef void (* pHRTIM_TIMxCallbackTypeDef)(HRTIM_HandleTypeDef *hhrtim,    /*!<
   * @{
   * @brief Constants defining the DLL calibration periods (in micro seconds)
   */
-#define HRTIM_SINGLE_CALIBRATION    0xFFFFFFFFU                           /*!< Non periodic DLL calibration */
-#define HRTIM_CALIBRATIONRATE_7300  0x00000000U                           /*!< Periodic DLL calibration: T = 1048576U * tHRTIM (7.3 ms) */
-#define HRTIM_CALIBRATIONRATE_910   (HRTIM_DLLCR_CALRTE_0)                         /*!< Periodic DLL calibration: T = 131072U * tHRTIM (910 ms) */
-#define HRTIM_CALIBRATIONRATE_114   (HRTIM_DLLCR_CALRTE_1)                         /*!< Periodic DLL calibration: T = 16384U * tHRTIM (114 ms) */
-#define HRTIM_CALIBRATIONRATE_14    (HRTIM_DLLCR_CALRTE_1 | HRTIM_DLLCR_CALRTE_0)  /*!< Periodic DLL calibration: T = 2048U * tHRTIM (14 ms) */
+#define HRTIM_SINGLE_CALIBRATION    0xFFFFFFFFU                                    /*!< Non periodic DLL calibration */
+#define HRTIM_CALIBRATIONRATE_7300  0x00000000U                                    /*!< Periodic DLL calibration: T = 1048576U * tHRTIM (7.300 ms) */
+#define HRTIM_CALIBRATIONRATE_910   (HRTIM_DLLCR_CALRTE_0)                         /*!< Periodic DLL calibration: T = 131072U * tHRTIM (0.910 ms) */
+#define HRTIM_CALIBRATIONRATE_114   (HRTIM_DLLCR_CALRTE_1)                         /*!< Periodic DLL calibration: T = 16384U * tHRTIM (0.114 ms) */
+#define HRTIM_CALIBRATIONRATE_14    (HRTIM_DLLCR_CALRTE_1 | HRTIM_DLLCR_CALRTE_0)  /*!< Periodic DLL calibration: T = 2048U * tHRTIM (0.014 ms) */
 /**
   * @}
   */
@@ -2024,6 +2021,10 @@ typedef void (* pHRTIM_TIMxCallbackTypeDef)(HRTIM_HandleTypeDef *hhrtim,    /*!<
   * @}
   */
 
+/**
+  * @}
+  */
+
   /* Private macros --------------------------------------------------------*/
 /** @addtogroup HRTIM_Private_Macros
   * @{
@@ -2229,18 +2230,18 @@ typedef void (* pHRTIM_TIMxCallbackTypeDef)(HRTIM_HandleTypeDef *hhrtim,    /*!<
 #define IS_HRTIM_OUTPUTPULSE(OUTPUTPULSE) ((OUTPUTPULSE) <= 0x0000FFFFU)
 
 #define IS_HRTIM_OUTPUTSET(OUTPUTSET)\
-              (((OUTPUTSET) == HRTIM_OUTPUTSET_NONE)             || \
-               ((OUTPUTSET) == HRTIM_OUTPUTSET_RESYNC)           || \
-               ((OUTPUTSET) == HRTIM_OUTPUTSET_TIMPER)           || \
-               ((OUTPUTSET) == HRTIM_OUTPUTSET_TIMCMP1)          || \
-               ((OUTPUTSET) == HRTIM_OUTPUTSET_TIMCMP2)          || \
-               ((OUTPUTSET) == HRTIM_OUTPUTSET_TIMCMP3)          || \
-               ((OUTPUTSET) == HRTIM_OUTPUTSET_TIMCMP4)          || \
-               ((OUTPUTSET) == HRTIM_OUTPUTSET_MASTERPER)        || \
-               ((OUTPUTSET) == HRTIM_OUTPUTSET_MASTERCMP1)       || \
-               ((OUTPUTSET) == HRTIM_OUTPUTSET_MASTERCMP2)       || \
-               ((OUTPUTSET) == HRTIM_OUTPUTSET_MASTERCMP3)       || \
-               ((OUTPUTSET) == HRTIM_OUTPUTSET_MASTERCMP4)       || \
+              (((OUTPUTSET) == HRTIM_OUTPUTSET_NONE)       || \
+               ((OUTPUTSET) == HRTIM_OUTPUTSET_RESYNC)     || \
+               ((OUTPUTSET) == HRTIM_OUTPUTSET_TIMPER)     || \
+               ((OUTPUTSET) == HRTIM_OUTPUTSET_TIMCMP1)    || \
+               ((OUTPUTSET) == HRTIM_OUTPUTSET_TIMCMP2)    || \
+               ((OUTPUTSET) == HRTIM_OUTPUTSET_TIMCMP3)    || \
+               ((OUTPUTSET) == HRTIM_OUTPUTSET_TIMCMP4)    || \
+               ((OUTPUTSET) == HRTIM_OUTPUTSET_MASTERPER)  || \
+               ((OUTPUTSET) == HRTIM_OUTPUTSET_MASTERCMP1) || \
+               ((OUTPUTSET) == HRTIM_OUTPUTSET_MASTERCMP2) || \
+               ((OUTPUTSET) == HRTIM_OUTPUTSET_MASTERCMP3) || \
+               ((OUTPUTSET) == HRTIM_OUTPUTSET_MASTERCMP4) || \
                ((OUTPUTSET) == HRTIM_OUTPUTSET_TIMEV_1)    || \
                ((OUTPUTSET) == HRTIM_OUTPUTSET_TIMEV_2)    || \
                ((OUTPUTSET) == HRTIM_OUTPUTSET_TIMEV_3)    || \
@@ -2250,31 +2251,31 @@ typedef void (* pHRTIM_TIMxCallbackTypeDef)(HRTIM_HandleTypeDef *hhrtim,    /*!<
                ((OUTPUTSET) == HRTIM_OUTPUTSET_TIMEV_7)    || \
                ((OUTPUTSET) == HRTIM_OUTPUTSET_TIMEV_8)    || \
                ((OUTPUTSET) == HRTIM_OUTPUTSET_TIMEV_9)    || \
-               ((OUTPUTSET) == HRTIM_OUTPUTSET_EEV_1)            || \
-               ((OUTPUTSET) == HRTIM_OUTPUTSET_EEV_2)            || \
-               ((OUTPUTSET) == HRTIM_OUTPUTSET_EEV_3)            || \
-               ((OUTPUTSET) == HRTIM_OUTPUTSET_EEV_4)            || \
-               ((OUTPUTSET) == HRTIM_OUTPUTSET_EEV_5)            || \
-               ((OUTPUTSET) == HRTIM_OUTPUTSET_EEV_6)            || \
-               ((OUTPUTSET) == HRTIM_OUTPUTSET_EEV_7)            || \
-               ((OUTPUTSET) == HRTIM_OUTPUTSET_EEV_8)            || \
-               ((OUTPUTSET) == HRTIM_OUTPUTSET_EEV_9)            || \
-               ((OUTPUTSET) == HRTIM_OUTPUTSET_EEV_10)           || \
+               ((OUTPUTSET) == HRTIM_OUTPUTSET_EEV_1)      || \
+               ((OUTPUTSET) == HRTIM_OUTPUTSET_EEV_2)      || \
+               ((OUTPUTSET) == HRTIM_OUTPUTSET_EEV_3)      || \
+               ((OUTPUTSET) == HRTIM_OUTPUTSET_EEV_4)      || \
+               ((OUTPUTSET) == HRTIM_OUTPUTSET_EEV_5)      || \
+               ((OUTPUTSET) == HRTIM_OUTPUTSET_EEV_6)      || \
+               ((OUTPUTSET) == HRTIM_OUTPUTSET_EEV_7)      || \
+               ((OUTPUTSET) == HRTIM_OUTPUTSET_EEV_8)      || \
+               ((OUTPUTSET) == HRTIM_OUTPUTSET_EEV_9)      || \
+               ((OUTPUTSET) == HRTIM_OUTPUTSET_EEV_10)     || \
                ((OUTPUTSET) == HRTIM_OUTPUTSET_UPDATE))
 
 #define IS_HRTIM_OUTPUTRESET(OUTPUTRESET)\
-              (((OUTPUTRESET) == HRTIM_OUTPUTRESET_NONE)             || \
-               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_RESYNC)           || \
-               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_TIMPER)           || \
-               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_TIMCMP1)          || \
-               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_TIMCMP2)          || \
-               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_TIMCMP3)          || \
-               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_TIMCMP4)          || \
-               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_MASTERPER)        || \
-               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_MASTERCMP1)       || \
-               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_MASTERCMP2)       || \
-               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_MASTERCMP3)       || \
-               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_MASTERCMP4)       || \
+              (((OUTPUTRESET) == HRTIM_OUTPUTRESET_NONE)       || \
+               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_RESYNC)     || \
+               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_TIMPER)     || \
+               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_TIMCMP1)    || \
+               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_TIMCMP2)    || \
+               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_TIMCMP3)    || \
+               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_TIMCMP4)    || \
+               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_MASTERPER)  || \
+               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_MASTERCMP1) || \
+               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_MASTERCMP2) || \
+               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_MASTERCMP3) || \
+               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_MASTERCMP4) || \
                ((OUTPUTRESET) == HRTIM_OUTPUTRESET_TIMEV_1)    || \
                ((OUTPUTRESET) == HRTIM_OUTPUTRESET_TIMEV_2)    || \
                ((OUTPUTRESET) == HRTIM_OUTPUTRESET_TIMEV_3)    || \
@@ -2284,16 +2285,16 @@ typedef void (* pHRTIM_TIMxCallbackTypeDef)(HRTIM_HandleTypeDef *hhrtim,    /*!<
                ((OUTPUTRESET) == HRTIM_OUTPUTRESET_TIMEV_7)    || \
                ((OUTPUTRESET) == HRTIM_OUTPUTRESET_TIMEV_8)    || \
                ((OUTPUTRESET) == HRTIM_OUTPUTRESET_TIMEV_9)    || \
-               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_EEV_1)            || \
-               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_EEV_2)            || \
-               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_EEV_3)            || \
-               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_EEV_4)            || \
-               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_EEV_5)            || \
-               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_EEV_6)            || \
-               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_EEV_7)            || \
-               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_EEV_8)            || \
-               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_EEV_9)            || \
-               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_EEV_10)           || \
+               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_EEV_1)      || \
+               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_EEV_2)      || \
+               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_EEV_3)      || \
+               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_EEV_4)      || \
+               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_EEV_5)      || \
+               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_EEV_6)      || \
+               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_EEV_7)      || \
+               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_EEV_8)      || \
+               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_EEV_9)      || \
+               ((OUTPUTRESET) == HRTIM_OUTPUTRESET_EEV_10)     || \
                ((OUTPUTRESET) == HRTIM_OUTPUTRESET_UPDATE))
 
 #define IS_HRTIM_OUTPUTIDLEMODE(OUTPUTIDLEMODE)\

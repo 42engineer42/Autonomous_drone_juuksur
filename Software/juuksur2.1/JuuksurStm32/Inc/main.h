@@ -101,6 +101,8 @@ void Error_Handler(void);
 #define RGB_LED_1_G_GPIO_Port GPIOC
 #define RGB_LED_1_B_Pin GPIO_PIN_3
 #define RGB_LED_1_B_GPIO_Port GPIOC
+#define USART1_RX_Pin GPIO_PIN_4
+#define USART1_RX_GPIO_Port GPIOC
 #define RGB_LED_2_R_Pin GPIO_PIN_0
 #define RGB_LED_2_R_GPIO_Port GPIOB
 #define RGB_LED_2_G_Pin GPIO_PIN_1
@@ -143,5 +145,3 @@ void Error_Handler(void);
 #endif
 
 #endif /* __MAIN_H */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

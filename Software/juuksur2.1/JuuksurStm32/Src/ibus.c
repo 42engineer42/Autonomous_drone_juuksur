@@ -69,6 +69,7 @@ static void ibus_start_sensor_measurement_cmd(IbusState *ib, uint8_t byte) {
 }
 
 void ibus_receive(IbusState *ib, uint8_t byte) {
+
     uint8_t csValid = 0;
     int i, j;
     if(ib->state == 0) {
@@ -140,6 +141,8 @@ void ibus_receive(IbusState *ib, uint8_t byte) {
 }
 
 static int ibus_test_cs(IbusState *ib) {
+
+
     uint16_t gchecksum = 0xFFFF - ib->curHeader[0] - ib->curHeader[1];
     int i;
     for(i = 0; i < ib->curSize - 4; i++) {

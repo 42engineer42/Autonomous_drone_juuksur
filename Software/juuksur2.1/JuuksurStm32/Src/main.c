@@ -37,7 +37,6 @@
   ******************************************************************************
   */
 /* USER CODE END Header */
-
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "dma.h"
@@ -48,6 +47,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <math.h>
+#include <stdio.h>
+#include <ibus.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -141,10 +142,26 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM6_Init();
   MX_UART5_Init();
-  MX_USART3_UART_Init();
   MX_TIM7_Init();
+  MX_USART3_UART_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
+    /*while (1) {
+        // uint8_t wank = 0xAA;
+        // HAL_UART_Transmit(&huart3, &wank, 1, 100);
+        // HAL_GPIO_TogglePin(BOB2_GPIO_Port, BOB2_Pin);
+        HAL_Delay(50);
+    }*/
+    /*
+    // Manually init the pins for uart
+    RCC->AHBENR |= RCC_AHBENR_GPIOAEN;
+    GPIOB->MODER |= (2<<22); // PB11 alternate mode
+    GPIOB->AFR[1] |= (7<<11); // PB11 alternate mode 7 should be uart. Probably. Maybe
+    USART3->CR1 = 0x00; // Clear
+    USART3->CR1 |= (1<<0); // Enable USART
+    USART3->BRR =
+     */
+
 
   /* USER CODE END 2 */
 
@@ -153,7 +170,8 @@ int main(void)
 
   // enabli pi
   //HAL_GPIO_WritePin(PiEnable_GPIO_Port, PiEnable_Pin, GPIO_PIN_SET);
-
+    // while(1) HAL_UART_Transmit(&huart2, "Wanker\n\r", 8, 100);
+    HAL_Delay(5);
   tfmini_stm32_init(&tfmini, &huart5);
   ibus_stm32_init(&piIbus, &huart2, 0);
   ibus_stm32_init(&rxIbus, &huart3, 0);
@@ -163,7 +181,7 @@ int main(void)
   ibus_set_event_callback(&rxIbus.ibRx, ibus_event, &rxIbus); 
   ibus_set_event_callback(&telIbus.ibRx, ibus_event, &telIbus);
 
-  printf("\r\nstarting...\r\n");
+  // printf("\r\nstarting...\r\n");
   // start uart TX timer
   HAL_TIM_Base_Start_IT(&htim6);
   HAL_TIM_Base_Start_IT(&htim7);
@@ -261,10 +279,156 @@ int main(void)
     ibus_stm32_process_rx(&rxIbus);
     ibus_stm32_process_rx(&telIbus);
     tfmini_stm32_process_rx(&tfmini);
+    char payload[200];
+    int len = sprintf(payload, "Payload: ");
+    HAL_UART_Transmit(&huart2, payload, len, 100);
+    HAL_UART_Transmit(&huart2, (uint8_t*)"\n\rpiIbus: ", 2, 100);
+    for (int i = 0; i < 28; ++i) {
+        len = sprintf(payload, "%d ", piIbus.ibRx.payload[i]);
+        HAL_UART_Transmit(&huart2, payload, len, 100);
+    }
+    HAL_UART_Transmit(&huart2, (uint8_t*)"\n\r rxIbus: ", 2, 100);
+    for (int i = 0; i < 28; ++i) {
+        len = sprintf(payload, "%d ", rxIbus.ibRx.payload[i]);
+        HAL_UART_Transmit(&huart2, payload, len, 100);
+    }
+    HAL_UART_Transmit(&huart2, (uint8_t*)"\n\rtelIbus: ", 2, 100);
+    for (int i = 0; i < 28; ++i) {
+        len = sprintf(payload, "%d ", telIbus.ibRx.payload[i]);
+        HAL_UART_Transmit(&huart2, payload, len, 100);
+    }
+
+    HAL_UART_Transmit(&huart2, (uint8_t*)"\n\r", 2, 100);
+
+    uint8_t ringBuf[RBUF_SIZE];
+    uint8_t prevBuf[RBUF_SIZE];
+    uint8_t different = 0;
+    HAL_UART_Receive(&huart3, ringBuf, IBUS_PACKET_SIZE, 100);
+    uint8_t rBuf[200];
+    len = sprintf(rBuf, "RBUF: ");
+    HAL_UART_Transmit(&huart2, rBuf, len, 100);
+    for (int i = 0; i < RBUF_SIZE; ++i) {
+        if (prevBuf[i] != ringBuf[i]) {
+            different = 1;
+        }
+        len = sprintf(rBuf, "%d ", ringBuf[i]);
+        HAL_UART_Transmit(&huart2, rBuf, len, 100);
+        prevBuf[i] = ringBuf[i];
+    }
+
+    if (different == 1) {
+        HAL_UART_Transmit(&huart2, (uint8_t*)"\n\r", 2, 100);
+        char rBuf[200];
+        len = sprintf(rBuf, "Different: %d", different);
+        HAL_UART_Transmit(&huart2, rBuf, len, 100);
+    }
+
+    HAL_UART_Transmit(&huart2, (uint8_t*)"\n\r", 2, 100);
+
+    // uint8_t* thing = &rxIbus.ibRx.state;
+    // PRINT STATE OF RXIBUS
+    char value[20];
+    int len1 = sprintf(value, "rxIbus state: %X", rxIbus.ibRx.state);
+    HAL_UART_Transmit(&huart2, (uint8_t*)value, len1, 100);
+    HAL_UART_Transmit(&huart2, (uint8_t*)"\n\r", 2, 100);
+
+
+    // PRINT PAYLOAD OF RXIBUS
+    uint8_t* what = &rxIbus.ibRx.payload;
+    /*for (int i = 0; i < 28; i++) {
+        char yep[20];
+        int len = sprintf(yep, "rxIBus payload: %X\n\r", what[i]);
+
+        HAL_UART_Transmit(&huart2, yep, len, 100);
+    }*/
+    char channel_chars[120];
+    int channel_lens = sprintf(channel_chars, "rxIbus ");
+    HAL_UART_Transmit(&huart2, (uint8_t*)channel_chars, channel_lens, 100);
+    for(int i=0; i<14; i++) {
+        channel_lens = snprintf(channel_chars, 120, "%u ", rxIbus.txCh.channels[i]);
+        HAL_UART_Transmit(&huart2, (uint8_t*)channel_chars, channel_lens, 100);
+    }
+      HAL_UART_Transmit(&huart2, (uint8_t*)"\n\r", 2, 100);
+
+    channel_lens = sprintf(channel_chars, "telIbus ");
+    HAL_UART_Transmit(&huart2, (uint8_t*)channel_chars, channel_lens, 100);
+    for(int i=0; i<14; i++) {
+        channel_lens = snprintf(channel_chars, 120, "%u ", telIbus.txCh.channels[i]);
+        HAL_UART_Transmit(&huart2, (uint8_t*)channel_chars, channel_lens, 100);
+    }
+
+    //channel_lens = sprintf(channel_chars, "\n");
+    //HAL_UART_Transmit(&huart2, (uint8_t*)channel_chars, channel_lens, 100);
+    HAL_UART_Transmit(&huart2, (uint8_t*)"\n\r", 2, 100);
+
+      channel_lens = sprintf(channel_chars, "rxIbus ");
+      HAL_UART_Transmit(&huart2, (uint8_t*)channel_chars, channel_lens, 100);
+      for(int i=0; i<RBUF_SIZE; i++) {
+          channel_lens = snprintf(channel_chars, 120, "%u ", rxIbus.ringBuf[i]);
+          HAL_UART_Transmit(&huart2, (uint8_t*)channel_chars, channel_lens, 100);
+      }
+      HAL_UART_Transmit(&huart2, (uint8_t*)"\n\r", 2, 100);
+
+
+      channel_lens = sprintf(channel_chars, "piIbus ");
+      HAL_UART_Transmit(&huart2, (uint8_t*)channel_chars, channel_lens, 100);
+      for(int i=0; i<RBUF_SIZE; i++) {
+          channel_lens = snprintf(channel_chars, 120, "%u ", piIbus.ringBuf[i]);
+          HAL_UART_Transmit(&huart2, (uint8_t*)channel_chars, channel_lens, 100);
+      }
+      HAL_UART_Transmit(&huart2, (uint8_t*)"\n\r", 2, 100);
+
+
+      channel_lens = sprintf(channel_chars, "telIbus ");
+      HAL_UART_Transmit(&huart2, (uint8_t*)channel_chars, channel_lens, 100);
+      for(int i=0; i<RBUF_SIZE; i++) {
+          channel_lens = snprintf(channel_chars, 120, "%u ", telIbus.ringBuf[i]);
+          HAL_UART_Transmit(&huart2, (uint8_t*)channel_chars, channel_lens, 100);
+      }
+      HAL_UART_Transmit(&huart2, (uint8_t*)"\n\r", 2, 100);
+
+
+      channel_lens = sprintf(channel_chars, "rxChannels ");
+      HAL_UART_Transmit(&huart2, (uint8_t*)channel_chars, channel_lens, 100);
+      for(int i=0; i<14; i++) {
+          channel_lens = snprintf(channel_chars, 120, "%u ", rxChannels.channels[i]);
+          HAL_UART_Transmit(&huart2, (uint8_t*)channel_chars, channel_lens, 100);
+      }
+      HAL_UART_Transmit(&huart2, (uint8_t*)"\n\r", 2, 100);
+
+      // PRINT CUR CMD OF RXIBUS
+    uint8_t* yeep = &rxIbus.ibRx.curCmd;
+    char no[20];
+    int len2 = sprintf(no, "rxIBus curCMD: %X%X\n\r", yeep[0], yeep[1]);
+      HAL_UART_Transmit(&huart2, no, len2, 100);
+
+
+    uint8_t* wank = &telIbus;
+
+    HAL_UART_Transmit(&huart2, "\n\r", 2, 100);
+    for (int i = 0; i < sizeof(IbusStm32State); i++) {
+        if (wank[i] == 0) continue;
+        char cunt[20];
+        int len = sprintf(cunt, "%X", wank[i]);
+        HAL_UART_Transmit(&huart2, cunt, len, 100);
+    }
+    HAL_UART_Transmit(&huart2, "\n\r", 2, 100);
+    HAL_Delay(1000);
+
+    char fuck[200];
+    len = sprintf(fuck, "%X\n\r", telIbus.rxData);
+    HAL_UART_Transmit(&huart2, fuck, len, 100);
+    HAL_Delay(1000);
+
+    //tsprintf(bigAssThing, "Start %d\n\r%d\n\r%d\n\r%d\n\r%d\n\r%d\n\r%d\n\r%d\n\r", piIbus.halfDuplex, piIbus.txBusy,
+    //piIbus.rxData, piIbus.rxReadPos, piIbus.rxWritePos
+    //)
+
     if(tfminiLast != tfmini.tfmini.dist) {
         realHeight = (uint16_t)(cosf((((float)telRoll*100.0f)*DEG2RAD)) * cosf(((float)telPitch*100.0f)*DEG2RAD) * tfmini.tfmini.dist);
         tfminiLast = tfmini.tfmini.dist;
     }
+
   }
   /* USER CODE END 3 */
 }
@@ -279,7 +443,8 @@ void SystemClock_Config(void)
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
   RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 
-  /** Initializes the CPU, AHB and APB busses clocks 
+  /** Initializes the RCC Oscillators according to the specified parameters
+  * in the RCC_OscInitTypeDef structure.
   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
@@ -289,7 +454,8 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  /** Initializes the CPU, AHB and APB busses clocks 
+
+  /** Initializes the CPU, AHB and APB buses clocks
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
@@ -340,12 +506,12 @@ int _write(int file,char *ptr, int len)
 // NOTE: this should always be called from main not an interrupt
 void ibus_event(void *usrData, IbusEvent *e) {
   if(usrData == &piIbus) {
-    //printf("pi event!\r\n");
+    // printf("pi event!\r\n");
     switch(e->type) {
         case IBUS_CMD_CH:
             piChannels = e->e.ch;
             lastPiData = HAL_GetTick();
-            //printf("pi ch: %d %d %d %d\r\n", e->e.ch.channels[0], e->e.ch.channels[1], e->e.ch.channels[2], e->e.ch.channels[3]);
+            // printf("pi ch: %d %d %d %d\r\n", e->e.ch.channels[0], e->e.ch.channels[1], e->e.ch.channels[2], e->e.ch.channels[3]);
             break;
         case IBUS_CMD_ERROR:
             errorOccured = 1;
@@ -355,7 +521,7 @@ void ibus_event(void *usrData, IbusEvent *e) {
     switch(e->type) {
         case IBUS_CMD_CH:
             rxChannels = e->e.ch;
-            //printf("rx channels: %d %d %d %d %d\r\n", e->e.ch.channels[0], e->e.ch.channels[1], e->e.ch.channels[2], e->e.ch.channels[3], e->e.ch.channels[5]);
+            // printf("rx channels: %d %d %d %d %d\r\n", e->e.ch.channels[0], e->e.ch.channels[1], e->e.ch.channels[2], e->e.ch.channels[3], e->e.ch.channels[5]);
             break;
     }
   } else if(usrData == &telIbus) {
@@ -418,12 +584,10 @@ void Error_Handler(void)
   * @retval None
   */
 void assert_failed(uint8_t *file, uint32_t line)
-{ 
+{
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
      tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

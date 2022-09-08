@@ -38,6 +38,8 @@ void ibus_event(void *usrData, IbusEvent *e) {
 	switch(e->type) {
 		case IBUS_CMD_CH:
 			//printf("ch %d %d %d %d\r\n", e->e.ch.channels[0], e->e.ch.channels[1], e->e.ch.channels[2], e->e.ch.channels[3]);
+            HAL_UART_Transmit(&huart2, "Fucking killyourself\n\r", 22, 100);
+            HAL_Delay(500);
             publish_data((Stm32IoState*)usrData, &e->e.ch);
 			break;
 	}
